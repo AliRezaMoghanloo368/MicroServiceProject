@@ -1,22 +1,36 @@
 services:
+  main.api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+      - "ConnectionStrings:OrderingConnectionString=Server=maindb;Database=MainDb;User Id=sa;Password=@Moghanloo368;"
+    depends_on:
+      - maindb
+    ports:
+      - "8001:80"
+
+  maindb:
+    container_name: maindb
+    environment:
+      SA_PASSWORD: "@Moghanloo368"
+      ACCEPT_EULA: "Y"
+    restart: always
+    ports:
+      - "1433:1433"
+
+
   files.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
     ports:
-      - "8080"
+      - "8002:80"
+
 
   logs.api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
     ports:
-      - "8080"
+      - "8003:80"
 
-
-  main.api:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
-    ports:
-      - "8080"

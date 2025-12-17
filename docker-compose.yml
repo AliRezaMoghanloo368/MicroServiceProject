@@ -1,4 +1,13 @@
 services:
+  main.api:
+    image: ${DOCKER_REGISTRY-}mainapi
+    build:
+      context: .
+      dockerfile: src/Services/Main/Main.Api/Dockerfile
+
+  maindb:
+    image: mcr.microsoft.com/mssql/server:2017-latest
+
   files.api:
     image: ${DOCKER_REGISTRY-}filesapi
     build:
@@ -12,9 +21,8 @@ services:
       dockerfile: src/Services/Logs/Logs.Api/Dockerfile
 
 
-  main.api:
-    image: ${DOCKER_REGISTRY-}mainapi
-    build:
-      context: .
-      dockerfile: src/Services/Main/Main.Api/Dockerfile
-
+volumes:
+  mongo_data:
+  portainer_data:
+  postgres_data:
+  pgadmin_data:
