@@ -1,0 +1,20 @@
+services:
+  files.api:
+    image: ${DOCKER_REGISTRY-}filesapi
+    build:
+      context: .
+      dockerfile: src/Services/Files/Files.Api/Dockerfile
+
+  logs.api:
+    image: ${DOCKER_REGISTRY-}logsapi
+    build:
+      context: .
+      dockerfile: src/Services/Logs/Logs.Api/Dockerfile
+
+
+  main.api:
+    image: ${DOCKER_REGISTRY-}mainapi
+    build:
+      context: .
+      dockerfile: src/Services/Main/Main.Api/Dockerfile
+
