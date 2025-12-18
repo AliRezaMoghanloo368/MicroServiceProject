@@ -1,5 +1,6 @@
 ﻿using Main.Domain.Common;
 using Main.Domain.Models;
+using Main.Infrastructure.EntityValidator;
 using Microsoft.EntityFrameworkCore;
 
 namespace Main.Infrastructure.Persistence
@@ -12,6 +13,15 @@ namespace Main.Infrastructure.Persistence
         }
 
         public DbSet<Student> Students { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // ✅ Fluent API Configurations
+            modelBuilder.ApplyConfiguration(new StudentValidator());
+            modelBuilder.ApplyConfiguration(new TeacherValidator());
+            modelBuilder.ApplyConfiguration(new CourseValidator());
+            base.OnModelCreating(modelBuilder);
+        }
 
         #region SaveChangesAsync
         //public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
