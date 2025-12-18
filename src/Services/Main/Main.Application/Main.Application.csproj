@@ -21,10 +21,8 @@
   <ItemGroup>
     <Folder Include="Dtos\Courses\" />
     <Folder Include="Dtos\Teachers\" />
-    <Folder Include="Dtos\Students\" />
     <Folder Include="Features\Courses\Commands\" />
     <Folder Include="Features\Courses\Queries\" />
-    <Folder Include="Features\Students\Queries\" />
     <Folder Include="Features\Teachers\Commands\" />
     <Folder Include="Features\Teachers\Queries\" />
   </ItemGroup>

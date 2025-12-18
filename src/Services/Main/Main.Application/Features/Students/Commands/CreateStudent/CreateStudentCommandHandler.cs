@@ -24,6 +24,13 @@ namespace Main.Application.Features.Students.Commands.CreateStudent
 
         public async Task<Result<Student>> Handle(CreateStudentCommand request, CancellationToken cancellationToken)
         {
+            //var valid = new CreateStudentCommandValidation();
+            //var branchIsValid = await valid.ValidateAsync(request);
+            //if (!branchIsValid.IsValid)
+            //{
+            //    return Result<Student>.ErrorResult(branchIsValid.Errors.Select(x => x.ErrorMessage).ToList());
+            //}
+
             var studentEntity = _mapper.Map<Student>(request);
             var newStudent = await _studentRepository.AddAsync(studentEntity);
 
