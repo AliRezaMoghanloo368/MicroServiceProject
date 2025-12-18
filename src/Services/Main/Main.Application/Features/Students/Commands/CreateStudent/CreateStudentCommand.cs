@@ -9,6 +9,5 @@ namespace Main.Application.Features.Students.Commands.CreateStudent
         public string FirstName { get; set; } = null!;
         public string LastName { get; set; } = null!;
         public string NationalCode { get; set; } = null!;
-        public string? ProfileImageFileId { get; set; }
     }
 }

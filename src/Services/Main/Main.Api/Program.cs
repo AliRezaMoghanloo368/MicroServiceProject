@@ -1,3 +1,5 @@
+using Main.Api.Extensions;
+using Main.Infrastructure.Persistence;
 using Main.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,5 +25,11 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+
+app.MigrateDatabase<MainContext>((context, services) =>
+{
+    var logger = services.GetService<ILogger<MainContextSeed>>();
+    MainContextSeed.SeedAsync(context, logger).Wait();
+});
 
 app.Run();

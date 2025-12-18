@@ -1,5 +1,4 @@
-﻿using Main.Domain.Common;
-using Main.Domain.Models;
+﻿using Main.Domain.Models;
 using Main.Infrastructure.EntityValidator;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,7 +8,7 @@ namespace Main.Infrastructure.Persistence
     {
         public MainContext(DbContextOptions<MainContext> options) : base(options)
         {
-            
+
         }
 
         public DbSet<Student> Students { get; set; }

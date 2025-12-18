@@ -24,10 +24,19 @@ namespace Main.Infrastructure.EntityValidator
                 .IsRequired()
                 .HasMaxLength(10);
 
-            //builder.HasOne<Branch>()
-            //       .WithMany(b => b.Tables)
-            //       .HasForeignKey(x => x.BranchId)
-            //       .OnDelete(DeleteBehavior.Cascade);
+            builder.Property(x => x.ProfileImageFileId)
+                .HasColumnType("nvarchar(max)")
+                .IsRequired(false);
+
+            builder.Property(x => x.CreatedAt)
+                .IsRequired();
+
+            builder.HasMany(x => x.StudentCourses)
+                .WithOne(x => x.Student)
+                .HasForeignKey(x => x.StudentId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            builder.HasQueryFilter(x => x.IsActive);
         }
     }
 }

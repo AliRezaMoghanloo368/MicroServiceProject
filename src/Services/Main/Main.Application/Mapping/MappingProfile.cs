@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Main.Application.Dtos.Students;
 using Main.Application.Features.Students.Commands.CreateStudent;
 using Main.Application.Features.Students.Commands.UpdateStudent;
 using Main.Domain.Models;
@@ -12,6 +13,7 @@ namespace Main.Application.Mapping
             #region Student
             CreateMap<Student, CreateStudentCommand>().ReverseMap();
             CreateMap<Student, UpdateStudentCommand>().ReverseMap();
+            CreateMap<Student, StudentDto>().ReverseMap();
             #endregion
 
             #region Teacher

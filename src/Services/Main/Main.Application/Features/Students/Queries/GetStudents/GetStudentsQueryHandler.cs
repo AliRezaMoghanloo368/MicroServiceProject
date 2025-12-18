@@ -6,7 +6,7 @@ using SharedLibrary.Patterns.ResultPattern;
 
 namespace Main.Application.Features.Students.Queries.GetStudents
 {
-    public class GetStudentsQueryHandler : IRequestHandler<GetStudentsQuery, Result<IReadOnlyList<StudentDto>>>
+    public class GetStudentsQueryHandler : IRequestHandler<GetStudentsQuery, Result<List<StudentDto>>>
     {
         private readonly IStudentRepository _studentRepository;
         private readonly IMapper _mapper;
@@ -17,11 +17,11 @@ namespace Main.Application.Features.Students.Queries.GetStudents
             _mapper = mapper;
         }
 
-        public async Task<Result<IReadOnlyList<StudentDto>>> Handle(GetStudentsQuery request, CancellationToken cancellationToken)
+        public async Task<Result<List<StudentDto>>> Handle(GetStudentsQuery request, CancellationToken cancellationToken)
         {
             var list = await _studentRepository.GetAllAsync();
-            var studentList = _mapper.Map<IReadOnlyList<StudentDto>>(list);
-            return Result<IReadOnlyList<StudentDto>>.SuccessResult(studentList);
+            var studentList = _mapper.Map<List<StudentDto>>(list);
+            return Result<List<StudentDto>>.SuccessResult(studentList);
         }
     }
 }
