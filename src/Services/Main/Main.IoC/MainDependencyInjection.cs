@@ -22,31 +22,52 @@ namespace Main.IoC
         public static IServiceCollection RegisterServices(this IServiceCollection services,
             IConfiguration configuration)
         {
-            #region Application Layer
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            services.AddAutoMapper(typeof(MappingProfile).Assembly);
-            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            #region ------------------------Application Layer
+            #region Student Settings
             services.AddMediatR(typeof(CreateStudentCommandHandler).Assembly);
             services.AddMediatR(typeof(UpdateStudentCommandHandler).Assembly);
             services.AddMediatR(typeof(DeleteStudentCommandHandler).Assembly);
             services.AddMediatR(typeof(GetStudentQueryHandler).Assembly);
             services.AddMediatR(typeof(GetStudentsQueryHandler).Assembly);
+            services.AddScoped<IStudentRepository, StudentRepository>();
+            #endregion
+
+            #region Teacher Settings
+            //services.AddMediatR(typeof(CreateTeacherCommandHandler).Assembly);
+            //services.AddMediatR(typeof(UpdateTeacherCommandHandler).Assembly);
+            //services.AddMediatR(typeof(DeleteTeacherCommandHandler).Assembly);
+            //services.AddMediatR(typeof(GetTeacherQueryHandler).Assembly);
+            //services.AddMediatR(typeof(GetTeachersQueryHandler).Assembly);
+            services.AddScoped<ITeacherRepository, TeacherRepository>();
+            #endregion
+
+            #region Course Settings
+            //services.AddMediatR(typeof(CreateCourseCommandHandler).Assembly);
+            //services.AddMediatR(typeof(UpdateCourseCommandHandler).Assembly);
+            //services.AddMediatR(typeof(DeleteCourseCommandHandler).Assembly);
+            //services.AddMediatR(typeof(GetCourseQueryHandler).Assembly);
+            //services.AddMediatR(typeof(GetCoursesQueryHandler).Assembly);
+            services.AddScoped<ICourseRepository, CourseRepository>();
+            #endregion
+
+            #region Other
+            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(typeof(MappingProfile).Assembly);
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+            services.AddMediatR(Assembly.GetExecutingAssembly());
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(UnhandledExceptionBehavior<,>));
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
             #endregion
+            #endregion
 
-            #region Data Layer
+            #region ------------------------Data Layer
             services.AddDbContext<MainContext>(options =>
             {
                 options.UseSqlServer(configuration.GetConnectionString("Root"));
             });
-            services.AddScoped<IStudentRepository, StudentRepository>();
-            services.AddScoped<ITeacherRepository, TeacherRepository>();
-            services.AddScoped<ICourseRepository, CourseRepository>();
             #endregion
 
-            #region Shared
+            #region ------------------------Shared
             //service.AddScoped<IEncrypter, Encrypter>();
             #endregion
 

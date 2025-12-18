@@ -19,11 +19,13 @@ namespace Main.Application.Mapping
             #region Teacher
             //CreateMap<Teacher, CreateTeacherCommand>().ReverseMap();
             //CreateMap<Teacher, UpdateTeacherCommand>().ReverseMap();
+            //CreateMap<Teacher, TeacherDto>().ReverseMap();
             #endregion
 
             #region Course
             //CreateMap<Course, CreateCourseCommand>().ReverseMap();
             //CreateMap<Course, UpdateCourseCommand>().ReverseMap();
+            //CreateMap<Course, CourseDto>().ReverseMap();
             #endregion
         }
     }
