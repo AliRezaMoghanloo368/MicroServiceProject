@@ -11,5 +11,15 @@ namespace Main.Infrastructure.Repositories
         {
             _context = context;
         }
+
+        public async Task InActiveAsync(int id)
+        {
+            var teacher = _context.Teachers.FirstOrDefault(x => x.Id == id);
+            if (teacher == null)
+                return;
+
+            teacher.IsActive = false;
+            await UpdateAsync(teacher);
+        }
     }
 }

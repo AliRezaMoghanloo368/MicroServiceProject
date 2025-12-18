@@ -1,4 +1,8 @@
-﻿using MediatR;
+﻿using Main.Application.Contracts.Persistence;
+using Main.Infrastructure.Persistence;
+using Main.Infrastructure.Repositories;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -16,7 +20,13 @@ namespace Main.IoC
             #endregion
 
             #region Data Layer
-
+            services.AddDbContext<MainContext>(options =>
+            {
+                options.UseSqlServer(configuration.GetConnectionString("Root"));
+            });
+            services.AddScoped<IStudentRepository, StudentRepository>();
+            services.AddScoped<ITeacherRepository, TeacherRepository>();
+            services.AddScoped<ICourseRepository, CourseRepository>();
             #endregion
 
             #region Shared

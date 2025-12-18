@@ -8,7 +8,7 @@ namespace Main.Domain.Models
         public string LastName { get; set; } = null!;
         public string Email { get; set; } = null!;
         public string? ProfileImageFileId { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public bool IsActive { get; set; } = true;
 
         public ICollection<Course> Courses { get; set; } = new List<Course>();
     }
