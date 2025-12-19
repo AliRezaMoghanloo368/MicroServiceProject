@@ -1,4 +1,4 @@
-﻿namespace Main.Application.Dtos.Courses
+﻿namespace Main.Application.Dtos.StudentCourses
 {
     public class StudentCourseDto
     {

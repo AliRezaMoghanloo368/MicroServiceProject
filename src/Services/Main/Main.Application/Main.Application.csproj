@@ -17,5 +17,12 @@
     <ProjectReference Include="..\..\..\..\..\SharedLibrary\SharedLibrary.csproj" />
     <ProjectReference Include="..\Main.Domain\Main.Domain.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\StudentCourses\Commands\DeleteStudentCourse\" />
+    <Folder Include="Features\StudentCourses\Commands\UpdateStudentCourse\" />
+    <Folder Include="Features\StudentCourses\Queries\GetStudentCourse\" />
+    <Folder Include="Features\StudentCourses\Queries\GetStudentCourses\" />
+  </ItemGroup>
   
 </Project>

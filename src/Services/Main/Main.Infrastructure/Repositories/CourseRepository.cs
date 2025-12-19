@@ -7,11 +7,8 @@ namespace Main.Infrastructure.Repositories
 {
     public class CourseRepository : GenericRepository<Course>, ICourseRepository
     {
-        private readonly MainContext _context;
         public CourseRepository(MainContext context) : base(context)
-        {
-            _context = context;
-        }
+        { }
 
         public async Task LoadTeacherAsync(Course course)
         {

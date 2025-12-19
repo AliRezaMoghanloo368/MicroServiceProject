@@ -1,4 +1,5 @@
-﻿using Main.Application.Dtos.Teachers;
+﻿using Main.Application.Dtos.StudentCourses;
+using Main.Application.Dtos.Teachers;
 
 namespace Main.Application.Dtos.Courses
 {

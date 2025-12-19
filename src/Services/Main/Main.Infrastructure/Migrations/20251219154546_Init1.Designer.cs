@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Main.Infrastructure.Migrations
 {
     [DbContext(typeof(MainContext))]
-    [Migration("20251219132809_Init1")]
+    [Migration("20251219154546_Init1")]
     partial class Init1
     {
         /// <inheritdoc />
@@ -119,7 +119,7 @@ namespace Main.Infrastructure.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("StudentCourse");
+                    b.ToTable("StudentCourses");
                 });
 
             modelBuilder.Entity("Main.Domain.Models.Teacher", b =>

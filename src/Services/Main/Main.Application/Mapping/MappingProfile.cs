@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Main.Application.Dtos.Courses;
+using Main.Application.Dtos.StudentCourses;
 using Main.Application.Dtos.Students;
 using Main.Application.Dtos.Teachers;
 using Main.Application.Features.Courses.Commands.CreateCourse;

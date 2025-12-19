@@ -6,11 +6,7 @@ namespace Main.Infrastructure.Repositories
 {
     public class TeacherRepository : GenericRepository<Teacher>, ITeacherRepository
     {
-        private readonly MainContext _context;
-        public TeacherRepository(MainContext context) : base(context)
-        {
-            _context = context;
-        }
+        public TeacherRepository(MainContext context) : base(context) { }
 
         public async Task InActiveAsync(long id)
         {

@@ -6,6 +6,7 @@ using Main.Application.Features.Courses.Commands.DeleteCourse;
 using Main.Application.Features.Courses.Commands.UpdateCourse;
 using Main.Application.Features.Courses.Queries.GetCourse;
 using Main.Application.Features.Courses.Queries.GetCourses;
+using Main.Application.Features.StudentCourses.Commands.CreateStudentCourse;
 using Main.Application.Features.Students.Commands.CreateStudent;
 using Main.Application.Features.Students.Commands.UpdateStudent;
 using Main.Application.Features.Students.Queries.GetStudent;
@@ -57,6 +58,11 @@ namespace Main.IoC
             services.AddMediatR(typeof(GetCourseQueryHandler).Assembly);
             services.AddMediatR(typeof(GetCoursesQueryHandler).Assembly);
             services.AddScoped<ICourseRepository, CourseRepository>();
+            #endregion
+
+            #region StudentCourse Settings
+            services.AddMediatR(typeof(CreateStudentCourseCommandHandler).Assembly);
+            services.AddScoped<IStudentCourseRepository, StudentCourseRepository>();
             #endregion
 
             #region Other
