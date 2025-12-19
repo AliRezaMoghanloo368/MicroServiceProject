@@ -1,24 +1,24 @@
 ﻿using FluentValidation;
 using Main.Application.Contracts.Persistence;
 
-namespace Main.Application.Features.Students.Commands.UpdateStudent
+namespace Main.Application.Features.Teachers.Commands.UpdateTeacher
 {
-    public class UpdateStudentCommandValidation : AbstractValidator<UpdateStudentCommand>
+    public class UpdateTeacherCommandValidation : AbstractValidator<UpdateTeacherCommand>
     {
-        private readonly IStudentRepository _repo;
-        public UpdateStudentCommandValidation(IStudentRepository repo)
+        private readonly ITeacherRepository _repo;
+        public UpdateTeacherCommandValidation(ITeacherRepository repo)
         {
             _repo = repo;
 
             RuleFor(x => x.Id)
-                .GreaterThan(0).WithMessage("شناسه دانش آموز معتبر نیست");
+                .GreaterThan(0).WithMessage("شناسه معلم معتبر نیست");
 
             RuleFor(x => x.Id)
                 .MustAsync(async (id, token) =>
                 {
                     var result = await _repo.GetByIdAsync(id);
                     return result == null ? false : true;
-                }).WithMessage("دانش آموزی یافت نشد");
+                }).WithMessage("معلمی یافت نشد");
 
             RuleFor(a => a.FirstName)
                 .NotEmpty().WithMessage("نام الزامی است")
@@ -30,10 +30,10 @@ namespace Main.Application.Features.Students.Commands.UpdateStudent
                 .NotNull()
                 .MaximumLength(100).WithMessage("نام خانوادگی نباید بیشتر از 100 حرف باشد");
 
-            RuleFor(a => a.NationalCode)
-                .NotEmpty().WithMessage("کد ملی الزامی است")
+            RuleFor(a => a.PhoneNumber)
+                .NotEmpty().WithMessage("شماره تماس الزامی است")
                 .NotNull()
-                .MaximumLength(10).WithMessage("کد ملی نباید بیشتر از 10 حرف باشد");
+                .MaximumLength(11).WithMessage("شماره تماس نباید بیشتر از 11 حرف باشد");
         }
     }
 }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Main.Infrastructure.Migrations
 {
     [DbContext(typeof(MainContext))]
-    [Migration("20251218154017_Init1")]
+    [Migration("20251218205207_Init1")]
     partial class Init1
     {
         /// <inheritdoc />
@@ -27,11 +27,11 @@ namespace Main.Infrastructure.Migrations
 
             modelBuilder.Entity("Main.Domain.Models.Course", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<string>("CoverImageFileId")
                         .HasColumnType("nvarchar(max)");
@@ -47,6 +47,9 @@ namespace Main.Infrastructure.Migrations
                     b.Property<int>("TeacherId")
                         .HasColumnType("int");
 
+                    b.Property<long>("TeacherId1")
+                        .HasColumnType("bigint");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -54,18 +57,18 @@ namespace Main.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TeacherId");
+                    b.HasIndex("TeacherId1");
 
                     b.ToTable("Courses", (string)null);
                 });
 
             modelBuilder.Entity("Main.Domain.Models.Student", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -98,20 +101,20 @@ namespace Main.Infrastructure.Migrations
 
             modelBuilder.Entity("Main.Domain.Models.StudentCourse", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
+                    b.Property<long>("CourseId")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("StudentId")
-                        .HasColumnType("int");
+                    b.Property<long>("StudentId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -124,18 +127,14 @@ namespace Main.Infrastructure.Migrations
 
             modelBuilder.Entity("Main.Domain.Models.Teacher", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -150,6 +149,11 @@ namespace Main.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(11)
+                        .HasColumnType("nvarchar(11)");
+
                     b.Property<string>("ProfileImageFileId")
                         .HasColumnType("nvarchar(max)");
 
@@ -162,7 +166,7 @@ namespace Main.Infrastructure.Migrations
                 {
                     b.HasOne("Main.Domain.Models.Teacher", "Teacher")
                         .WithMany("Courses")
-                        .HasForeignKey("TeacherId")
+                        .HasForeignKey("TeacherId1")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

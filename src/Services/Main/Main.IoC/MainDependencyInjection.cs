@@ -2,10 +2,14 @@
 using Main.Application.Behaviors;
 using Main.Application.Contracts.Persistence;
 using Main.Application.Features.Students.Commands.CreateStudent;
-using Main.Application.Features.Students.Commands.DeleteStudent;
 using Main.Application.Features.Students.Commands.UpdateStudent;
 using Main.Application.Features.Students.Queries.GetStudent;
 using Main.Application.Features.Students.Queries.GetStudents;
+using Main.Application.Features.Teachers.Commands.CreateTeacher;
+using Main.Application.Features.Teachers.Commands.DeleteTeacher;
+using Main.Application.Features.Teachers.Commands.UpdateTeacher;
+using Main.Application.Features.Teachers.Queries.GetTeacher;
+using Main.Application.Features.Teachers.Queries.GetTeachers;
 using Main.Application.Mapping;
 using Main.Infrastructure.Persistence;
 using Main.Infrastructure.Repositories;
@@ -26,18 +30,18 @@ namespace Main.IoC
             #region Student Settings
             services.AddMediatR(typeof(CreateStudentCommandHandler).Assembly);
             services.AddMediatR(typeof(UpdateStudentCommandHandler).Assembly);
-            services.AddMediatR(typeof(DeleteStudentCommandHandler).Assembly);
+            services.AddMediatR(typeof(DeleteTeacherCommandHandler).Assembly);
             services.AddMediatR(typeof(GetStudentQueryHandler).Assembly);
             services.AddMediatR(typeof(GetStudentsQueryHandler).Assembly);
             services.AddScoped<IStudentRepository, StudentRepository>();
             #endregion
 
             #region Teacher Settings
-            //services.AddMediatR(typeof(CreateTeacherCommandHandler).Assembly);
-            //services.AddMediatR(typeof(UpdateTeacherCommandHandler).Assembly);
-            //services.AddMediatR(typeof(DeleteTeacherCommandHandler).Assembly);
-            //services.AddMediatR(typeof(GetTeacherQueryHandler).Assembly);
-            //services.AddMediatR(typeof(GetTeachersQueryHandler).Assembly);
+            services.AddMediatR(typeof(CreateTeacherCommandHandler).Assembly);
+            services.AddMediatR(typeof(UpdateTeacherCommandHandler).Assembly);
+            services.AddMediatR(typeof(DeleteTeacherCommandHandler).Assembly);
+            services.AddMediatR(typeof(GetTeacherQueryHandler).Assembly);
+            services.AddMediatR(typeof(GetTeachersQueryHandler).Assembly);
             services.AddScoped<ITeacherRepository, TeacherRepository>();
             #endregion
 

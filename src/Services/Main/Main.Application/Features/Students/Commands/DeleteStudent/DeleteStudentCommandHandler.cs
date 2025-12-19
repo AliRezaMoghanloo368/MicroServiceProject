@@ -1,9 +1,6 @@
-﻿using AutoMapper;
-using Main.Application.Contracts.Persistence;
-using Main.Domain.Models;
+﻿using Main.Application.Contracts.Persistence;
 using MediatR;
 using Microsoft.Extensions.Logging;
-using SharedLibrary.Exceptions;
 using SharedLibrary.Patterns.ResultPattern;
 
 namespace Main.Application.Features.Students.Commands.DeleteStudent
@@ -12,7 +9,7 @@ namespace Main.Application.Features.Students.Commands.DeleteStudent
     {
         private readonly IStudentRepository _studentRepository;
         private readonly ILogger<DeleteStudentCommand> _logger;
-        public DeleteStudentCommandHandler(IStudentRepository studentRepository, 
+        public DeleteStudentCommandHandler(IStudentRepository studentRepository,
             ILogger<DeleteStudentCommand> logger)
         {
             _studentRepository = studentRepository;

@@ -7,6 +7,7 @@ using Main.Application.Features.Students.Queries.GetStudents;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Main.Api.Controllers
 {
@@ -21,7 +22,7 @@ namespace Main.Api.Controllers
         #region Get Student
         [HttpGet("{id}", Name = "GetStudent")]
         [ProducesResponseType(typeof(StudentDto), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<StudentDto>> GetStudentById(int id)
+        public async Task<ActionResult<StudentDto>> GetStudentById(long id)
         {
             var query = new GetStudentQuery(id);
             var student = await _mediator.Send(query);
@@ -32,7 +33,7 @@ namespace Main.Api.Controllers
         #region Get Students
         [HttpGet(Name = "GetStudents")]
         [ProducesResponseType(typeof(IReadOnlyList<StudentDto>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IReadOnlyList<StudentDto>>> GetStudents(int id)
+        public async Task<ActionResult<IReadOnlyList<StudentDto>>> GetStudents(long id)
         {
             var query = new GetStudentsQuery();
             var students = await _mediator.Send(query);
@@ -52,25 +53,19 @@ namespace Main.Api.Controllers
 
         #region Update Student
         [HttpPut(Name = "UpdateStudent")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesDefaultResponseType]
         public async Task<ActionResult> UpdateStudent([FromBody] UpdateStudentCommand command)
         {
-            await _mediator.Send(command);
-            return NoContent();
+            var result = await _mediator.Send(command);
+            return Ok(result);
         }
         #endregion
 
         #region Delete Student
         [HttpDelete("{id}", Name = "DeleteStudent")]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesDefaultResponseType]
-        public async Task<ActionResult> DeleteStudent(int id)
+        public async Task<ActionResult> DeleteStudent(long id)
         {
-            await _mediator.Send(new DeleteStudentCommand(id));
-            return NoContent();
+            var result = await _mediator.Send(new DeleteStudentCommand(id));
+            return Ok(result);
         }
         #endregion
     }

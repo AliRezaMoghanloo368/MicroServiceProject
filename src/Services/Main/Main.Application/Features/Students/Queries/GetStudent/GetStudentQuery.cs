@@ -4,7 +4,7 @@ using SharedLibrary.Patterns.ResultPattern;
 
 namespace Main.Application.Features.Students.Queries.GetStudent
 {
-    public record GetStudentQuery(int Id) : IRequest<Result<StudentDto>>
+    public record GetStudentQuery(long Id) : IRequest<Result<StudentDto>>
     {
 
     }

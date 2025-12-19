@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using FluentValidation;
 using Main.Application.Contracts.Persistence;
-using Main.Application.Features.Students.Commands.DeleteStudent;
 using Main.Domain.Models;
 using MediatR;
 using Microsoft.Extensions.Logging;
@@ -11,10 +11,10 @@ namespace Main.Application.Features.Students.Commands.CreateStudent
     public class CreateStudentCommandHandler : IRequestHandler<CreateStudentCommand, Result<Student>>
     {
         private readonly IStudentRepository _studentRepository;
-        private readonly ILogger<DeleteStudentCommand> _logger;
+        private readonly ILogger<CreateStudentCommand> _logger;
         private readonly IMapper _mapper;
         public CreateStudentCommandHandler(IStudentRepository studentRepository,
-            ILogger<DeleteStudentCommand> logger,
+            ILogger<CreateStudentCommand> logger,
             IMapper mapper)
         {
             _studentRepository = studentRepository;
@@ -24,12 +24,12 @@ namespace Main.Application.Features.Students.Commands.CreateStudent
 
         public async Task<Result<Student>> Handle(CreateStudentCommand request, CancellationToken cancellationToken)
         {
-            //var valid = new CreateStudentCommandValidation();
-            //var branchIsValid = await valid.ValidateAsync(request);
-            //if (!branchIsValid.IsValid)
-            //{
-            //    return Result<Student>.ErrorResult(branchIsValid.Errors.Select(x => x.ErrorMessage).ToList());
-            //}
+            var valid = new CreateStudentCommandValidation();
+            var isValid = await valid.ValidateAsync(request);
+            if (!isValid.IsValid)
+            {
+                return Result<Student>.ErrorResult(isValid.Errors.Select(x => x.ErrorMessage).ToList());
+            }
 
             var studentEntity = _mapper.Map<Student>(request);
             var newStudent = await _studentRepository.AddAsync(studentEntity);

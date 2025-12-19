@@ -65,7 +65,7 @@ namespace Main.Infrastructure.Repositories
             return await query.ToListAsync();
         }
 
-        public virtual async Task<T> GetByIdAsync(int id)
+        public virtual async Task<T> GetByIdAsync(long id)
         {
             return await _query.FindAsync(id);
         }

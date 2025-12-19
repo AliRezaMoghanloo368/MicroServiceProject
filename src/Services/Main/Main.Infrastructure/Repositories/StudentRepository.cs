@@ -12,7 +12,7 @@ namespace Main.Infrastructure.Repositories
             _context = context;
         }
 
-        public async Task InActiveAsync(int id)
+        public async Task InActiveAsync(long id)
         {
             var student = _context.Students.FirstOrDefault(x => x.Id == id);
             if (student == null)

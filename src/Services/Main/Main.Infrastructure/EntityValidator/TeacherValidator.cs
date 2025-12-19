@@ -20,10 +20,18 @@ namespace Main.Infrastructure.EntityValidator
                 .IsRequired()
                 .HasMaxLength(100);
 
-            //builder.HasOne<Branch>()
-            //       .WithMany(b => b.Tables)
-            //       .HasForeignKey(x => x.BranchId)
-            //       .OnDelete(DeleteBehavior.Cascade);
+            builder.Property(x => x.PhoneNumber)
+                    .IsRequired()
+                    .HasMaxLength(11);
+
+            builder.Property(x => x.ProfileImageFileId)
+                .HasColumnType("nvarchar(max)")
+                .IsRequired(false);
+
+            builder.Property(x => x.CreatedAt)
+                .IsRequired();
+
+            builder.HasQueryFilter(x => x.IsActive);
         }
     }
 }

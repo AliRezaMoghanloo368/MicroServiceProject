@@ -8,25 +8,25 @@ namespace Main.Infrastructure.Persistence
     {
         public static async Task SeedAsync(MainContext context, ILogger<MainContextSeed> logger)
         {
-            if (!await context.Students.AnyAsync())
-            {
-                await context.Students.AddRangeAsync(GetPreconfiguredStudents());
-                await context.SaveChangesAsync();
-                logger.LogInformation("data seed section configured");
-            }
+            //if (!await context.Students.AnyAsync())
+            //{
+            //    //await context.Students.AddRangeAsync(GetPreconfiguredStudents());
+            //    await context.SaveChangesAsync();
+            //    logger.LogInformation("data seed section configured");
+            //}
         }
 
-        public static IEnumerable<Student> GetPreconfiguredStudents()
-        {
-            return null;
-            //return new List<Student>
-            //{
-            //    new Student
-            //    {
-            //        FirstName = "xx",
-            //        LastName = "xxx"
-            //    }
-            //};
-        }
+        //public static IEnumerable<Student> GetPreconfiguredStudents()
+        //{
+        //    return null;
+        //    return new List<Student>
+        //    {
+        //        new Student
+        //        {
+        //            FirstName = "xx",
+        //            LastName = "xxx"
+        //        }
+        //    };
+        //}
     }
 }
