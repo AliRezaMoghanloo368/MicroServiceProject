@@ -1,7 +1,10 @@
-﻿namespace Logs.Infrastructure.Persistence
+﻿using MongoDB.Driver;
+using Logs.Domain.Models;
+
+namespace Logs.Infrastructure.Persistence
 {
     public interface ILogsContext
     {
-        IMongoCollection<Logs> Logs { get; }
+        IMongoCollection<History> Histories { get; }
     }
 }

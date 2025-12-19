@@ -55,8 +55,7 @@ namespace Main.Infrastructure.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    TeacherId = table.Column<int>(type: "int", nullable: false),
-                    TeacherId1 = table.Column<long>(type: "bigint", nullable: false),
+                    TeacherId = table.Column<long>(type: "bigint", nullable: false),
                     CoverImageFileId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -64,11 +63,11 @@ namespace Main.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Courses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Courses_Teachers_TeacherId1",
-                        column: x => x.TeacherId1,
+                        name: "FK_Courses_Teachers_TeacherId",
+                        column: x => x.TeacherId,
                         principalTable: "Teachers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -99,9 +98,9 @@ namespace Main.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Courses_TeacherId1",
+                name: "IX_Courses_TeacherId",
                 table: "Courses",
-                column: "TeacherId1");
+                column: "TeacherId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StudentCourse_CourseId",

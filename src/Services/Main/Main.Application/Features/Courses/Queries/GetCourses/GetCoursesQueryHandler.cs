@@ -19,7 +19,7 @@ namespace Main.Application.Features.Courses.Queries.GetCourses
 
         public async Task<Result<List<CourseDto>>> Handle(GetCoursesQuery request, CancellationToken cancellationToken)
         {
-            var list = await _courseRepository.GetAllAsync();
+            var list = await _courseRepository.GetAllWithTeacherAsync();
             var courseList = _mapper.Map<List<CourseDto>>(list);
             return Result<List<CourseDto>>.SuccessResult(courseList);
         }

@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using Main.Application.Dtos.Courses;
 using Main.Application.Dtos.Students;
 using Main.Application.Dtos.Teachers;
+using Main.Application.Features.Courses.Commands.CreateCourse;
+using Main.Application.Features.Courses.Commands.UpdateCourse;
 using Main.Application.Features.Students.Commands.CreateStudent;
 using Main.Application.Features.Students.Commands.UpdateStudent;
 using Main.Application.Features.Teachers.Commands.CreateTeacher;
@@ -26,9 +29,9 @@ namespace Main.Application.Mapping
             #endregion
 
             #region Course
-            //CreateMap<Course, CreateCourseCommand>().ReverseMap();
-            //CreateMap<Course, UpdateCourseCommand>().ReverseMap();
-            //CreateMap<Course, CourseDto>().ReverseMap();
+            CreateMap<Course, CreateCourseCommand>().ReverseMap();
+            CreateMap<Course, UpdateCourseCommand>().ReverseMap();
+            CreateMap<Course, CourseDto>().ReverseMap();
             #endregion
         }
     }

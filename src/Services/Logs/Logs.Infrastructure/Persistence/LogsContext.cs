@@ -1,15 +1,19 @@
-﻿namespace Logs.Infrastructure.Persistence
+﻿using Logs.Domain.Models;
+using Microsoft.Extensions.Configuration;
+using MongoDB.Driver;
+
+namespace Logs.Infrastructure.Persistence
 {
     public class LogsContext : ILogsContext
     {
-        public IMongoCollection<Logs> Logs { get; }
+        public IMongoCollection<History> Histories { get; }
 
         public LogsContext(IConfiguration configuration)
         {
-            var client = new MongoClient(configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
-            var database = client.GetDatabase(configuration.GetValue<string>("DatabaseSettings:DatabaseName"));
-            Logs = database.GetCollection<Logs>(configuration.GetValue<string>("DatabaseSettings:CollectionName"));
-            LogsContextSeed.SeedData(Logs);
+            var client = new MongoClient(configuration.GetSection("DatabaseSettings:ConnectionString").Value);
+            var database = client.GetDatabase(configuration.GetSection("DatabaseSettings:DatabaseName").Value);
+            Histories = database.GetCollection<History>(configuration.GetSection("DatabaseSettings:CollectionName").Value);
+            //LogsContextSeed.SeedData(Histories);
         }
     }
 }

@@ -1,26 +1,29 @@
-﻿namespace Logs.Infrastructure.Persistence
-{
-    public class LogsContextSeed
-    {
-        public static void SeedData(IMongoCollection<Logs> logsCollection)
-        {
-            bool existLogs = logsCollection.Find(p => true).Any();
+﻿using Logs.Domain.Models;
+using MongoDB.Driver;
 
-            if (!existLogs)
+namespace Logs.Infrastructure.Persistence
+{
+    public class HistoriesContextSeed
+    {
+        public static void SeedData(IMongoCollection<History> historiesCollection)
+        {
+            bool existHistories = historiesCollection.Find(p => true).Any();
+
+            if (!existHistories)
             {
-                logsCollection.InsertManyAsync(GetSeedData());
+                historiesCollection.InsertManyAsync(GetSeedData());
             }
         }
 
-        private static IEnumerable<Logs> GetSeedData()
+        private static IEnumerable<History> GetSeedData()
         {
-            return new List<Logs>()
+            return new List<History>()
             {
-                new Logs()
+                new History()
                 {
 
                 },
-                new Logs()
+                new History()
                 {
 
                 }

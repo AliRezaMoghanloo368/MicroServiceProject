@@ -1,4 +1,5 @@
 ﻿using Main.Domain.Common;
+using System.Text.Json.Serialization;
 
 namespace Main.Domain.Models
 {
@@ -6,10 +7,11 @@ namespace Main.Domain.Models
     {
         public string Title { get; set; } = null!;
         public string? Description { get; set; }
-        public int TeacherId { get; set; }
-        public Teacher Teacher { get; set; } = null!;
+        public long TeacherId { get; set; }
         public string? CoverImageFileId { get; set; }
 
+        [JsonIgnore]
+        public Teacher Teacher { get; set; } = null!;
         public ICollection<StudentCourse> StudentCourses { get; set; } = new List<StudentCourse>();
     }
 }

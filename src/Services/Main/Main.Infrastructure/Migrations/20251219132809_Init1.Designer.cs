@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Main.Infrastructure.Migrations
 {
     [DbContext(typeof(MainContext))]
-    [Migration("20251218205207_Init1")]
+    [Migration("20251219132809_Init1")]
     partial class Init1
     {
         /// <inheritdoc />
@@ -44,10 +44,7 @@ namespace Main.Infrastructure.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
-                    b.Property<int>("TeacherId")
-                        .HasColumnType("int");
-
-                    b.Property<long>("TeacherId1")
+                    b.Property<long>("TeacherId")
                         .HasColumnType("bigint");
 
                     b.Property<string>("Title")
@@ -57,7 +54,7 @@ namespace Main.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TeacherId1");
+                    b.HasIndex("TeacherId");
 
                     b.ToTable("Courses", (string)null);
                 });
@@ -166,8 +163,8 @@ namespace Main.Infrastructure.Migrations
                 {
                     b.HasOne("Main.Domain.Models.Teacher", "Teacher")
                         .WithMany("Courses")
-                        .HasForeignKey("TeacherId1")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("TeacherId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Teacher");

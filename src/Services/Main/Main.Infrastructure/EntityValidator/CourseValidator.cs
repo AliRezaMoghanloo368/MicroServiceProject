@@ -20,10 +20,25 @@ namespace Main.Infrastructure.EntityValidator
                 .IsRequired()
                 .HasMaxLength(1000);
 
-            //builder.HasOne<Branch>()
-            //       .WithMany(b => b.Tables)
-            //       .HasForeignKey(x => x.BranchId)
-            //       .OnDelete(DeleteBehavior.Cascade);
+            builder.Property(x => x.CoverImageFileId)
+                .HasColumnType("nvarchar(max)")
+                .IsRequired(false);
+
+            builder.Property(x => x.CreatedAt)
+                .IsRequired();
+
+            //Cascade
+            //NoAction
+            //Restrict: اگر معلم مربوطه حذف شد درس مربوط به آن حذف نشه و خطا بده
+            builder.HasOne(x => x.Teacher)
+                .WithMany(x => x.Courses)
+                .HasForeignKey(x => x.TeacherId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.HasMany(x => x.StudentCourses)
+                .WithOne(x => x.Course)
+                .HasForeignKey(x => x.CourseId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

@@ -10,7 +10,7 @@ using System.Net;
 
 namespace Main.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     public class CoursesController : GenericController
     {
         #region constructor

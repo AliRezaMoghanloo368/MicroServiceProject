@@ -19,9 +19,11 @@ namespace Main.Application.Features.Courses.Queries.GetCourse
 
         public async Task<Result<CourseDto>> Handle(GetCourseQuery request, CancellationToken cancellationToken)
         {
-            var st = await _courseRepository.GetByIdAsync(request.Id);
-            var course = _mapper.Map<CourseDto>(st);
-            return Result<CourseDto>.SuccessResult(course);
+            var course = await _courseRepository.GetByIdAsync(request.Id);
+            await _courseRepository.LoadTeacherAsync(course);
+            await _courseRepository.LoadStudentCoursesAsync(course);
+            var courseDto = _mapper.Map<CourseDto>(course);
+            return Result<CourseDto>.SuccessResult(courseDto);
         }
     }
 }
