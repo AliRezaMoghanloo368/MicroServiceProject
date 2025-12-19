@@ -32,6 +32,12 @@ namespace Main.Application.Mapping
             CreateMap<Course, CreateCourseCommand>().ReverseMap();
             CreateMap<Course, UpdateCourseCommand>().ReverseMap();
             CreateMap<Course, CourseDto>().ReverseMap();
+            CreateMap<StudentCourse, StudentCourseDto>()
+                .ForMember(dest => dest.StudentId,
+                    opt => opt.MapFrom(src => src.StudentId))
+                .ForMember(dest => dest.StudentFullName,
+                    opt => opt.MapFrom(src =>
+                        src.Student.FirstName + " " + src.Student.LastName));
             #endregion
         }
     }

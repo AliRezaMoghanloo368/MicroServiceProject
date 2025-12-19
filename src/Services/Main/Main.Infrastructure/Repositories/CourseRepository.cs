@@ -33,5 +33,23 @@ namespace Main.Infrastructure.Repositories
                 .Include(x => x.Teacher)
                 .ToListAsync();
         }
+
+        public async Task<List<Course>> GetAllWithTeacherAndStudentsAsync()
+        {
+            return await _context.Courses
+                .Include(x => x.Teacher)
+                .Include(x => x.StudentCourses)
+                    .ThenInclude(x => x.Student)
+                .ToListAsync();
+        }
+
+        public async Task<Course?> GetByIdWithStudentsAsync(long id)
+        {
+            return await _context.Courses
+                .Include(x => x.Teacher)
+                .Include(x => x.StudentCourses)
+                    .ThenInclude(x => x.Student)
+                .FirstOrDefaultAsync(x => x.Id == id);
+        }
     }
 }

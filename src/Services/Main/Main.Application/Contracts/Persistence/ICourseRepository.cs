@@ -7,5 +7,8 @@ namespace Main.Application.Contracts.Persistence
         Task LoadTeacherAsync(Course course);
         Task LoadStudentCoursesAsync(Course course);
         Task<List<Course>> GetAllWithTeacherAsync();
+        Task<List<Course>> GetAllWithTeacherAndStudentsAsync();
+        Task<Course?> GetByIdWithStudentsAsync(long id);
+
     }
 }
