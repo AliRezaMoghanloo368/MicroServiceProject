@@ -1,6 +1,11 @@
 ﻿using FluentValidation;
 using Main.Application.Behaviors;
 using Main.Application.Contracts.Persistence;
+using Main.Application.Features.Courses.Commands.CreateCourse;
+using Main.Application.Features.Courses.Commands.DeleteCourse;
+using Main.Application.Features.Courses.Commands.UpdateCourse;
+using Main.Application.Features.Courses.Queries.GetCourse;
+using Main.Application.Features.Courses.Queries.GetCourses;
 using Main.Application.Features.Students.Commands.CreateStudent;
 using Main.Application.Features.Students.Commands.UpdateStudent;
 using Main.Application.Features.Students.Queries.GetStudent;
@@ -44,13 +49,13 @@ namespace Main.IoC
             services.AddMediatR(typeof(GetTeachersQueryHandler).Assembly);
             services.AddScoped<ITeacherRepository, TeacherRepository>();
             #endregion
-
+                    
             #region Course Settings
-            //services.AddMediatR(typeof(CreateCourseCommandHandler).Assembly);
-            //services.AddMediatR(typeof(UpdateCourseCommandHandler).Assembly);
-            //services.AddMediatR(typeof(DeleteCourseCommandHandler).Assembly);
-            //services.AddMediatR(typeof(GetCourseQueryHandler).Assembly);
-            //services.AddMediatR(typeof(GetCoursesQueryHandler).Assembly);
+            services.AddMediatR(typeof(CreateCourseCommandHandler).Assembly);
+            services.AddMediatR(typeof(UpdateCourseCommandHandler).Assembly);
+            services.AddMediatR(typeof(DeleteCourseCommandHandler).Assembly);
+            services.AddMediatR(typeof(GetCourseQueryHandler).Assembly);
+            services.AddMediatR(typeof(GetCoursesQueryHandler).Assembly);
             services.AddScoped<ICourseRepository, CourseRepository>();
             #endregion
 

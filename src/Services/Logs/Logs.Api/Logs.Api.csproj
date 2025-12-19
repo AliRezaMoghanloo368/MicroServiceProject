@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\Logs.Core\Logs.Core.csproj" />
   </ItemGroup>
 
 </Project>

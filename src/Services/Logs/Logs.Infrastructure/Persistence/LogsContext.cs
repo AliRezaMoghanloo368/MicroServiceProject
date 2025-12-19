@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Logs.Infrastructure.Persistence
+﻿namespace Logs.Infrastructure.Persistence
 {
     public class LogsContext : ILogsContext
     {
