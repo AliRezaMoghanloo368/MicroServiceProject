@@ -17,11 +17,5 @@
     <ProjectReference Include="..\..\..\..\..\SharedLibrary\SharedLibrary.csproj" />
     <ProjectReference Include="..\Main.Domain\Main.Domain.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Dtos\Courses\" />
-    <Folder Include="Features\Courses\Commands\" />
-    <Folder Include="Features\Courses\Queries\" />
-  </ItemGroup>
   
 </Project>

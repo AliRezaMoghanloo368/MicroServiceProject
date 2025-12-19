@@ -7,7 +7,6 @@ using Main.Application.Features.Students.Queries.GetStudents;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Main.Api.Controllers
 {
