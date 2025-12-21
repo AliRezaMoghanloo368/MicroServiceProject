@@ -4,7 +4,8 @@ services:
     build:
       context: .
       dockerfile: src/Services/Main/Main.Api/Dockerfile
-
+    ports:
+      - "8001:8080"
   maindb:
     image: mcr.microsoft.com/mssql/server:2022-latest
 
