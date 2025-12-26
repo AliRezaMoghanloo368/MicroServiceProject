@@ -46,7 +46,8 @@ namespace Main.Api.Extensions
             IServiceProvider services)
             where TContext : DbContext
         {
-            context.Database.Migrate();
+            try { context.Database.Migrate(); }
+            catch { }
             seeder(context, services);
         }
     }

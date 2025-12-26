@@ -5,7 +5,7 @@ using System.Net;
 
 namespace Logs.Api.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route("api/v1/histories")]
     [ApiController]
     public class HistoryController : ControllerBase
     {
