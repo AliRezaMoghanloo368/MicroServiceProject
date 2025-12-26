@@ -22,9 +22,26 @@ namespace Logs.Api.Controllers
         #region get histories
         [HttpGet]
         [ProducesResponseType(typeof(IEnumerable<History>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IEnumerable<History>>> GetHistories()
+        public async Task<ActionResult<IEnumerable<History>?>> GetHistories()
         {
             var histories = await _historyRepository.GetHistoriesAsync();
+            return Ok(histories);
+        }
+        #endregion
+
+        #region get histories
+        [HttpGet("{userName}/{section?}/{recordId?}")]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(History), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<IEnumerable<History>?>> GetHistory(string userName, string? section, string? recordId)
+        {
+            var histories = await _historyRepository.GetHistoriesAsync(userName, section, recordId);
+            if (histories == null)
+            {
+                _logger.LogError($"History is not found");
+                return NotFound();
+            }
+
             return Ok(histories);
         }
         #endregion
@@ -46,20 +63,20 @@ namespace Logs.Api.Controllers
         }
         #endregion
 
-        #region create histories
+        #region create history
         [HttpPost]
         [ProducesResponseType(typeof(History), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<History>> CreateHistories([FromBody] History histories)
+        public async Task<ActionResult<History>> CreateHistory([FromBody] History history)
         {
-            await _historyRepository.CreateHistoryAsync(histories);
-            return CreatedAtRoute("GetHistory", new { id = histories.Id }, histories);
+            await _historyRepository.CreateHistoryAsync(history);
+            return CreatedAtRoute("GetHistory", new { id = history.Id }, history);
         }
         #endregion
 
         #region update history
         [HttpPut]
         [ProducesResponseType(typeof(History), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> UpdateHistories([FromBody] History history)
+        public async Task<IActionResult> UpdateHistory([FromBody] History history)
         {
             return Ok(await _historyRepository.UpdateHistoryAsync(history));
         }
@@ -68,7 +85,7 @@ namespace Logs.Api.Controllers
         #region delete history
         [HttpDelete("{id:length(24)}")]
         [ProducesResponseType(typeof(History), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> DeleteHistories(string id)
+        public async Task<IActionResult> DeleteHistory(string id)
         {
             return Ok(await _historyRepository.DeleteHistoryAsync(id));
         }

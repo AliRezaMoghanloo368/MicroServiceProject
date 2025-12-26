@@ -24,16 +24,20 @@ namespace Logs.Infrastructure.Persistence
                     UserId = "1",
                     UserName = "test",
                     HostName = "DESKTOP-MOGHANLOO",
-                    Action = "new",
-                    Description = "یک رکورد جدید ثبت شد."
+                    Section = "section1",
+                    RecordId = "1",
+                    Action = "seeddata",
+                    Description = "رکورد مورد نظر تستی می باشد."
                 },
                 new History()
                 {
                     UserId = "1",
                     UserName = "test",
                     HostName = "DESKTOP-MOGHANLOO",
-                    Action = "edit",
-                    Description = "یک رکورد ویرایش شد."
+                    Section = "section2",
+                    RecordId = "2",
+                    Action = "seeddata",
+                    Description = "رکورد مورد نظر تستی می باشد."
                 }
             };
         }

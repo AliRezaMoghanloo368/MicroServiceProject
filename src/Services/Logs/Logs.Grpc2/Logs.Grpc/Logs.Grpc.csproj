@@ -7,11 +7,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Protobuf Include="Protos\greet.proto" GrpcServices="Server" />
+    <None Remove="Protos\history.proto" />
   </ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
 		<PackageReference Include="Grpc.AspNetCore" Version="2.64.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Logs.Core\Logs.Core.csproj" />
+	  <ProjectReference Include="..\..\Logs.Domain\Logs.Domain.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Protobuf Include="Protos\history.proto" GrpcServices="Server" />
 	</ItemGroup>
 
 </Project>

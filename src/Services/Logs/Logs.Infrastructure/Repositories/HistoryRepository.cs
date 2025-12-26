@@ -2,6 +2,7 @@
 using Logs.Domain.Models;
 using Logs.Infrastructure.Persistence;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 
 namespace Logs.Infrastructure.Repositories
 {
@@ -58,6 +59,24 @@ namespace Logs.Infrastructure.Repositories
 
             return deleteResult.IsAcknowledged
                    && deleteResult.DeletedCount > 0;
+        }
+
+        public async Task<IEnumerable<History>?> GetHistoriesAsync(string userName,string? section,string? recordId)
+        {
+            if (string.IsNullOrWhiteSpace(userName))
+                return new List<History>();
+
+            var query = _context.Histories
+                .AsQueryable()
+                .Where(x => x.UserName == userName);
+
+            if (!string.IsNullOrWhiteSpace(section))
+                query = query.Where(x => x.Section == section);
+
+            if (!string.IsNullOrWhiteSpace(recordId))
+                query = query.Where(x => x.RecordId == recordId);
+
+            return await query.ToListAsync();
         }
         #endregion
     }

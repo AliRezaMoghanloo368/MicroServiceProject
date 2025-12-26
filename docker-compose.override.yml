@@ -1,4 +1,17 @@
 services:
+#region -------------------------------------portainer
+  portainer:
+    container_name: portainer
+    restart: always
+    ports:
+      - "8080:8000"
+      - "9000:9000"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "portainer_data:/data"
+#region -------------------------------------portainer
+
+#region -------------------------------------main
   main.api:
     container_name: main.api
     environment:
@@ -19,7 +32,9 @@ services:
     restart: always
     ports:
       - "14330:1433"
+#endregion -------------------------------------main
 
+#region -------------------------------------logs
   logs.api:
     container_name: logs.api
     environment:
@@ -39,6 +54,8 @@ services:
       - mongo_data:/data/db
     ports:
       - "27017:27017"
+#region -------------------------------------logs
+
 
   # files.api:
   #   environment:

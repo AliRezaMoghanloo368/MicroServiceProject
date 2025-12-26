@@ -1,41 +1,66 @@
 syntax = "proto3";
-import "google/protobuf/timestamp.proto";
-option csharp_namespace = "Logs.Grpc.Protos";
-package history;
 
-service HistoryProtoService {
-	rpc GetHistory(GetHistoryRequest) returns (History);
-	rpc GetHistory(CreateHistoryRequest) returns (History);
-	rpc GetHistory(UpdateHistoryRequest) returns (History);
-	rpc GetHistory(DeleteHistoryRequest) returns (DeleteHistoryResponse);
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+option csharp_namespace = "Logs.Grpc.Protos";
+
+service HistoryService {
+  rpc GetHistory (GetHistoryRequest) returns (HistoryModel);
+  rpc GetHistories (GetHistoriesRequest) returns (GetHistoriesResponse);
+  rpc CreateHistory (CreateHistoryRequest) returns (google.protobuf.Empty);
+  rpc UpdateHistory (UpdateHistoryRequest) returns (HistoryModel);
+  rpc DeleteHistory (DeleteHistoryRequest) returns (DeleteHistoryResponse);
 }
 
 message GetHistoryRequest {
-	string Id = 1; 
+  string id = 1;
 }
 
-message CreateHistoryRequest {
-	History history = 1; 
-}
-
-message UpdateHistoryRequest {
-	History history = 1; 
-}
-
-message DeleteHistoryRequest {
-	string Id = 1; 
-}
-
-message History {
+message HistoryModel {
   string id = 1;
   string userId = 2;
   string userName = 3;
   string hostName = 4;
-  google.protobuf.Timestamp createdAt = 5;
-  string action = 6;
+  string section = 5;
+  string recordId = 6;
+  google.protobuf.Timestamp createdAt = 7;
+  string action = 8;
+  string description = 9;
+}
+
+message GetHistoriesResponse {
+  repeated HistoryModel histories = 1;
+}
+
+message CreateHistoryRequest {
+  string userId = 1;
+  string userName = 2;
+  string hostName = 3;
+  string action = 4;
+  string section = 5;
+  string recordId = 6;
   string description = 7;
 }
 
+message GetHistoriesRequest {
+  string userId = 1;
+  string userName = 2;
+  string hostName = 3;
+  string action = 4;
+  string section = 5;
+  string recordId = 6;
+  string description = 7;
+}
+
+message UpdateHistoryRequest {
+  HistoryModel history = 1;
+}
+
+message DeleteHistoryRequest {
+  string id = 1;
+}
+
 message DeleteHistoryResponse {
-	string success = 1; 
+  bool success = 1;
 }
