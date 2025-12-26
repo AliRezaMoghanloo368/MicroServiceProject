@@ -1,0 +1,41 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+option csharp_namespace = "Logs.Grpc.Protos";
+package history;
+
+service HistoryProtoService {
+	rpc GetHistory(GetHistoryRequest) returns (History);
+	rpc GetHistory(CreateHistoryRequest) returns (History);
+	rpc GetHistory(UpdateHistoryRequest) returns (History);
+	rpc GetHistory(DeleteHistoryRequest) returns (DeleteHistoryResponse);
+}
+
+message GetHistoryRequest {
+	string Id = 1; 
+}
+
+message CreateHistoryRequest {
+	History history = 1; 
+}
+
+message UpdateHistoryRequest {
+	History history = 1; 
+}
+
+message DeleteHistoryRequest {
+	string Id = 1; 
+}
+
+message History {
+  string id = 1;
+  string userId = 2;
+  string userName = 3;
+  string hostName = 4;
+  google.protobuf.Timestamp createdAt = 5;
+  string action = 6;
+  string description = 7;
+}
+
+message DeleteHistoryResponse {
+	string success = 1; 
+}
