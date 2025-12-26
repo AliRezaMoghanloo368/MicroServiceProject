@@ -9,7 +9,6 @@ namespace Logs.Infrastructure.Repositories
     {
         #region constructor
         private readonly ILogsContext _context;
-
         public HistoryRepository(ILogsContext logsContext)
         {
             _context = logsContext;
@@ -17,7 +16,7 @@ namespace Logs.Infrastructure.Repositories
         #endregion
 
         #region history repo
-        public async Task<IEnumerable<History>> GetHistoryAsync()
+        public async Task<IEnumerable<History>> GetHistoriesAsync()
         {
             return await _context.Histories.Find(p => true).ToListAsync();
         }
@@ -35,14 +34,6 @@ namespace Logs.Infrastructure.Repositories
             return await _context.Histories.Find(filter).ToListAsync();
         }
 
-        //public async Task<IEnumerable<History>> GetLogsByCategory(string category)
-        //{
-        //    FilterDefinition<History> filter =
-        //        Builders<History>.Filter.Eq(p => p.Category, category);
-
-        //    return await _context.Histories.Find(filter).ToListAsync();
-        //}
-
         public async Task CreateHistoryAsync(History logs)
         {
             await _context.Histories.InsertOneAsync(logs);
@@ -52,7 +43,6 @@ namespace Logs.Infrastructure.Repositories
         {
             var updateResult = await _context.Histories
                 .ReplaceOneAsync(filter: p => p.Id == logs.Id, replacement: logs);
-
 
             return updateResult.IsAcknowledged
                    && updateResult.ModifiedCount > 0;

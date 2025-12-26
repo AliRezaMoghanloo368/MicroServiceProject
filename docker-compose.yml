@@ -15,15 +15,18 @@ services:
   #     context: .
   #     dockerfile: src/Services/Files/Files.Api/Dockerfile
 
-  # logs.api:
-  #   image: ${DOCKER_REGISTRY-}logsapi
-  #   build:
-  #     context: .
-  #     dockerfile: src/Services/Logs/Logs.Api/Dockerfile
+  logs.api:
+    image: ${DOCKER_REGISTRY-}logsapi
+    build:
+      context: .
+      dockerfile: src/Services/Logs/Logs.Api/Dockerfile
+    ports:
+      - "8003:8080"
+  logsdb:
+     image: mongo
 
-
-# volumes:
-#   mongo_data:
+volumes:
+  mongo_data:
 #   portainer_data:
 #   postgres_data:
 #   pgadmin_data:

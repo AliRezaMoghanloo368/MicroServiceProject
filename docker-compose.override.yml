@@ -1,23 +1,44 @@
 services:
   main.api:
+    container_name: main.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:8080
+      # - ASPNETCORE_URLS=http://+:8080
       - ConnectionStrings__Root=Server=maindb;Database=MainDb;User Id=sa;Password=@Moghanloo368;TrustServerCertificate=True;
+    restart: always
     depends_on:
       - maindb
     ports:
       - "8001:8080"
 
   maindb:
-    container_name: maindb
+    container_name: main.db
     environment:
       SA_PASSWORD: "@Moghanloo368"
       ACCEPT_EULA: "Y"
     restart: always
     ports:
-      - "1433:1433"
+      - "14330:1433"
 
+  logs.api:
+    container_name: logs.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings__Root=mongodb://logsdb:27017"
+    restart: always
+    depends_on:
+      - logsdb
+    ports:
+      - "8003:8080"
+
+  logsdb:
+    container_name: logs.db
+    image: mongo
+    restart: always
+    volumes:
+      - mongo_data:/data/db
+    ports:
+      - "27017:27017"
 
   # files.api:
   #   environment:
@@ -25,12 +46,4 @@ services:
   #     - ASPNETCORE_HTTP_PORTS=8080
   #   ports:
   #     - "8002:80"
-
-
-  # logs.api:
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Development
-  #     - ASPNETCORE_HTTP_PORTS=8080
-  #   ports:
-  #     - "8003:80"
 

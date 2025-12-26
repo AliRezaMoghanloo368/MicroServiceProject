@@ -12,7 +12,7 @@ namespace Logs.Domain.Models
         public string UserName { get; set; }
         public string HostName { get; set; }
         public DateTime CreateAt { get; set; } 
-        public int Action { get; set; }
+        public string Action { get; set; } //new, edit, delete
         public string Description { get; set; }
 
         public History()

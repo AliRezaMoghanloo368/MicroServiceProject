@@ -24,38 +24,27 @@ namespace Logs.Api.Controllers
         [ProducesResponseType(typeof(IEnumerable<History>), (int)HttpStatusCode.OK)]
         public async Task<ActionResult<IEnumerable<History>>> GetHistories()
         {
-            var histories = await _historyRepository.GetHistoryAsync();
+            var histories = await _historyRepository.GetHistoriesAsync();
             return Ok(histories);
         }
-
         #endregion
 
-        #region get histories by id
-        [HttpGet("{id:length(24)}", Name = "GetHistories")]
+        #region get history by id
+        [HttpGet("{id:length(24)}", Name = "GetHistory")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(History), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IEnumerable<History>>> GetHistories(string id)
+        public async Task<ActionResult<History>> GetHistory(string id)
         {
-            var histories = await _historyRepository.GetHistoryAsync(id);
-            if (histories == null)
+            var history = await _historyRepository.GetHistoryAsync(id);
+            if (history == null)
             {
-                _logger.LogError($"histories with id: {id} is not found");
+                _logger.LogError($"History with id: {id} is not found");
                 return NotFound();
             }
 
-            return Ok(histories);
+            return Ok(history);
         }
         #endregion
-
-        //#region get histories by category name
-        //[HttpGet("[action]/{category}")]
-        //[ProducesResponseType(typeof(IEnumerable<History>), (int)HttpStatusCode.OK)]
-        //public async Task<ActionResult<IEnumerable<History>>> GetHistoriesByCategory(string category)
-        //{
-        //    var histories = await _historiesRepository.GetHistoryByCategoryAsync(category);
-        //    return Ok(histories);
-        //}
-        //#endregion
 
         #region create histories
         [HttpPost]
@@ -63,21 +52,21 @@ namespace Logs.Api.Controllers
         public async Task<ActionResult<History>> CreateHistories([FromBody] History histories)
         {
             await _historyRepository.CreateHistoryAsync(histories);
-            return CreatedAtRoute("GetHistories", new { id = histories.Id }, histories);
+            return CreatedAtRoute("GetHistory", new { id = histories.Id }, histories);
         }
         #endregion
 
-        #region update histories
+        #region update history
         [HttpPut]
         [ProducesResponseType(typeof(History), (int)HttpStatusCode.OK)]
-        public async Task<IActionResult> UpdateHistories([FromBody] History histories)
+        public async Task<IActionResult> UpdateHistories([FromBody] History history)
         {
-            return Ok(await _historyRepository.UpdateHistoryAsync(histories));
+            return Ok(await _historyRepository.UpdateHistoryAsync(history));
         }
         #endregion
 
-        #region delete histories
-        [HttpDelete("{id:length(24)}", Name = "DeleteHistories")]
+        #region delete history
+        [HttpDelete("{id:length(24)}")]
         [ProducesResponseType(typeof(History), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> DeleteHistories(string id)
         {

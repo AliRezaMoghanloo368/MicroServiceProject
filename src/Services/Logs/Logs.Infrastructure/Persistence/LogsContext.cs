@@ -10,10 +10,10 @@ namespace Logs.Infrastructure.Persistence
 
         public LogsContext(IConfiguration configuration)
         {
-            var client = new MongoClient(configuration.GetSection("DatabaseSettings:ConnectionString").Value);
-            var database = client.GetDatabase(configuration.GetSection("DatabaseSettings:DatabaseName").Value);
-            Histories = database.GetCollection<History>(configuration.GetSection("DatabaseSettings:CollectionName").Value);
-            //LogsContextSeed.SeedData(Histories);
+            var client = new MongoClient(configuration.GetSection("ConnectionStrings:Root").Value);
+            var database = client.GetDatabase(configuration.GetSection("ConnectionStrings:DatabaseName").Value);
+            Histories = database.GetCollection<History>(configuration.GetSection("ConnectionStrings:CollectionName").Value);
+            HistoriesContextSeed.SeedData(Histories);
         }
     }
 }

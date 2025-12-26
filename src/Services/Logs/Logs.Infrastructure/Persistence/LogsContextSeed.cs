@@ -5,13 +5,13 @@ namespace Logs.Infrastructure.Persistence
 {
     public class HistoriesContextSeed
     {
-        public static void SeedData(IMongoCollection<History> historiesCollection)
+        public static void SeedData(IMongoCollection<History> histories)
         {
-            bool existHistories = historiesCollection.Find(p => true).Any();
+            bool isExist = histories.Find(p => true).Any();
 
-            if (!existHistories)
+            if (!isExist)
             {
-                historiesCollection.InsertManyAsync(GetSeedData());
+                histories.InsertManyAsync(GetSeedData());
             }
         }
 
@@ -21,11 +21,19 @@ namespace Logs.Infrastructure.Persistence
             {
                 new History()
                 {
-
+                    UserId = "1",
+                    UserName = "test",
+                    HostName = "DESKTOP-MOGHANLOO",
+                    Action = "new",
+                    Description = "یک رکورد جدید ثبت شد."
                 },
                 new History()
                 {
-
+                    UserId = "1",
+                    UserName = "test",
+                    HostName = "DESKTOP-MOGHANLOO",
+                    Action = "edit",
+                    Description = "یک رکورد ویرایش شد."
                 }
             };
         }
