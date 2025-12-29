@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\SharedLibrary\SharedLibrary.csproj" />
+    <ProjectReference Include="..\..\..\Shared\SharedLibrary\SharedLibrary.csproj" />
     <ProjectReference Include="..\..\Logs\Logs.Grpc2\Logs.Grpc\Logs.Grpc.csproj" />
     <ProjectReference Include="..\Main.Domain\Main.Domain.csproj" />
   </ItemGroup>
