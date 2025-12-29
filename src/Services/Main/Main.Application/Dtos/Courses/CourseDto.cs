@@ -1,4 +1,5 @@
-﻿using Main.Application.Dtos.StudentCourses;
+﻿using Main.Application.Dtos.Histories;
+using Main.Application.Dtos.StudentCourses;
 using Main.Application.Dtos.Teachers;
 
 namespace Main.Application.Dtos.Courses
@@ -12,6 +13,8 @@ namespace Main.Application.Dtos.Courses
         public TeacherDto Teacher { get; set; } = null!;
 
         public List<StudentCourseDto> StudentCourses { get; set; } = new();
+
+        public List<HistoryDto> Histories { get; set; } = new();
 
         public DateTime CreatedAt { get; set; }
     }

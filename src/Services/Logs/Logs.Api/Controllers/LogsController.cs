@@ -33,7 +33,7 @@ namespace Logs.Api.Controllers
         [HttpGet("{userName}/{section?}/{recordId?}")]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(History), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<IEnumerable<History>?>> GetHistory(string userName, string? section, string? recordId)
+        public async Task<ActionResult<IEnumerable<History>?>> GetHistories(string userName, string? section, string? recordId)
         {
             var histories = await _historyRepository.GetHistoriesAsync(userName, section, recordId);
             if (histories == null)

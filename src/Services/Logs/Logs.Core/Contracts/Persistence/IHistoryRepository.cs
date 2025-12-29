@@ -8,7 +8,7 @@ namespace Logs.Core.Contracts.Persistence
         Task<IEnumerable<History>?> GetHistoriesAsync(string userName, string? section, string? recordId);
         Task<History> GetHistoryAsync(string id);
         //Task<IEnumerable<History>> GetHistoryByUserNameAsync(string userName);
-        Task CreateHistoryAsync(History history);
+        Task<History> CreateHistoryAsync(History history);
         Task<bool> UpdateHistoryAsync(History history);
         Task<bool> DeleteHistoryAsync(string id);
     }

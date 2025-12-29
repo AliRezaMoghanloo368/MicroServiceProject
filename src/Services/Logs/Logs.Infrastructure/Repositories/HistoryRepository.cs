@@ -35,15 +35,16 @@ namespace Logs.Infrastructure.Repositories
             return await _context.Histories.Find(filter).ToListAsync();
         }
 
-        public async Task CreateHistoryAsync(History logs)
+        public async Task<History> CreateHistoryAsync(History history)
         {
-            await _context.Histories.InsertOneAsync(logs);
+            await _context.Histories.InsertOneAsync(history);
+            return history;
         }
 
-        public async Task<bool> UpdateHistoryAsync(History logs)
+        public async Task<bool> UpdateHistoryAsync(History history)
         {
             var updateResult = await _context.Histories
-                .ReplaceOneAsync(filter: p => p.Id == logs.Id, replacement: logs);
+                .ReplaceOneAsync(filter: p => p.Id == history.Id, replacement: history);
 
             return updateResult.IsAcknowledged
                    && updateResult.ModifiedCount > 0;

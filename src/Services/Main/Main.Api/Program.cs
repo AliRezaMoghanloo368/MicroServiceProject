@@ -1,6 +1,10 @@
+using Logs.Grpc.Protos;
 using Main.Api.Extensions;
+using Main.Api.Grpc.Services;
+using Main.Api.Mapping;
 using Main.Infrastructure.Persistence;
 using Main.IoC;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +16,13 @@ builder.Services.AddOpenApi();
 
 #region Ioc
 builder.Services.RegisterServices(builder.Configuration);
+builder.Services.AddGrpcClient<HistoryService.HistoryServiceClient>
+    (options =>
+    {
+        options.Address = new Uri(builder.Configuration["GrpcSettings:HistoryUrl"]);
+    });
+builder.Services.AddScoped<Logs_HistoryGrpcService>();
+builder.Services.AddAutoMapper(typeof(MainMappingProfile).Assembly);
 #endregion
 
 var app = builder.Build();

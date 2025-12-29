@@ -1,4 +1,6 @@
-﻿using Main.Application.Dtos.Students;
+﻿using Logs.Grpc.Services;
+using Main.Api.Grpc.Services;
+using Main.Application.Dtos.Students;
 using Main.Application.Features.Students.Commands.CreateStudent;
 using Main.Application.Features.Students.Commands.DeleteStudent;
 using Main.Application.Features.Students.Commands.UpdateStudent;
@@ -14,8 +16,11 @@ namespace Main.Api.Controllers
     public class StudentsController : GenericController
     {
         #region constructor
-        public StudentsController(IMediator mediator) : base(mediator)
-        { }
+        private readonly Logs_HistoryGrpcService _historyGrpcService;
+        public StudentsController(IMediator mediator, Logs_HistoryGrpcService historyGrpcService) : base(mediator)
+        {
+            _historyGrpcService = historyGrpcService;
+        }
         #endregion
 
         #region Get Student
@@ -46,6 +51,11 @@ namespace Main.Api.Controllers
         public async Task<ActionResult<int>> CreateStudent([FromBody] CreateStudentCommand command)
         {
             var result = await _mediator.Send(command);
+
+            #region For log
+            await _historyGrpcService.CreateHistoryAsync("student", result.Data.Id.ToString());
+            #endregion
+
             return Ok(result);
         }
         #endregion

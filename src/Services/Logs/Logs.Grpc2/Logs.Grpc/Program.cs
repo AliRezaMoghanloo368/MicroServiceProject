@@ -1,7 +1,15 @@
+using Logs.Core.Contracts.Persistence;
+using Logs.Grpc.Mapping;
 using Logs.Grpc.Services;
+using Logs.Infrastructure.Persistence;
+using Logs.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
-
+#region IoC
+builder.Services.AddScoped<ILogsContext, LogsContext>();
+builder.Services.AddScoped<IHistoryRepository, HistoryRepository>();
+builder.Services.AddAutoMapper(typeof(GrpcMapping).Assembly);
+#endregion
 // Add services to the container.
 builder.Services.AddGrpc();
 

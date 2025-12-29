@@ -1,4 +1,7 @@
-﻿using Main.Application.Dtos.Courses;
+﻿using AutoMapper;
+using Main.Api.Grpc.Services;
+using Main.Application.Dtos.Courses;
+using Main.Application.Dtos.Histories;
 using Main.Application.Features.Courses.Commands.CreateCourse;
 using Main.Application.Features.Courses.Commands.DeleteCourse;
 using Main.Application.Features.Courses.Commands.UpdateCourse;
@@ -14,8 +17,13 @@ namespace Main.Api.Controllers
     public class CoursesController : GenericController
     {
         #region constructor
-        public CoursesController(IMediator mediator) : base(mediator)
-        { }
+        private readonly IMapper _mapper;
+        private readonly Logs_HistoryGrpcService _service;
+        public CoursesController(IMediator mediator, Logs_HistoryGrpcService service, IMapper mapper = null) : base(mediator)
+        {
+            _service = service;
+            _mapper = mapper;
+        }
         #endregion
 
         #region Get Course
@@ -36,7 +44,28 @@ namespace Main.Api.Controllers
         {
             var query = new GetCoursesQuery();
             var courses = await _mediator.Send(query);
+
+            var recordIds = courses.Data.Select(c => c.Id.ToString()).ToList();
+
+            // gRPC call برای گرفتن همه histories
+            var h = await _service.GetHistories("test", "student", recordIds[0]);
+
+            var histories = _mapper.Map<List<HistoryDto>>(h.Histories);
+
+            foreach (var courseDto in courses.Data)
+            {
+                courseDto.Histories.AddRange(histories);
+            }
+
+            //foreach (var courseDto in courseDtos)
+            //{
+            //    courseDto.Histories = histories
+            //        .Where(h => h.RecordId == courseDto.Id.ToString())
+            //        .ToList();
+            //}
+
             return Ok(courses);
+            //return Ok(courses);
         }
         #endregion
 

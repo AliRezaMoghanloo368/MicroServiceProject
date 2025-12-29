@@ -50,11 +50,20 @@ namespace Logs.Grpc.Services
             return _mapper.Map<HistoryModel>(entity);
         }
 
-        public override async Task<Empty> CreateHistory(CreateHistoryRequest request, ServerCallContext context)
+        public override async Task<HistoryModel> CreateHistory(CreateHistoryRequest request, ServerCallContext context)
         {
-            var entity = _mapper.Map<History>(request);
-            await _repo.CreateHistoryAsync(entity);
-            return new Empty();
+            try
+            {
+                var entity = _mapper.Map<History>(request);
+                var result = await _repo.CreateHistoryAsync(entity);
+                return _mapper.Map<HistoryModel>(result);
+            }
+            catch (RpcException ex)
+            {
+                _logger.LogError(ex, "Error in CreateHistory");
+                throw new Exception(ex.Message);
+            }
+
         }
     }
 }

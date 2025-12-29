@@ -22,6 +22,7 @@ namespace Main.Infrastructure.Persistence
             modelBuilder.ApplyConfiguration(new StudentValidator());
             modelBuilder.ApplyConfiguration(new TeacherValidator());
             modelBuilder.ApplyConfiguration(new CourseValidator());
+            modelBuilder.ApplyConfiguration(new StudentCourseValidator());
             base.OnModelCreating(modelBuilder);
         }
 

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
+using Logs.Grpc.Protos;
 using Main.Application.Dtos.Courses;
+using Main.Application.Dtos.Histories;
 using Main.Application.Dtos.StudentCourses;
 using Main.Application.Dtos.Students;
 using Main.Application.Dtos.Teachers;
@@ -40,6 +42,9 @@ namespace Main.Application.Mapping
                     opt => opt.MapFrom(src =>
                         src.Student.FirstName + " " + src.Student.LastName));
             #endregion
+
+            CreateMap<HistoryModel, GetHistoriesResponse>().ReverseMap();
+            CreateMap<HistoryDto, CreateHistoryRequest>().ReverseMap();
         }
     }
 }

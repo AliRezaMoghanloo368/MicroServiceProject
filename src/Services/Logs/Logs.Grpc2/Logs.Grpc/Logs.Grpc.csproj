@@ -18,6 +18,12 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\Logs.Core\Logs.Core.csproj" />
 	  <ProjectReference Include="..\..\Logs.Domain\Logs.Domain.csproj" />
+	  <ProjectReference Include="..\..\Logs.Infrastructure\Logs.Infrastructure.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="12.0.1" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>

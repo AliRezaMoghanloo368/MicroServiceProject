@@ -10,7 +10,6 @@ namespace Main.Application.Features.Courses.Queries.GetCourses
     {
         private readonly ICourseRepository _courseRepository;
         private readonly IMapper _mapper;
-
         public GetCoursesQueryHandler(ICourseRepository courseRepository, IMapper mapper)
         {
             _courseRepository = courseRepository;

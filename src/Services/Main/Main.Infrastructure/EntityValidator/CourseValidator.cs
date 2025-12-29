@@ -27,6 +27,8 @@ namespace Main.Infrastructure.EntityValidator
             builder.Property(x => x.CreatedAt)
                 .IsRequired();
 
+            builder.HasQueryFilter(c => c.Teacher.IsActive);
+
             //Cascade
             //NoAction
             //Restrict: اگر معلم مربوطه حذف شد درس مربوط به آن حذف نشه و خطا بده
@@ -42,3 +44,9 @@ namespace Main.Infrastructure.EntityValidator
         }
     }
 }
+
+
+//اگر جایی نیاز داشتی رکوردهای غیرفعال رو ببینی (مثلاً پنل ادمین):
+//context.Courses
+//    .IgnoreQueryFilters()
+//    .ToList();

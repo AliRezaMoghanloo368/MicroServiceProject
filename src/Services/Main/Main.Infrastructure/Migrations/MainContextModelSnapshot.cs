@@ -116,7 +116,7 @@ namespace Main.Infrastructure.Migrations
 
                     b.HasIndex("StudentId");
 
-                    b.ToTable("StudentCourses");
+                    b.ToTable("StudentCourses", (string)null);
                 });
 
             modelBuilder.Entity("Main.Domain.Models.Teacher", b =>

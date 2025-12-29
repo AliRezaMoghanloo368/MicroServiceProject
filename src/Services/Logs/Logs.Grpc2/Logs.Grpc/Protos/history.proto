@@ -8,7 +8,7 @@ option csharp_namespace = "Logs.Grpc.Protos";
 service HistoryService {
   rpc GetHistory (GetHistoryRequest) returns (HistoryModel);
   rpc GetHistories (GetHistoriesRequest) returns (GetHistoriesResponse);
-  rpc CreateHistory (CreateHistoryRequest) returns (google.protobuf.Empty);
+  rpc CreateHistory (CreateHistoryRequest) returns (HistoryModel);
   rpc UpdateHistory (UpdateHistoryRequest) returns (HistoryModel);
   rpc DeleteHistory (DeleteHistoryRequest) returns (DeleteHistoryResponse);
 }
@@ -37,10 +37,11 @@ message CreateHistoryRequest {
   string userId = 1;
   string userName = 2;
   string hostName = 3;
-  string action = 4;
-  string section = 5;
-  string recordId = 6;
-  string description = 7;
+  string section = 4;
+  string recordId = 5;
+  google.protobuf.Timestamp createdAt = 6;
+  string action = 7;
+  string description = 8;
 }
 
 message GetHistoriesRequest {
