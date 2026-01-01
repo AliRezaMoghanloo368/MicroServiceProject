@@ -1,7 +1,9 @@
-﻿using Main.Application.Features.StudentCourses.Commands.CreateStudentCourse;
+﻿using Main.Api.Grpc.Services;
+using Main.Application.Features.StudentCourses.Commands.CreateStudentCourse;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static SharedLibrary.Utilities.Enums;
 
 namespace Main.Api.Controllers
 {
@@ -9,7 +11,11 @@ namespace Main.Api.Controllers
     public class StudentCoursesController : GenericController
     {
         #region constructor
-        public StudentCoursesController(IMediator mediator) : base(mediator) { }
+        private readonly Logs_HistoryGrpcService _service;
+        public StudentCoursesController(IMediator mediator, Logs_HistoryGrpcService service) : base(mediator)
+        {
+            _service = service;
+        }
         #endregion
 
         #region addStudentToCourse
@@ -18,6 +24,10 @@ namespace Main.Api.Controllers
             [FromBody] CreateStudentCourseCommand command)
         {
             var result = await _mediator.Send(command);
+
+            // For log
+            await _service.CreateHistoryAsync("student-course", command.CourseId.ToString(), HistoryAction.add);
+
             return Ok(result);
         }
         #endregion

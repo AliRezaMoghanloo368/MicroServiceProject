@@ -3,6 +3,7 @@ using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
 using Grpc.Net.Client;
 using Logs.Grpc.Protos;
+using static SharedLibrary.Utilities.Enums;
 
 namespace Main.Api.Grpc.Services
 {
@@ -29,7 +30,7 @@ namespace Main.Api.Grpc.Services
         #endregion
 
         #region Create History
-        public async Task CreateHistoryAsync(string section, string recordId)
+        public async Task CreateHistoryAsync(string section, string recordId, HistoryAction action, string description="")
         {
             try
             {
@@ -41,8 +42,8 @@ namespace Main.Api.Grpc.Services
                     Section = section,
                     RecordId = recordId,
                     CreatedAt = Timestamp.FromDateTime(DateTime.UtcNow),
-                    Action = "new",
-                    Description = ""
+                    Action = action.ToString(),
+                    Description = description
                 };
 
                 _service.CreateHistory(request);
@@ -51,29 +52,6 @@ namespace Main.Api.Grpc.Services
             {
                 throw new RpcException(new Status(StatusCode.Internal, ex.Message));
             }
-
-
-
-            //    try
-            //    {
-            //        // 1️⃣ ایجاد channel به سرور
-            //        using var channel = GrpcChannel.ForAddress("http://localhost:5024");
-
-            //        // 2️⃣ ساخت client با استفاده از channel
-            //        var client = new HistoryService.HistoryServiceClient(channel);
-
-            //        // 3️⃣ ارسال درخواست
-            //        var request = new CreateHistoryRequest
-            //        {
-            //            Section = "Student",
-            //            RecordId = "123"
-            //        };
-            //        var response = client.CreateHistory(request);
-            //    }
-            //    catch (RpcException ex)
-            //    {
-            //        throw new Exception(ex.Message);
-            //    }
         }
         #endregion
     }
