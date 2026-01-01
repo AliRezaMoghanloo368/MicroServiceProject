@@ -17,7 +17,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       # - ASPNETCORE_URLS=http://+:8080
-      - ConnectionStrings__Root=Server=maindb;Database=MainDb;User Id=sa;Password=@Moghanloo368;TrustServerCertificate=True;
+      - "ConnectionStrings__Root=Server=maindb;Database=MainDb;User Id=sa;Password=@Moghanloo368;TrustServerCertificate=True;"
+      - "GrpcSettings__HistoryUrl=http://logs.grpc"
     restart: always
     depends_on:
       - maindb
@@ -46,6 +47,17 @@ services:
     ports:
       - "8003:8080"
 
+  logs.grpc:
+    container_name: logs.grpc
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings__Root=mongodb://logsdb:27017"
+    restart: always
+    depends_on:
+      - logsdb
+    ports:
+      - "8004:8080"
+
   logsdb:
     container_name: logs.db
     image: mongo
@@ -62,5 +74,6 @@ services:
   #     - ASPNETCORE_ENVIRONMENT=Development
   #     - ASPNETCORE_HTTP_PORTS=8080
   #   ports:
-  #     - "8002:80"
+  #     - "8005:80"
+
 

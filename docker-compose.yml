@@ -7,8 +7,9 @@ services:
     build:
       context: .
       dockerfile: src/Services/Main/Main.Api/Dockerfile
-    ports:
-      - "8001:8080"
+    # ports:
+    #   - "8001:8080"
+
   maindb:
     image: mcr.microsoft.com/mssql/server:2022-latest
 
@@ -23,10 +24,17 @@ services:
     build:
       context: .
       dockerfile: src/Services/Logs/Logs.Api/Dockerfile
-    ports:
-      - "8003:8080"
+    # ports:
+    #   - "8003:8080"
+
   logsdb:
      image: mongo
+
+  logs.grpc:
+    image: ${DOCKER_REGISTRY-}logsgrpc
+    build:
+      context: .
+      dockerfile: src/Services/Logs/Logs.Grpc2/Logs.Grpc/Dockerfile
 
 volumes:
   mongo_data:
