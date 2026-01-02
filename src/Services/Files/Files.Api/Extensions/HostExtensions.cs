@@ -27,23 +27,22 @@ namespace Files.Api.Extensions
                         Connection = connection
                     };
 
-                    command.CommandText = "DROP TABLE IF EXISTS Coupon";
+                    command.CommandText = "DROP TABLE IF EXISTS Files";
                     command.ExecuteNonQuery();
 
-                    command.CommandText = @"CREATE TABLE Coupon(Id SERIAL PRIMARY KEY,
-                                                                ProductName VARCHAR(200) NOT NULL,
-                                                                Description TEXT,
-                                                                Amount INT)";
+                    command.CommandText = @"CREATE TABLE Files(Id SERIAL PRIMARY KEY,
+                                                                EntityName VARCHAR(200) NOT NULL,
+                                                                EntityId TEXT NOT NULL,
+                                                                FileContent BYTEA,
+                                                                UploadAt TIMESTAMP)";
 
                     command.ExecuteNonQuery();
 
                     // seed data
-
-                    command.CommandText = "INSERT INTO Coupon(ProductName, Description, Amount) VALUES ('IPhone x', 'iphone discount', 150);";
-                    command.ExecuteNonQuery();
-
-                    command.CommandText = "INSERT INTO Coupon(ProductName, Description, Amount) VALUES ('Samsung 10', 'samsung discount', 150);";
-                    command.ExecuteNonQuery();
+                    //command.CommandText = "INSERT INTO Files(EntityName, EntityId, FileContent, UploadAt) VALUES ('Students', '', @FileContent, NOW());";
+                    //command.Parameters.AddWithValue("FileContent", new byte[] { 1, 2, 3, 4 });
+                    ////command.Parameters.AddWithValue("UploadAt", DateTime.UtcNow);
+                    //command.ExecuteNonQuery();
 
                     logger.LogInformation("migration has been completed!!!");
                 }

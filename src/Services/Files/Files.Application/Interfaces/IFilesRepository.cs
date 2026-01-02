@@ -1,6 +1,6 @@
 ﻿using Files.Domain.Models;
 
-namespace Files.Domain.Interfaces
+namespace Files.Application.Interfaces
 {
     public interface IFilesRepository
     {

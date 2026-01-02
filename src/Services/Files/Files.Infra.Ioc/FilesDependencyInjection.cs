@@ -1,8 +1,7 @@
-﻿using Files.Domain.Interfaces;
+﻿using Files.Application.Interfaces;
 using Files.Infra.Data.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
 namespace Files.Infra.IoC
 {
@@ -11,7 +10,7 @@ namespace Files.Infra.IoC
         public static IServiceCollection RegisterServices(this IServiceCollection services,
             IConfiguration configuration)
         {
-            #region ------------------------Application Layer
+            #region Application Layer
             services.AddScoped<IFilesRepository, FilesRepository>();
             #endregion
 
@@ -20,14 +19,7 @@ namespace Files.Infra.IoC
             //services.AddAutoMapper(typeof(MappingProfile).Assembly);
             #endregion
 
-            #region ------------------------Data Layer
-            //services.AddDbContext<MainContext>(options =>
-            //{
-            //    options.UseSqlServer(configuration.GetConnectionString("Root"));
-            //});
-            #endregion
-
-            #region ------------------------Shared
+            #region Shared
             //service.AddScoped<IEncrypter, Encrypter>();
             #endregion
 

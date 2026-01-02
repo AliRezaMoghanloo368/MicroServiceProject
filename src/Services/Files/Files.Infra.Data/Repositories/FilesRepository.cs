@@ -1,5 +1,5 @@
 ﻿using Dapper;
-using Files.Domain.Interfaces;
+using Files.Application.Interfaces;
 using Files.Domain.Models;
 using Microsoft.Extensions.Configuration;
 using Npgsql;

@@ -1,4 +1,5 @@
 using Files.Api.Extensions;
+using Main.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+#region IoC
+builder.Services.RegisterServices(builder.Configuration);
+#endregion
 
 var app = builder.Build();
 
@@ -20,10 +25,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-//app.MigrateDatabase<MainContext>((context, services) =>
-//{
-//    var logger = services.GetService<ILogger<MainContextSeed>>();
-//    MainContextSeed.SeedAsync(context, logger).Wait();
-//});
+app.MigrateDatabase<Program>();
 
 app.Run();
