@@ -61,24 +61,28 @@ namespace Files.Infra.Data.Repositories
         #endregion
 
         #region Update 
-        public async Task UpdateAsync(FilesEntity entity)
+        public async Task<bool> UpdateAsync(FilesEntity entity)
         {
             using var connection = new NpgsqlConnection(connectionString);
 
             var affected = await connection.ExecuteAsync
                 ("UPDATE FilesEntity SET EntityName=@EntityName, EntityId=@EntityId, FileContent=@FileContent WHERE Id=@Id",
                 new { EntityName = entity.EntityName, EntityId = entity.EntityId, FileContent = entity.FileContent, Id = entity.Id });
+
+            return affected == 0 ? false : true;
         }
         #endregion
 
         #region Delete
-        public async Task DeleteAsync(FilesEntity entity)
+        public async Task<bool> DeleteAsync(string id)
         {
             using var connection = new NpgsqlConnection(connectionString);
 
             var affected = await connection.ExecuteAsync
                 ("DELETE FROM FilesEntity WHERE Id=@Id",
-                new { Id = entity.Id });
+                new { Id = id });
+
+            return affected == 0 ? false : true;
         }
         #endregion
     }

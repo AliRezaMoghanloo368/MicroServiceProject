@@ -1,4 +1,5 @@
 ﻿using Files.Application.Interfaces;
+using Files.Application.Mapping;
 using Files.Infra.Data.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,8 +16,7 @@ namespace Files.Infra.IoC
             #endregion
 
             #region Other
-            //services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            //services.AddAutoMapper(typeof(MappingProfile).Assembly);
+            services.AddAutoMapper(typeof(FilesMappingProfile).Assembly);
             #endregion
 
             #region Shared

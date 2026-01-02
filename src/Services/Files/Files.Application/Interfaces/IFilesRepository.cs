@@ -7,7 +7,7 @@ namespace Files.Application.Interfaces
         Task<FilesEntity?> GetByIdAsync(string id);
         Task<List<FilesEntity>> GetFilesAsync(string entityName, string entityId);
         Task<FilesEntity> CreateAsync(FilesEntity entity);
-        Task UpdateAsync(FilesEntity entity);
-        Task DeleteAsync(FilesEntity entity);
+        Task<bool> UpdateAsync(FilesEntity entity);
+        Task<bool> DeleteAsync(string id);
     }
 }
