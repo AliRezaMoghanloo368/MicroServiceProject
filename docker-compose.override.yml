@@ -33,6 +33,8 @@ services:
     restart: always
     ports:
       - "14330:1433"
+    volumes:
+      - maindb_data:/var/opt/mssql
 #endregion -------------------------------------main
 
 #region -------------------------------------logs
@@ -78,6 +80,19 @@ services:
       - filesdb
     ports:
       - "8005:80"
+
+  filesdb:
+    container_name: filesdb
+    image: postgres:15
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=@Moghanloo368
+      - POSTGRES_DB=FilesDb
+    restart: always
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
 #endregion -------------------------------------
 
 
