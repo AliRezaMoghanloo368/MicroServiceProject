@@ -4,7 +4,6 @@ using Main.Api.Grpc.Services;
 using Main.Api.Mapping;
 using Main.Infrastructure.Persistence;
 using Main.IoC;
-using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 

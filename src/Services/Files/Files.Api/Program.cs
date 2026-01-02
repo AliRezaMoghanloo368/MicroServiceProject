@@ -1,3 +1,5 @@
+using Files.Api.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -17,5 +19,11 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+
+//app.MigrateDatabase<MainContext>((context, services) =>
+//{
+//    var logger = services.GetService<ILogger<MainContextSeed>>();
+//    MainContextSeed.SeedAsync(context, logger).Wait();
+//});
 
 app.Run();

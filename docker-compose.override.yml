@@ -66,14 +66,18 @@ services:
       - mongo_data:/data/db
     ports:
       - "27017:27017"
-#region -------------------------------------logs
+#endregion -------------------------------------logs
 
-
-  # files.api:
-  #   environment:
-  #     - ASPNETCORE_ENVIRONMENT=Development
-  #     - ASPNETCORE_HTTP_PORTS=8080
-  #   ports:
-  #     - "8005:80"
+#region ----------------------------------------files
+  files.api:
+    container_name: files.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "DatabaseSettings__Root=Server=filesdb;Port=5432;Database=FilesDb;User Id=admin;Password=@Moghanloo368"
+    depends_on: 
+      - filesdb
+    ports:
+      - "8005:80"
+#endregion -------------------------------------
 
 

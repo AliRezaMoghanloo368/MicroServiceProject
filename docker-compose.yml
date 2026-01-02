@@ -2,33 +2,32 @@ services:
   portainer:
     image: portainer/portainer-ce
 
+  maindb:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+
+  filesdb:
+    image: postgres
+
+  logsdb:
+    image: mongo
+
   main.api:
     image: ${DOCKER_REGISTRY-}mainapi
     build:
       context: .
       dockerfile: src/Services/Main/Main.Api/Dockerfile
-    # ports:
-    #   - "8001:8080"
 
-  maindb:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-
-  # files.api:
-  #   image: ${DOCKER_REGISTRY-}filesapi
-  #   build:
-  #     context: .
-  #     dockerfile: src/Services/Files/Files.Api/Dockerfile
+  files.api:
+    image: ${DOCKER_REGISTRY-}filesapi
+    build:
+      context: .
+      dockerfile: src/Services/Files/Files.Api/Dockerfile
 
   logs.api:
     image: ${DOCKER_REGISTRY-}logsapi
     build:
       context: .
       dockerfile: src/Services/Logs/Logs.Api/Dockerfile
-    # ports:
-    #   - "8003:8080"
-
-  logsdb:
-     image: mongo
 
   logs.grpc:
     image: ${DOCKER_REGISTRY-}logsgrpc
@@ -39,5 +38,5 @@ services:
 volumes:
   mongo_data:
   portainer_data:
-#   postgres_data:
-#   pgadmin_data:
+  postgres_data:
+  pgadmin_data:
