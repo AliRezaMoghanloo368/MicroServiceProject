@@ -7,7 +7,6 @@ using Main.Application.Features.Students.Commands.DeleteStudent;
 using Main.Application.Features.Students.Commands.UpdateStudent;
 using Main.Application.Features.Students.Queries.GetStudent;
 using Main.Application.Features.Students.Queries.GetStudents;
-using Main.Domain.Models;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
