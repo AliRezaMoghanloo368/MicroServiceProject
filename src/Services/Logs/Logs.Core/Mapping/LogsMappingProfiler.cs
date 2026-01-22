@@ -1,10 +1,13 @@
-﻿namespace Logs.Core.Mapping
+﻿using EventBus.Messages.Events;
+using Logs.Domain.Models;
+
+namespace Logs.Core.Mapping
 {
     public class LogsMappingProfiler : Profile
     {
         public LogsMappingProfiler()
         {
-            CreateMap<HistoryDto, CreateHistoryRequest>().ReverseMap();
+            CreateMap<LogsHistoryPublish, LogsHistoryEvent>().ReverseMap();
         }
     }
 }

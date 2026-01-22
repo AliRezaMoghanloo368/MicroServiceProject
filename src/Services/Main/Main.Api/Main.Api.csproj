@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\BuildingBlocks\EventBus.Messages\EventBus.Messages.csproj" />
     <ProjectReference Include="..\..\..\Shared\SharedLibrary\SharedLibrary.csproj" />
     <ProjectReference Include="..\..\Logs\Logs.Grpc2\Logs.Grpc\Logs.Grpc.csproj" />
     <ProjectReference Include="..\Main.IoC\Main.IoC.csproj" />

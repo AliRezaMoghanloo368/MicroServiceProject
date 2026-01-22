@@ -1,5 +1,5 @@
 using Files.Api.Extensions;
-using Main.IoC;
+using Files.Infra.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,7 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 #region IoC
-builder.Services.RegisterServices(builder.Configuration);
+builder.Services.FilesRegisterServices(builder.Configuration);
 #endregion
 
 var app = builder.Build();

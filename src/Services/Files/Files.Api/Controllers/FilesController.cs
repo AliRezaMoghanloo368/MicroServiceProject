@@ -2,15 +2,12 @@
 using Files.Application.Dtos;
 using Files.Application.Interfaces;
 using Files.Domain.Models;
-using Main.Application.Features.Filess.Commands.CreateFiles;
-using Main.Application.Features.Filess.Commands.DeleteFiles;
-using Main.Application.Features.Filess.Commands.UpdateFiles;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 
 namespace Files.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class FilesController : ControllerBase
     {
@@ -25,11 +22,16 @@ namespace Files.Api.Controllers
         #endregion
 
         #region Get File
-        [HttpGet("{id}", Name = "GetFile")]
+        [HttpGet("{id:guid}", Name = "GetFile")]
         [ProducesResponseType(typeof(FilesDto), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<FilesDto?>> GetByIdAsync(string id)
+        [ProducesResponseType(typeof(FilesDto), (int)HttpStatusCode.NotFound)]
+        public async Task<ActionResult<FilesDto?>> GetByIdAsync(Guid id)
         {
             var file = await _repo.GetByIdAsync(id);
+
+            if (file == null)
+                return NotFound();
+
             var result = _mapper.Map<FilesDto>(file);
             return Ok(result);
         }
@@ -49,31 +51,47 @@ namespace Files.Api.Controllers
         #region Create Files
         [HttpPost(Name = "CreateFiles")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
-        public async Task<ActionResult<FilesEntity>> CreateFiles([FromBody] CreateFileDto dto)
+        public async Task<IActionResult> CreateFiles([FromForm] CreateFileDto dto)
         {
-            var file = _mapper.Map<FilesEntity>(dto);
+            using var ms = new MemoryStream();
+            await dto.FileContent.CopyToAsync(ms);
+
+            var file = new FilesEntity
+            {
+                Id = Guid.NewGuid(),
+                EntityName = dto.EntityName,
+                EntityId = dto.EntityId,
+                FileContent = ms.ToArray(),
+                UploadAt = DateTime.UtcNow
+            };
+
             var result = await _repo.CreateAsync(file);
-
-            //// For log
-            //await _service.CreateHistoryAsync("files", result.Data.Id.ToString(), HistoryAction.add);
-
             return Ok(result);
         }
+
         #endregion
 
         #region Update Files
         [HttpPut(Name = "UpdateFiles")]
-        public async Task<ActionResult> UpdateFiles([FromBody] UpdateFileDto dto)
+        public async Task<IActionResult> UpdateFiles([FromForm] UpdateFileDto dto)
         {
-            var file = _mapper.Map<FilesEntity>(dto);
-            var result = await _repo.UpdateAsync(file);
+            var fileEntity = _mapper.Map<FilesEntity>(dto);
+
+            if (dto.FileContent != null)
+            {
+                using var ms = new MemoryStream();
+                await dto.FileContent.CopyToAsync(ms);
+                fileEntity.FileContent = ms.ToArray();
+            }
+
+            var result = await _repo.UpdateAsync(fileEntity);
             return Ok(result);
         }
         #endregion
 
         #region Delete Files
         [HttpDelete("{id}", Name = "DeleteFiles")]
-        public async Task<ActionResult> DeleteFiles(string id)
+        public async Task<ActionResult> DeleteFiles(Guid id)
         {
             var result = await _repo.DeleteAsync(id);
             return Ok(result);

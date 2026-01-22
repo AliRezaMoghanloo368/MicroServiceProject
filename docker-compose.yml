@@ -1,4 +1,7 @@
 services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+
   portainer:
     image: portainer/portainer-ce
 
@@ -7,6 +10,9 @@ services:
 
   filesdb:
     image: postgres:15
+
+  pgadmin:
+    image: dpage/pgadmin4:8
 
   logsdb:
     image: mongo

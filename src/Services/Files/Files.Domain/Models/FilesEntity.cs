@@ -19,6 +19,5 @@
         //public string? Description { get; set; }
         //public string? UploadBy { get; set; }
         public DateTime UploadAt { get; set; }
-        //public bool IsActive { get; set; }
     }
 }

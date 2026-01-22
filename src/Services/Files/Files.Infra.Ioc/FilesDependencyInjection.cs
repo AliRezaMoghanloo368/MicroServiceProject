@@ -8,7 +8,7 @@ namespace Files.Infra.IoC
 {
     public static class FilesDependencyInjection
     {
-        public static IServiceCollection RegisterServices(this IServiceCollection services,
+        public static IServiceCollection FilesRegisterServices(this IServiceCollection services,
             IConfiguration configuration)
         {
             #region Application Layer

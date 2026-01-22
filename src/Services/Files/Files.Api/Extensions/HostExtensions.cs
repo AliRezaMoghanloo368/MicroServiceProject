@@ -19,7 +19,8 @@ namespace Files.Api.Extensions
                 {
                     logger.LogInformation("migrating posgtresql database");
 
-                    using var connection = new NpgsqlConnection(configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
+                    string? connectionString = configuration.GetValue<string>("DatabaseSettings:Root");
+                    using var connection = new NpgsqlConnection(connectionString);
                     connection.Open();
 
                     using var command = new NpgsqlCommand
@@ -27,10 +28,10 @@ namespace Files.Api.Extensions
                         Connection = connection
                     };
 
-                    command.CommandText = "DROP TABLE IF EXISTS Files";
-                    command.ExecuteNonQuery();
+                    //command.CommandText = "DROP TABLE IF EXISTS Files";
+                    //command.ExecuteNonQuery();
 
-                    command.CommandText = @"CREATE TABLE Files(Id SERIAL PRIMARY KEY,
+                    command.CommandText = @"CREATE TABLE IF NOT EXISTS Files(Id UUID PRIMARY KEY,
                                                                 EntityName VARCHAR(200) NOT NULL,
                                                                 EntityId TEXT NOT NULL,
                                                                 FileContent BYTEA,

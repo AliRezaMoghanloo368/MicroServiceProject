@@ -15,9 +15,9 @@ using Main.Domain.Models;
 
 namespace Main.Application.Mapping
 {
-    public class MappingProfile : Profile
+    public class MappingProfiler : Profile
     {
-        public MappingProfile()
+        public MappingProfiler()
         {
             #region Student
             CreateMap<Student, CreateStudentCommand>().ReverseMap();

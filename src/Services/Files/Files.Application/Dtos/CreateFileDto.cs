@@ -1,9 +1,11 @@
-﻿namespace Files.Application.Dtos
+﻿using Microsoft.AspNetCore.Http;
+
+namespace Files.Application.Dtos
 {
     public class CreateFileDto
     {
-        public string EntityName { get; set; }
-        public string EntityId { get; set; }
-        public byte[]? FileContent { get; set; }
+        public string EntityName { get; set; } = null!;
+        public string EntityId { get; set; } = null!;
+        public IFormFile? FileContent { get; set; } = null!;
     }
 }
