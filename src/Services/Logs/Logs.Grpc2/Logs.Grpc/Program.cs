@@ -1,4 +1,5 @@
 using Logs.Core.Contracts.Persistence;
+using Logs.Core.Mapping;
 using Logs.Grpc.Mapping;
 using Logs.Grpc.Services;
 using Logs.Infrastructure.Persistence;
@@ -9,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddScoped<ILogsContext, LogsContext>();
 builder.Services.AddScoped<IHistoryRepository, HistoryRepository>();
 builder.Services.AddAutoMapper(typeof(GrpcMapping).Assembly);
+builder.Services.AddAutoMapper(typeof(LogsMappingProfiler).Assembly);
 #endregion
 // Add services to the container.
 builder.Services.AddGrpc();

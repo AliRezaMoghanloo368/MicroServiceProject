@@ -9,6 +9,7 @@ namespace Logs.Core.Mapping
         public LogsMappingProfiler()
         {
             CreateMap<LogsHistoryPublish, LogsHistoryEvent>().ReverseMap();
+            CreateMap<History, LogsHistoryEvent>().ReverseMap();
         }
     }
 }

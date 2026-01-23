@@ -105,13 +105,13 @@ namespace Logs.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         public async Task<IActionResult> Publish([FromBody] LogsHistoryPublish logs)
         {
-            //get existing...
-            var result = _historyRepository.GetHistoriesAsync(logs.UserName, logs.Section, logs.RecordId);
-            if (result == null)
-                return BadRequest();
+            ////get existing...
+            //var history = _historyRepository.GetHistoriesAsync(logs.UserName, logs.Section, logs.RecordId);
+            //if (history == null)
+            //    return BadRequest();
 
             //create event
-            var eventMessage = _mapper.Map<LogsHistoryEvent>(result);
+            var eventMessage = _mapper.Map<LogsHistoryEvent>(logs);
 
             //send event to rabbitmq
             await _publisher.Publish(eventMessage);

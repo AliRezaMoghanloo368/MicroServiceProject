@@ -25,12 +25,14 @@ services:
     container_name: main.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://+:8080
+      # - ASPNETCORE_URLS=http://+:8080
       - "ConnectionStrings__Root=Server=maindb;Database=MainDb;User Id=sa;Password=@Moghanloo368;TrustServerCertificate=True;"
       - "GrpcSettings__HistoryUrl=http://logs.grpc:8080"
+      - "EventBusSettings__HostAddress=amqp://guest:guest@rabbitmq:5672"
     restart: always
     depends_on:
       - maindb
+      - rabbitmq
     ports:
       - "8001:8080"
 
@@ -52,9 +54,11 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - "ConnectionStrings__Root=mongodb://logsdb:27017"
+      - "EventBusSettings__HostAddress=amqp://guest:guest@rabbitmq:5672"
     restart: always
     depends_on:
       - logsdb
+      - rabbitmq
     ports:
       - "8003:8080"
 
