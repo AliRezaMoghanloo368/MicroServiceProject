@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Google.Protobuf.WellKnownTypes;
+using EventBus.Messages.Events;
 using Logs.Domain.Models;
 using Logs.Grpc.Protos;
 using Main.Application.Dtos.Courses;
@@ -16,7 +16,7 @@ namespace Main.Api.Mapping
             CreateMap<History, HistoryDto>().ReverseMap();
             CreateMap<History, HistoryModel>().ReverseMap();
             CreateMap<HistoryModel, HistoryDto>().ReverseMap();
-
+            CreateMap<HistoryDto, LogsHistoryEvent>().ReverseMap();
         }
     }
 }

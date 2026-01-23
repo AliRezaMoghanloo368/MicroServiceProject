@@ -1,6 +1,8 @@
-﻿using FluentValidation;
+﻿using EventBus.Messages.Common;
+using FluentValidation;
 using Main.Application.Behaviors;
 using Main.Application.Contracts.Persistence;
+using Main.Application.EventBusConsumer;
 using Main.Application.Features.Courses.Commands.CreateCourse;
 using Main.Application.Features.Courses.Commands.DeleteCourse;
 using Main.Application.Features.Courses.Commands.UpdateCourse;
@@ -19,6 +21,8 @@ using Main.Application.Features.Teachers.Queries.GetTeachers;
 using Main.Application.Mapping;
 using Main.Infrastructure.Persistence;
 using Main.Infrastructure.Repositories;
+using MassTransit;
+using MassTransit.Definition;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
