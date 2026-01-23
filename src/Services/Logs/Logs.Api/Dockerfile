@@ -12,8 +12,10 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/Services/Logs/Logs.Api/Logs.Api.csproj", "src/Services/Logs/Logs.Api/"]
+COPY ["src/BuildingBlocks/EventBus.Messages/EventBus.Messages.csproj", "src/BuildingBlocks/EventBus.Messages/"]
 COPY ["src/Services/Logs/Logs.Core/Logs.Core.csproj", "src/Services/Logs/Logs.Core/"]
 COPY ["src/Services/Logs/Logs.Domain/Logs.Domain.csproj", "src/Services/Logs/Logs.Domain/"]
+COPY ["src/Services/Logs/Logs.Infrastructure/Logs.Infrastructure.csproj", "src/Services/Logs/Logs.Infrastructure/"]
 RUN dotnet restore "./src/Services/Logs/Logs.Api/Logs.Api.csproj"
 COPY . .
 WORKDIR "/src/src/Services/Logs/Logs.Api"
@@ -29,3 +31,5 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Logs.Api.dll"]
+
+
