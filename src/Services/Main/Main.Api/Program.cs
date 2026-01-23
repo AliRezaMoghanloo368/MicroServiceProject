@@ -1,9 +1,7 @@
-﻿using EventBus.Messages.Common;
-using Logs.Grpc.Protos;
+﻿using Logs.Grpc.Protos;
 using Main.Api.Extensions;
 using Main.Api.Grpc.Services;
 using Main.Api.Mapping;
-using Main.Application.EventBusConsumer;
 using Main.Infrastructure.Persistence;
 using Main.IoC;
 using MassTransit;
@@ -30,42 +28,15 @@ builder.Services.AddGrpcClient<HistoryService.HistoryServiceClient>
 builder.Services.AddScoped<Logs_HistoryGrpcService>();
 #endregion
 
-#region EventBus Ioc
+#region EventBus::Rabbitmq Ioc
 builder.Services.AddMassTransit(config =>
 {
-    config.AddConsumer<LogsHistoryConsumer>();
     config.UsingRabbitMq((ctx, conf) =>
     {
         conf.Host(builder.Configuration.GetValue<string>("EventBusSettings:HostAddress"));
-        conf.ReceiveEndpoint(EventBusConstants.LogsHistoryQueue, c =>
-        {
-            c.ConfigureConsumer<LogsHistoryConsumer>(ctx);
-        });
     });
 });
 builder.Services.AddMassTransitHostedService();
-builder.Services.AddScoped<LogsHistoryConsumer>();
-//services.AddMassTransit(config =>
-//{
-//    // ثبت خودکار همه Consumer ها در این Assembly
-//    config.AddConsumers(typeof(Program).Assembly);
-
-//    // فرمت نام Queue ها
-//    config.SetEndpointNameFormatter(
-//        new KebabCaseEndpointNameFormatter("logs", includeNamespace: false)
-//    );
-
-//    config.UsingRabbitMq((ctx, conf) =>
-//    {
-//        conf.Host(configuration.GetValue<string>("EventBusSettings:HostAddress"));
-
-//        // ساخت خودکار Queue برای همه Consumer ها
-//        conf.ConfigureEndpoints(ctx);
-//    });
-//});
-
-//services.AddMassTransitHostedService();
-//builder.Services.AddScoped<LogsHistoryConsumer>();
 #endregion
 
 var app = builder.Build();

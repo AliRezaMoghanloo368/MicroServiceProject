@@ -4,15 +4,15 @@
     {
         public IntegrationBaseEvent()
         {
-            Id = Guid.NewGuid().ToString();
+            //Id = Guid.NewGuid().ToString();
             CreateAt = DateTime.UtcNow;
         }
         public IntegrationBaseEvent(string? id, DateTime createAt)
         {
-            Id = id;
+            //Id = id;
             CreateAt = createAt;
         }
-        public string? Id { get; set; }
+        //public string? Id { get; set; }
         public DateTime CreateAt { get; set; }
     }
 }

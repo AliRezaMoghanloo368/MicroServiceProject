@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using EventBus.Messages.Events;
+using Logs.Domain.Models;
 using Logs.Grpc.Protos;
 using Main.Application.Dtos.Courses;
 using Main.Application.Dtos.Histories;
@@ -45,6 +47,7 @@ namespace Main.Application.Mapping
 
             CreateMap<HistoryModel, GetHistoriesResponse>().ReverseMap();
             CreateMap<HistoryDto, CreateHistoryRequest>().ReverseMap();
+            CreateMap<LogsHistoryPublish, LogsHistoryEvent>().ReverseMap();
         }
     }
 }

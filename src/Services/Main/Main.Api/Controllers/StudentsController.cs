@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using EventBus.Messages.Events;
+using Logs.Domain.Models;
 using Main.Api.Grpc.Services;
 using Main.Application.Dtos.Histories;
 using Main.Application.Dtos.Students;
@@ -7,8 +9,10 @@ using Main.Application.Features.Students.Commands.DeleteStudent;
 using Main.Application.Features.Students.Commands.UpdateStudent;
 using Main.Application.Features.Students.Queries.GetStudent;
 using Main.Application.Features.Students.Queries.GetStudents;
+using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 using System.Net;
 using static SharedLibrary.Utilities.Enums;
 
@@ -19,11 +23,14 @@ namespace Main.Api.Controllers
     {
         #region constructor
         private readonly IMapper _mapper;
-        private readonly Logs_HistoryGrpcService _service;
-        public StudentsController(IMediator mediator, Logs_HistoryGrpcService service, IMapper mapper) : base(mediator)
+        private readonly Logs_HistoryGrpcService _grpService;
+        private readonly IPublishEndpoint _publisher;
+        public StudentsController(IMediator mediator, Logs_HistoryGrpcService service, IMapper mapper
+            , IPublishEndpoint publisher) : base(mediator)
         {
-            _service = service;
+            _grpService = service;
             _mapper = mapper;
+            _publisher = publisher;
         }
         #endregion
 
@@ -41,7 +48,7 @@ namespace Main.Api.Controllers
                 var recordId = student.Data.Id.ToString();
 
                 // gRPC call برای گرفتن همه histories
-                var h = await _service.GetHistories("test", "student", recordId);
+                var h = await _grpService.GetHistories("test", "student", recordId);
 
                 var histories = _mapper.Map<List<HistoryDto>>(h.Histories);
 
@@ -64,15 +71,15 @@ namespace Main.Api.Controllers
             #region GetHistory
             if (students.Data != null && students.Data.Count > 0)
             {
-                var recordIds = students.Data.Select(c => c.Id.ToString()).ToList();
-
-                // gRPC call برای گرفتن همه histories
-                var h = await _service.GetHistories("test", "student", recordIds[0]);
-
-                var histories = _mapper.Map<List<HistoryDto>>(h.Histories);
-
+                int i = 0;
                 foreach (var studentDto in students.Data)
                 {
+                    var recordIds = students.Data.Select(c => c.Id).ToList();
+
+                    // gRPC call برای گرفتن همه histories
+                    var h = await _grpService.GetHistories("test", "student", recordIds[i++].ToString());
+
+                    var histories = _mapper.Map<List<HistoryDto>>(h.Histories);
                     studentDto.Histories.AddRange(histories);
                 }
             }
@@ -90,7 +97,7 @@ namespace Main.Api.Controllers
             var result = await _mediator.Send(command);
 
             // For log
-            await _service.CreateHistoryAsync("student", result.Data.Id.ToString(), HistoryAction.add);
+            await _grpService.CreateHistoryAsync("student", result.Data.Id.ToString(), HistoryAction.add);
 
             return Ok(result);
         }
@@ -103,7 +110,7 @@ namespace Main.Api.Controllers
             var result = await _mediator.Send(command);
 
             // For log
-            await _service.CreateHistoryAsync("student", command.Id.ToString(), HistoryAction.edit);
+            await _grpService.CreateHistoryAsync("student", command.Id.ToString(), HistoryAction.edit);
 
             return Ok(result);
         }
@@ -116,9 +123,27 @@ namespace Main.Api.Controllers
             var result = await _mediator.Send(new DeleteStudentCommand(id));
 
             // For log
-            await _service.CreateHistoryAsync("student", id.ToString(), HistoryAction.delete);
+            await _grpService.CreateHistoryAsync("student", id.ToString(), HistoryAction.delete);
 
             return Ok(result);
+        }
+        #endregion
+
+        #region Publish
+        [HttpPost("[action]")]
+        [ProducesResponseType((int)HttpStatusCode.Accepted)]
+        //[ProducesResponseType((int)HttpStatusCode.BadRequest)]
+        public async Task<IActionResult> Publish([FromBody] LogsHistoryPublish command)
+        {
+            ////get existing...
+
+            //create event
+            var eventMessage = _mapper.Map<LogsHistoryEvent>(command);
+
+            //send event to rabbitmq
+            await _publisher.Publish(eventMessage);
+
+            return Accepted();
         }
         #endregion
     }

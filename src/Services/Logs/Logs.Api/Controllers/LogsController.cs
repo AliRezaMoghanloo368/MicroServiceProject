@@ -16,14 +16,13 @@ namespace Logs.Api.Controllers
         private readonly IHistoryRepository _historyRepository;
         private readonly ILogger<HistoryController> _logger;
         private readonly IMapper _mapper;
-        private readonly IPublishEndpoint _publisher;
+
         public HistoryController(IHistoryRepository historyRepository, ILogger<HistoryController> logger,
-            IMapper mapper, IPublishEndpoint publisher)
+            IMapper mapper)
         {
             _historyRepository = historyRepository;
             _logger = logger;
             _mapper = mapper;
-            _publisher = publisher;
         }
         #endregion
 
@@ -96,27 +95,6 @@ namespace Logs.Api.Controllers
         public async Task<IActionResult> DeleteHistory(string id)
         {
             return Ok(await _historyRepository.DeleteHistoryAsync(id));
-        }
-        #endregion
-
-        #region publish
-        [HttpPost("[action]")]
-        [ProducesResponseType((int)HttpStatusCode.Accepted)]
-        [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> Publish([FromBody] LogsHistoryPublish logs)
-        {
-            ////get existing...
-            //var history = _historyRepository.GetHistoriesAsync(logs.UserName, logs.Section, logs.RecordId);
-            //if (history == null)
-            //    return BadRequest();
-
-            //create event
-            var eventMessage = _mapper.Map<LogsHistoryEvent>(logs);
-
-            //send event to rabbitmq
-            await _publisher.Publish(eventMessage);
-
-            return Accepted();
         }
         #endregion
     }

@@ -21,10 +21,10 @@ namespace Main.Api.Controllers
     {
         #region constructor
         private readonly IMapper _mapper;
-        private readonly Logs_HistoryGrpcService _service;
+        private readonly Logs_HistoryGrpcService _grpService;
         public TeachersController(IMediator mediator, Logs_HistoryGrpcService service, IMapper mapper) : base(mediator)
         {
-            _service = service;
+            _grpService = service;
             _mapper = mapper;
         }
         #endregion
@@ -43,7 +43,7 @@ namespace Main.Api.Controllers
                 var recordId = teacher.Data.Id.ToString();
 
                 // gRPC call برای گرفتن همه histories
-                var h = await _service.GetHistories("test", "teacher", recordId);
+                var h = await _grpService.GetHistories("test", "teacher", recordId);
 
                 var histories = _mapper.Map<List<HistoryDto>>(h.Histories);
 
@@ -66,15 +66,15 @@ namespace Main.Api.Controllers
             #region GetHistory
             if (teachers.Data != null && teachers.Data.Count > 0)
             {
-                var recordIds = teachers.Data.Select(c => c.Id.ToString()).ToList();
-
-                // gRPC call برای گرفتن همه histories
-                var h = await _service.GetHistories("test", "teacher", recordIds[0]);
-
-                var histories = _mapper.Map<List<HistoryDto>>(h.Histories);
-
+                int i = 0;
                 foreach (var teacherDto in teachers.Data)
                 {
+                    var recordIds = teachers.Data.Select(c => c.Id).ToList();
+
+                    // gRPC call برای گرفتن همه histories
+                    var h = await _grpService.GetHistories("test", "teacher", recordIds[i++].ToString());
+
+                    var histories = _mapper.Map<List<HistoryDto>>(h.Histories);
                     teacherDto.Histories.AddRange(histories);
                 }
             }
@@ -92,7 +92,7 @@ namespace Main.Api.Controllers
             var result = await _mediator.Send(command);
 
             // For log
-            await _service.CreateHistoryAsync("teacher", result.Data.Id.ToString(), HistoryAction.add);
+            await _grpService.CreateHistoryAsync("teacher", result.Data.Id.ToString(), HistoryAction.add);
 
             return Ok(result);
         }
@@ -105,7 +105,7 @@ namespace Main.Api.Controllers
             var result = await _mediator.Send(command);
 
             // For log
-            await _service.CreateHistoryAsync("teacher", command.Id.ToString(), HistoryAction.edit);
+            await _grpService.CreateHistoryAsync("teacher", command.Id.ToString(), HistoryAction.edit);
 
             return Ok(result);
         }
@@ -118,7 +118,7 @@ namespace Main.Api.Controllers
             var result = await _mediator.Send(new DeleteTeacherCommand(id));
 
             // For log
-            await _service.CreateHistoryAsync("teacher", id.ToString(), HistoryAction.delete);
+            await _grpService.CreateHistoryAsync("teacher", id.ToString(), HistoryAction.delete);
 
             return Ok(result);
         }
