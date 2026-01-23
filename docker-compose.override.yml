@@ -25,9 +25,9 @@ services:
     container_name: main.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      # - ASPNETCORE_URLS=http://+:8080
+      - ASPNETCORE_URLS=http://+:8080
       - "ConnectionStrings__Root=Server=maindb;Database=MainDb;User Id=sa;Password=@Moghanloo368;TrustServerCertificate=True;"
-      - "GrpcSettings__HistoryUrl=http://logs.grpc"
+      - "GrpcSettings__HistoryUrl=http://logs.grpc:8080"
     restart: always
     depends_on:
       - maindb

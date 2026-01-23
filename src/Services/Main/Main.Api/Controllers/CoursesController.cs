@@ -63,16 +63,19 @@ namespace Main.Api.Controllers
             var courses = await _mediator.Send(query);
 
             #region GetHistory
-            var recordIds = courses.Data.Select(c => c.Id.ToString()).ToList();
-
-            // gRPC call برای گرفتن همه histories
-            var h = await _service.GetHistories("test", "course", recordIds[0]);
-
-            var histories = _mapper.Map<List<HistoryDto>>(h.Histories);
-
-            foreach (var courseDto in courses.Data)
+            if (courses.Data.Count > 0)
             {
-                courseDto.Histories.AddRange(histories);
+                var recordIds = courses.Data.Select(c => c.Id.ToString()).ToList();
+
+                // gRPC call برای گرفتن همه histories
+                var h = await _service.GetHistories("test", "course", recordIds[0]);
+
+                var histories = _mapper.Map<List<HistoryDto>>(h.Histories);
+
+                foreach (var courseDto in courses.Data)
+                {
+                    courseDto.Histories.AddRange(histories);
+                }
             }
             #endregion
 

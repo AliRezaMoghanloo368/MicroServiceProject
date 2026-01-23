@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Google.Protobuf.WellKnownTypes;
 using Grpc.Core;
-using Grpc.Net.Client;
 using Logs.Grpc.Protos;
 using static SharedLibrary.Utilities.Enums;
 
@@ -30,7 +29,7 @@ namespace Main.Api.Grpc.Services
         #endregion
 
         #region Create History
-        public async Task CreateHistoryAsync(string section, string recordId, HistoryAction action, string description="")
+        public async Task CreateHistoryAsync(string section, string recordId, HistoryAction action, string description = "")
         {
             try
             {

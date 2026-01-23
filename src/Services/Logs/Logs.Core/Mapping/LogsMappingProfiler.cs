@@ -1,4 +1,5 @@
-﻿using EventBus.Messages.Events;
+﻿using AutoMapper;
+using EventBus.Messages.Events;
 using Logs.Domain.Models;
 
 namespace Logs.Core.Mapping
