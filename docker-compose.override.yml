@@ -128,11 +128,10 @@ services:
     container_name: ocelotapigw
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
     depends_on:
       - files.api
       - logs.api
       - main.api
     ports:
-      - "8010:8080"
+      - "8010:80"
 
