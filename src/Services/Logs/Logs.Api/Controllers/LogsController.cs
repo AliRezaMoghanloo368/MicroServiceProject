@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using EventBus.Messages.Events;
 using Logs.Core.Contracts.Persistence;
 using Logs.Domain.Models;
-using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
 

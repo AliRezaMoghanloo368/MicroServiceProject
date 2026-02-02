@@ -41,9 +41,16 @@ services:
       context: .
       dockerfile: src/Services/Logs/Logs.Grpc2/Logs.Grpc/Dockerfile
 
+  ocelotapigw:
+    image: ${DOCKER_REGISTRY-}ocelotapigw
+    build:
+      context: .
+      dockerfile: src/ApiGateways/OcelotApiGw/Dockerfile
+
 volumes:
   maindb_data:
   mongo_data:
   portainer_data:
   postgres_data:
   pgadmin_data:
+

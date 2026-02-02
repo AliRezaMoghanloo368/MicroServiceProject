@@ -6,7 +6,8 @@
       "serviceActions": {
         "files.api": "StartDebugging",
         "logs.api": "StartDebugging",
-        "main.api": "StartDebugging"
+        "main.api": "StartDebugging",
+        "ocelotapigw": "StartDebugging"
       }
     }
   }

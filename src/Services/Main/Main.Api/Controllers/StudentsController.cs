@@ -12,7 +12,6 @@ using Main.Application.Features.Students.Queries.GetStudents;
 using MassTransit;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
 using System.Net;
 using static SharedLibrary.Utilities.Enums;
 

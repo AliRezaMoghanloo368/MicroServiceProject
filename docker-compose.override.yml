@@ -6,7 +6,6 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
-#region -------------------------------------rabbitmq
 
 #region -------------------------------------portainer
   portainer:
@@ -18,9 +17,8 @@ services:
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock"
       - "portainer_data:/data"
-#region -------------------------------------portainer
 
-#region -------------------------------------main
+#region ------------------------------------- main
   main.api:
     container_name: main.api
     environment:
@@ -46,9 +44,8 @@ services:
       - "14330:1433"
     volumes:
       - maindb_data:/var/opt/mssql
-#endregion -------------------------------------main
 
-#region -------------------------------------logs
+#region ------------------------------------- logs
   logs.api:
     container_name: logs.api
     environment:
@@ -81,9 +78,8 @@ services:
       - mongo_data:/data/db
     ports:
       - "27017:27017"
-#endregion -------------------------------------logs
 
-#region ----------------------------------------files
+#region ---------------------------------------- files
   files.api:
     container_name: files.api
     environment:
@@ -113,9 +109,8 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data/
-#endregion -------------------------------------files
 
-#region ----------------------------------------pgadmin
+#region ---------------------------------------- pgadmin
   pgadmin:
     container_name: pgadmin
     image: dpage/pgadmin4:8
@@ -127,3 +122,17 @@ services:
       - "8007:80"
     volumes:
       - pgadmin_data:/root/.pgadmin
+
+  #region ---------------------------------------- ocelotapigw
+  ocelotapigw:
+    container_name: ocelotapigw
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8080
+    depends_on:
+      - files.api
+      - logs.api
+      - main.api
+    ports:
+      - "8010:8080"
+
