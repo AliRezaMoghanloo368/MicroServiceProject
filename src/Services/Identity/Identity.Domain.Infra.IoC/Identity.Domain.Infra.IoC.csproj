@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\SharedLibrary\SharedLibrary.csproj" />
     <ProjectReference Include="..\Identity.Domain.Application\Identity.Domain.Application.csproj" />
+    <ProjectReference Include="..\Identity.Domain.Infra.Data\Identity.Domain.Infra.Data.csproj" />
   </ItemGroup>
 
 </Project>

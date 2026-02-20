@@ -4,6 +4,6 @@ namespace Identity.Domain.Application.Services.Authenticate.Interfaces
 {
     public interface IJwtHandler
     {
-        public string CreateToken(User user);
+        public JsonWebToken Create(User user);
     }
 }

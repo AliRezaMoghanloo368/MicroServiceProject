@@ -1,4 +1,9 @@
 ﻿using Identity.Domain.Application.Services.Authenticate.Implement;
+using Identity.Domain.Application.Services.Authenticate.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
 namespace Identity.Domain.Application.Services.Authenticate

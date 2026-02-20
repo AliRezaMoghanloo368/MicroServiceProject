@@ -1,4 +1,9 @@
-﻿using System.Text;
+﻿using Identity.Domain.Application.Services.Authenticate.Interfaces;
+using Identity.Domain.Core.AggregateModels.Users;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 
 namespace Identity.Domain.Application.Services.Authenticate.Implement
 {
@@ -24,7 +29,7 @@ namespace Identity.Domain.Application.Services.Authenticate.Implement
             };
         }
 
-        public JsonWebToken Create(int userId, string dbName)
+        public JsonWebToken Create(User user)
         {
             var nowUtc = DateTime.UtcNow;
             var expires = nowUtc.AddMinutes(_jwtOptions.ExpiryMinutes);
@@ -37,8 +42,7 @@ namespace Identity.Domain.Application.Services.Authenticate.Implement
                 { "iss", _jwtOptions.Issuer},
                 { "iat", now},
                 { "exp", exp},
-                { "user_id", userId.ToString() },
-                { "db_name", dbName }
+                { "user_id", user.Id.ToString() }
             };
 
             var jwt = new JwtSecurityToken(_jwtHeader, payload);
