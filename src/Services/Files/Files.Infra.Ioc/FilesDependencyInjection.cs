@@ -19,10 +19,6 @@ namespace Files.Infra.IoC
             services.AddAutoMapper(typeof(FilesMappingProfile).Assembly);
             #endregion
 
-            #region Shared
-            //service.AddScoped<IEncrypter, Encrypter>();
-            #endregion
-
             return services;
         }
     }

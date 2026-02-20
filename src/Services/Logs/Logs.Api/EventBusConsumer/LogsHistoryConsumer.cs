@@ -21,7 +21,6 @@ namespace Logs.Api.EventBusConsumer
         public async Task Consume(ConsumeContext<LogsHistoryEvent> context)
         {
             var history = _mapper.Map<History>(context.Message);
-            //var result = await _mediator.Send(command);
             await _historyRepository.CreateHistoryAsync(history);
             _logger.LogInformation($"history consumed successfully and history id is : {history.Id}");
         }

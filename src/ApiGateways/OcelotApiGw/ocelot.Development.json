@@ -143,6 +143,56 @@
       ],
       "UpstreamPathTemplate": "/Files/{id}",
       "UpstreamHttpMethod": [ "GET" ]
+    },
+
+    //--------------------- Identity
+    {
+      "DownstreamPathTemplate": "/api/v1/users/name/{userName}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "Identity.Domain.Api",
+          "Port": "8006"
+        }
+      ],
+      "UpstreamPathTemplate": "/users/name/{userName}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/users/id/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "Identity.Domain.Api",
+          "Port": "8006"
+        }
+      ],
+      "UpstreamPathTemplate": "/users/id/{id}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/users/login",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "Identity.Domain.Api",
+          "Port": "8006"
+        }
+      ],
+      "UpstreamPathTemplate": "/login",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/users/register",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "Identity.Domain.Api",
+          "Port": "8006"
+        }
+      ],
+      "UpstreamPathTemplate": "/register",
+      "UpstreamHttpMethod": [ "POST" ]
     }
   ],
   "GlobalConfiguration": {

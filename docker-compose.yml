@@ -47,10 +47,17 @@ services:
       context: .
       dockerfile: src/ApiGateways/OcelotApiGw/Dockerfile
 
+  identity.domain.api:
+    image: ${DOCKER_REGISTRY-}identitydomainapi
+    build:
+      context: .
+      dockerfile: src/Services/Identity/Identity.Domain.Api/Dockerfile
+
 volumes:
   maindb_data:
   mongo_data:
   portainer_data:
   postgres_data:
   pgadmin_data:
+
 

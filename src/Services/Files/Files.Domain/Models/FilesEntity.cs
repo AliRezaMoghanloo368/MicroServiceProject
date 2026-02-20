@@ -15,7 +15,6 @@
         //public long? FileSize { get; set; }
         public byte[]? FileContent { get; set; }
         //public string? FilePath { get; set; }
-        //public string? FileDate { get; set; }
         //public string? Description { get; set; }
         //public string? UploadBy { get; set; }
         public DateTime UploadAt { get; set; }
