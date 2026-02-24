@@ -135,7 +135,7 @@ services:
     ports:
       - "8010:80"
 
-#region ---------------------------------------- files
+#region ---------------------------------------- identity
   identity.domain.api:
     container_name: identity.domain.api
     environment:
@@ -145,7 +145,7 @@ services:
       - "DatabaseSettings__Root=Server=identitydb;Port=5432;Database=IdentityDB;User Id=admin;Password=@Moghanloo368"
     restart: always
     depends_on: 
-      filesdb:
+      identitydb:
         condition: service_healthy
     ports:
       - "8006:8080"
