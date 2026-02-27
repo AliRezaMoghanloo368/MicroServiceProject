@@ -70,6 +70,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Domain.Application", "src\Services\Identity\Identity.Domain.Application\Identity.Domain.Application.csproj", "{583D3970-EA8D-4FD3-80BB-083CBA55D2CC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Help", "Help", "{D65BFAEF-C0C8-402D-9E44-CA53D7F30CB3}"
+	ProjectSection(SolutionItems) = preProject
+		C:\Users\FRPC\OneDrive\دسکتاپ\راهنما.pdf = C:\Users\FRPC\OneDrive\دسکتاپ\راهنما.pdf
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Identity.Domain.Infra.IoC", "src\Services\Identity\Identity.Domain.Infra.IoC\Identity.Domain.Infra.IoC.csproj", "{35AEB851-D7B9-4202-B5DB-0BD16E4CEE7E}"
 EndProject

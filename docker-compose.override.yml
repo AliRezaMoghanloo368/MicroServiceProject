@@ -132,6 +132,7 @@ services:
       - files.api
       - logs.api
       - main.api
+      - identity.domain.api
     ports:
       - "8010:80"
 
