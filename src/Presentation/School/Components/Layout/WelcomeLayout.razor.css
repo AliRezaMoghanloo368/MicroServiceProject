@@ -1,0 +1,21 @@
+﻿#img-profile {
+    width:80%;
+    height:80%;
+    opacity:0.5;
+}
+
+.main-page {
+    background: url("/images/bgs/login2.jpg") no-repeat center center fixed;
+    background-size: cover;
+    transition: all ease-in 0.3s;
+}
+
+.sub-main-page {
+    display: grid;
+    grid-template-areas: "top-nav" "bottom-nav";
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 60px;
+    transition: all ease-in 0.3s;
+    backdrop-filter: blur(40px);
+    /*    zoom: 1.2;*/
+}

@@ -1,0 +1,64 @@
+﻿@* @using SocialMedia.Shared.Classes
+@using SocialMedia.Shared.Models
+@using static SocialMedia.Client.Components.Messages.MessageSet
+@using SocialMedia.Client.Shared;
+@inject ILogger<MessageBox> logger
+
+<div style="@StylesForOutbox;" class=" message-outbox">
+    <div class="profile-imgbox">
+        @if (image == null)
+        {
+            <img class="profile-image" style="background-size:cover; background-image:url('User_2.png')" />
+        }
+        else
+        {
+            <img class="profile-image" src="data:image/png;base64,@(Convert.ToBase64String(image))" />
+        }
+    </div>
+    <div style="@StylesForInbox; background-color:@BGColor" class="Classes message-inbox">
+        <context>
+            @foreach(var n in strN)
+            {
+                <p class="paragraph"> @n <br /> </p>
+            }
+        </context>
+        <datetime>
+            @TimeDate
+        </datetime>
+    </div>
+</div>
+
+@code {
+    int rows = 1;
+    string _myText;
+    string[] strN;
+    byte[]? image = null;
+    [Parameter] public string? StylesForOutbox { get; set; }
+    [Parameter] public string? StylesForInbox { get; set; }
+    [Parameter] public string? Classes { get; set; }
+    [Parameter] public string? TimeDate { get; set; }
+    [Parameter] public Enums.MessageType MessageType { get; set; }
+    [Parameter] public string? BGColor { get; set; }
+    [Parameter] public string Content
+    {
+        get => _myText;
+        set
+        {
+            _myText = value;
+            SetContent(value);
+        }
+    }
+}
+
+@functions {
+    protected override Task OnInitializedAsync()
+    {
+        image = MessageType == Enums.MessageType.MyMessage ? Caller.MyAccount.Image : Caller.HisAccount.Image;
+        return base.OnInitializedAsync();
+    }
+
+    void SetContent(string value)
+    {
+        strN = value.Split('\n');
+    }
+} *@

@@ -1,0 +1,16 @@
+﻿<div id="snackbar" style="border-radius:10px; padding:5px; list-style:none;"></div>
+
+<script>
+    function showSnackbar(text, interval=3000) {
+      // Get the snackbar DIV
+      var x = document.getElementById("snackbar");
+
+      // Add the "show" class to DIV
+      x.className = "show";
+      x.innerHTML = text;
+      // var left = (document.body.clientWidth / 2) - (x.style.width / 2);
+      // x.style.left = $`"{left}px"`;
+      // After 3 seconds, remove the show class from DIV
+      setTimeout(function(){ x.className = x.className.replace("show", ""); }, interval);
+    }
+</script>

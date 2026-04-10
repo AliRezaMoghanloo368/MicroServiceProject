@@ -1,0 +1,173 @@
+﻿.head-navigation {
+    grid-area: head-navigation;
+    background-color: whitesmoke;
+    margin: -1px;
+    height: 60px;
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.body-navigation {
+    width: 100%;
+    height: 100%;
+    padding-top: 20px;
+    grid-area: body-navigation;
+    display: grid;
+    grid-template-areas: "messageboxes" "toolbar";
+    grid-template-columns: 100%;
+    grid-template-rows: 1fr 65px;
+    overflow: hidden;
+}
+
+messageboxes {
+    grid-area: messageboxes;
+    display: grid;
+    flex-wrap: wrap;
+    overflow: scroll;
+    padding-left: 50px;
+    padding-right: 46px;
+    margin-bottom: 7px;
+    overflow-x: hidden;
+}
+
+toolbar {
+    grid-area: toolbar;
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    align-items: center;
+    border-top: 1px solid #e8e8e8;
+}
+
+.txtsend {
+    width: 100%;
+    border: none;
+    border-style: none;
+    font-size: medium;
+    height: 30px;
+    resize: none;
+}
+
+.btn-send {
+    height: 36px;
+    padding: 10px;
+    background-color: white;
+    border-radius: 6px;
+    color: #2764bd;
+    margin-right: 20px;
+    margin-left: 10px;
+    line-height: 1;
+    justify-content: center;
+    align-items: center;
+    /*box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;*/
+    transition: 0.3s;
+    transform: rotate(50deg);
+    background-color: gainsboro;
+}
+
+    .btn-send:hover {
+        transform: rotate(-10deg);
+        background-color: #2764bd;
+        color: white;
+        border-radius: 50%;
+    }
+
+.smile {
+    margin-left: 7px;
+    color: #808080;
+    transition: 0.3s;
+}
+
+    .smile:hover {
+        color: orangered;
+        transform: rotate(10deg);
+    }
+
+.paperclip {
+    position: relative;
+    margin-left: 7px;
+    color: #808080;
+    transition: 0.3s;
+}
+
+    .paperclip:hover {
+        color: orangered;
+        /* transform: rotate(-10deg); */
+    }
+
+.microphone {
+    color: #808080;
+    transition: 0.3s;
+    margin-left: 7px;
+    margin-right: 7px;
+}
+
+    .microphone:hover {
+        color: orangered;
+        transform: rotate(10deg);
+    }
+
+attachbox {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    width: 36px;
+    height: fit-content;
+    background-color: transparent;
+    z-index: 100000;
+    top: -190px;
+    left: -5px;
+    overflow: visible;
+}
+
+.attach {
+    height: 36px;
+    padding: 18px;
+    background-color: white;
+    border-radius: 25px;
+    color: gray;
+    margin: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    transition: 0.3s;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+
+    .attach:hover {
+        color: white;
+        transform: rotate(30deg);
+        background-color: orangered;
+    }
+
+.btnattach-image {
+}
+
+
+
+
+
+/* Small devices (landscape phones) */
+@media (min-width: 576px) {
+
+}
+
+/* Medium devices (tablets) */
+@media (min-width: 768px) {
+
+}
+
+/* Large devices (desktops) */
+@media (min-width: 992px) {
+
+}
+
+@media (max-width: 992px) {
+
+}
+
+/* Extra large devices (large desktops) */
+@media (min-width: 1200px) {
+
+}

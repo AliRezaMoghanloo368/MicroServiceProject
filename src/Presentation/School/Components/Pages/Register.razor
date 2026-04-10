@@ -1,0 +1,94 @@
+﻿@page "/register"
+@using School.Components.Controls
+@using School.Components.Layout
+@using School.Services
+@rendermode InteractiveServer
+@inject AuthService _authService
+@inject FilesService _filesService
+@inject NavigationManager _navigator
+@layout WelcomeLayout
+@inject IJSRuntime _js;
+
+<div class="top-nav flex-center">
+    <div class="row" style="width:250px;">
+        <div class="flex-center w-100 position-relative" style="height:150px;">
+            <span class="profile">
+                @if (this.fileViewModel.FileContent == null)
+                {
+                    @* <img class="profileImage" src="data:image/png;base64,@Convert.ToBase64String(user.Image)" /> *@
+                    <svg id="img-profile" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="silver" class="size-6">
+                        <path fill-rule="evenodd" d="M7.5 6a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM3.751 20.105a8.25 8.25 0 0 1 16.498 0 .75.75 0 0 1-.437.695A18.683 18.683 0 0 1 12 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 0 1-.437-.695Z" clip-rule="evenodd" />
+                    </svg>
+                }
+                else
+                {
+                    @foreach (var item in filesBase64)
+                    {
+                        <img src="data:@item.contentType;base64,@item.base64data" style="border-radius: 50%;" class="w-100 h-100" />
+                    }
+                }
+            </span>
+            <button Class="btn-icon border-radius btn-upload flex-center">
+                <label for="file-upload" class="w-100 h-100 text-white flex-center" style="cursor:pointer;">
+                    <img src="/images/icons/image-white.svg" class="wh-20" />
+                </label>
+            </button>
+        </div>
+
+        <div class="w-100" style="height:190px;">
+            <div class="form-group mb-3 my-6">
+                <div class="form-group">
+                    <BeauInputText Id="txt-fullname" @bind-value="createUserDto.FullName" PlaceHolder="نام و نام خانوادگی" ShowCustomIcon="true">
+                        <CustomIcon>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="silver" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                            </svg>
+                        </CustomIcon>
+                    </BeauInputText>
+                </div>
+                <div class="form-group">
+                    <BeauInputText Id="txt-username" @bind-value="createUserDto.UserName" PlaceHolder="نام کاربری" ShowCustom="true" ShowCustomIcon="true">
+                        <CustomIcon>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="silver" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                            </svg>
+                        </CustomIcon>
+                    </BeauInputText>
+                </div>
+                <div class="form-group">
+                    <BeauInputText Id="txt-password" @bind-value="createUserDto.Password" PlaceHolder="رمز عبور"
+                                   Type="password" ShowPassword="true"></BeauInputText>
+                </div>
+                <div class="form-group">
+                    <BeauInputText Id="txt-phonenumber" @bind-value="createUserDto.PhoneNumber" PlaceHolder="شماره تماس" ShowCustomIcon="true" Mask="phone">
+                        <CustomIcon>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="silver" class="size-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25Z" />
+                            </svg>
+                        </CustomIcon>
+                    </BeauInputText>
+                </div>
+            </div>
+            <div class="form-group d-flex justify-content-between">
+                <button Class="btn-icon border-radius" @onclick="RegisterUser">
+                    <img src="/images/icons/check-square-white.svg" class="wh-20" />
+                </button>
+                <button Class="btn-icon border-radius" @onclick="SignInPage">
+                    <img src="/images/icons/arrow-left-white.svg" class="wh-20" />
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bottom-nav">
+    <button Class="btn-icon border-radius m-2" @onclick="CloseWindow">
+        <img src="/images/icons/power-white.svg" class="wh-20" />
+    </button>
+    <button Class="btn-icon border-radius m-2">
+        <img src="/images/icons/globe-white.svg" class="wh-20" />
+    </button>
+    <button Class="btn-icon border-radius m-2">
+        <img src="/images/icons/database-white.svg" class="wh-20" />
+    </button>
+</div>
+<InputFile id="file-upload" style="visibility:hidden; display:none;" Onchange="OnChange" accept="image/png, image/jpeg, image/gif" />

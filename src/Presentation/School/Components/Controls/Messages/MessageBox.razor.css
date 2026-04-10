@@ -1,0 +1,69 @@
+﻿.message-outbox {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    padding-right: 20px;
+    padding-bottom: -69px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.message-inbox {
+    background-color: white;
+    color: rgb(64,64,64);
+    height: fit-content;
+    max-width: 70%;
+    display: flex;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+    flex-direction: column;
+    font-size: medium;
+    overflow: hidden;
+}
+
+.profile-imgbox {
+    grid-area: imgbox;
+    width: 32px;
+    height: 32px;
+    background-image: url('customer.ico');
+    background-size: cover;
+    border-radius: 100%;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 1px 2px 0px;
+}
+
+datetime {
+    font-size: small;
+    color: #1d78ae;
+    text-align: left;
+    text-align: initial !important;
+    margin-top: 7px;
+}
+
+.context {
+    user-select: text !important;
+    word-wrap: break-word;
+    unicode-bidi: plaintext;
+    text-align: initial !important;
+}
+
+.paragraph {
+    user-select: text !important;
+    word-wrap: break-word;
+    unicode-bidi: plaintext;
+    text-align: initial !important;
+    margin-bottom: 0;
+}
+
+/*textarea {
+    width: 100%;
+    user-select: text !important;
+    resize: none;
+    overflow: visible;
+    height: fit-content;
+    unicode-bidi: plaintext;
+    text-align: initial !important;
+}
+*/

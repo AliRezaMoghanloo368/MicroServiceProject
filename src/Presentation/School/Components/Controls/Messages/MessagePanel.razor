@@ -1,0 +1,139 @@
+﻿@* @using SocialMedia.Client.Components
+@using SocialMedia.Client.Pages
+@using SocialMedia.Client.Shared
+@using SocialMedia.Shared.Classes
+@using SocialMedia.Shared.Models
+@using System.Data
+@inject HttpClient httpClient
+@inject NavigationManager navigator;
+
+<div id="@MessagePanelId" style="visibility:hidden;">
+    <div class="head-navigation">
+    </div>
+    <div class="body-navigation">
+        <messageboxes>
+            @if (Caller.contents != null)
+            {
+                <MessageSet Contents="@Caller.contents"></MessageSet>
+            }
+        </messageboxes>
+        <toolbar>
+            <button class="btn-send" type="submit" @onclick="AddToList"><i class="fa fa-paper-plane"></i></button>
+            <inputbox>
+                <span class="smile"><i class="fa fa-smile"></i></span>
+                <span class="paperclip" @onclick="AttachOver">
+                    <i class="fa fa-paperclip"></i>
+                    <attachbox class="@displayAttach">
+                        <a class="attach btnattach-image"><i class="fa fa-file-image"></i></a>
+                        <a class="attach btnattach-music"><i class="fa fa-file-audio"></i></a>
+                        <a class="attach btnattach-film"><i class="fa fa-film"></i></a>
+                        <a class="attach btnattach-file"><i class="fa fa-file-pdf"></i></a>
+                    </attachbox>
+                </span>
+                <textarea @bind="inputValue" @onkeypress="AddToListToKey" class="txtsend" type="input" placeholder="پیام"></textarea>
+                <span class="microphone"><i class="fa fa-microphone"></i></span>
+            </inputbox>
+        </toolbar>
+    </div>
+</div>
+
+@code {
+    string inputValue;
+    string displayAttach = "d-none";
+    string display = "display:none";
+    int step = -1;
+    List<Messages>? Messages;
+    bool Refresh = false;
+    [Parameter] public User user { get; set; }
+    string MessagePanelId;
+}
+
+@functions {
+    protected override async Task OnInitializedAsync()
+    {
+        if (Refresh == false)
+        {
+            MessagePanelId = $"MessagePanel{user.Id}";
+            Messages = await httpClient.GetFromJsonAsync<List<Messages>>
+                    ($"/api/Messages/{Caller.MyAccount.Id}");
+
+            if (Messages == null)
+                return;
+
+            AddFromDBAsync(Messages);
+            Refresh = true;
+        }
+
+        if (user.Id == 6) display = "display:contents"; else display = "display:none";
+    }
+
+    void AddFromDBAsync(List<Messages> list)
+    {
+        foreach (var lst in list)
+        {
+            Caller.contents = new Caller.Contents()
+                {
+                    Text = lst.Text,
+                    MessageType = lst.TransferId == Caller.MyAccount.Id ? Enums.MessageType.MyMessage : Enums.MessageType.HisMessage,
+                    OperationState = Enums.OperationState.Insert
+                };
+
+            Save(inputValue);
+            MessageSet.Create(Caller.contents);
+        }
+        // Caller.contents = null;
+    }
+    void AddToList()
+    {
+        step++;
+        Caller.contents = new Caller.Contents()
+            {
+                Text = inputValue,
+                MessageType = Enums.MessageType.MyMessage,
+                OperationState = Enums.OperationState.Insert
+            };
+
+        Save(inputValue);
+        MessageSet.Create(Caller.contents);
+        inputValue = "";
+    }
+    void AddToListToKey(KeyboardEventArgs e)
+    {
+        if (e.Key == "Enter")
+        {
+            AddToList();
+        }
+    }
+
+    void AttachOver()
+    {
+        if (displayAttach == "d-none")
+            displayAttach = "d-flex";
+        else
+            displayAttach = "d-none";
+    }
+
+    private async Task Save(string text)
+    {
+        Messages messages = new Messages()
+            {
+                TransferId = Caller.MyAccount.Id,
+                Text = text,
+                Time = Functions.GetTime(),
+                Date = Functions.GetDate(),
+                ReceiverId = user.Id.ToString() //Caller.HisAccount.Id.ToString()
+            };
+        if (Caller.contents.OperationState == Enums.OperationState.Insert)
+        {
+            await httpClient.PostAsJsonAsync("api/Messages", messages);
+        }
+        else if (Caller.contents.OperationState == Enums.OperationState.Update)
+        {
+            await httpClient.PutAsJsonAsync($"api/Messages/{user.Id}", messages);
+        }
+        else
+        {
+
+        }
+    }
+} *@

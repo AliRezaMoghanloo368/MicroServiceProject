@@ -1,0 +1,125 @@
+﻿@* @page "/beaugridview" *@
+@* @typeparam T *@
+@using System.Linq
+@using System.ComponentModel.DataAnnotations
+@using System.Data
+@inject IJSRuntime _js
+
+<div style="overflow-x:auto;">
+    <table id="@Name" class="table table-striped table-bordered table-hover center" @onkeydown="KeyDownHandler">
+        <thead style="background-color: rgb(42 96 141 / 59%);">
+            <tr id="@(Name)-TableHeaderRow">
+                @for (int r = 0; r < DataTable.Columns.Count; r++)
+                {
+                    if (ColumnOptions?.ContainsKey(DataTable.Columns[r].ColumnName) == true)
+                    {
+                        if (ColumnOptions?[DataTable.Columns[r].ColumnName].Visible == true)
+                        {
+                            <th id="@(Name)-TableHeader-@(r)">@DataTable.Columns[r].Caption</th>
+                        }
+                    }
+                    else
+                    {
+                        <th id="@(Name)-TableHeader-@(r)">@DataTable.Columns[r].Caption</th>
+                    }
+                }
+            </tr>
+            <tr id="@(Name)-RowFilter">
+                @for (int r = 0; r < DataTable.Columns.Count; r++)
+                {
+                    if (ColumnOptions?.ContainsKey(DataTable.Columns[r].ColumnName) == true)
+                    {
+                        if (ColumnOptions?[DataTable.Columns[r].ColumnName].Visible == true)
+                        {
+                            string columnName = DataTable.Columns[r].ColumnName;
+                            string textBoxName = $"{Name}-FilterTextBox-{r}";
+                            <th id="@(Name)-FilterBox-@(r)">
+                                <input id="@textBoxName" type="text" class="form-control txtfilter-box"
+                                       @oninput="(n) => Filter(string.Concat(n.Value.ToString(), '-', columnName))" />
+                            </th>
+                        }
+                    }
+                    else
+                    {
+                        string columnName = DataTable.Columns[r].ColumnName;
+                        string textBoxName = $"{Name}-FilterTextBox-{r}";
+                        <th id="@(Name)-FilterBox-@(r)">
+                            <input id="@textBoxName" type="text" class="form-control txtfilter-box"
+                                   @onchange="(n) => Filter(string.Concat(n.Value.ToString(), '-', columnName))" />
+                        </th>
+                    }
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                for (int i = 0; i < DataTable.DefaultView.Count; i++)
+                {
+                    DataRowView dataRow;
+                    dataRow = DataTable.DefaultView[i];
+                    <tr for="inputText" class="@GetRowClass(dataRow)">
+                        @for (int r = 0; r < DataTable.Columns.Count; r++)
+                        {
+                            if (ColumnOptions?.ContainsKey(DataTable.Columns[r].ColumnName) == true)
+                            {
+                                if (ColumnOptions?[DataTable.Columns[r].ColumnName].Visible == true)
+                                {
+                                    <td id="@(Name)-DataBox-@(i)-@(r)" class="table-data">
+                                        @if (Editable)
+                                        {
+                                            <input id="@(Name)-DataTextBox-@(i)-@(r)" class="table-data-input" type="text" value="@DataTable.DefaultView[i][r]"
+                                                   @onfocus="() => SelectRow(dataRow)" @onchange="(n) => OnChangeRow(n.Value.ToString(), dataRow, i, r)" />
+                                        }
+                                        else
+                                        {
+                                            <input id="@(Name)-DataTextBox-@(i)-@(r)" class="table-data-input" type="text" value="@DataTable.DefaultView[i][r]"
+                                                   @onfocus="() => SelectRow(dataRow)" readonly="readonly" />
+                                        }
+                                    </td>
+                                }
+                            }
+                            else
+                            {
+                                <td id="@(Name)-DataBox-@(i)-@(r)" class="table-data">
+                                    @if (Editable)
+                                    {
+                                        <input id="@(Name)-DataTextBox-@(i)-@(r)" class="table-data-input" type="text" value="@DataTable.DefaultView[i][r]"
+                                               @onfocus="() => SelectRow(dataRow)" />
+                                    }
+                                    else
+                                    {
+                                        <input id="@(Name)-DataTextBox-@(i)-@(r)" class="table-data-input" type="text" value="@DataTable.DefaultView[i][r]"
+                                               @onfocus="() => SelectRow(dataRow)" readonly="readonly" />
+                                    }
+                                </td>
+                            }
+                        }
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+@* <script src="~/js/functions.js"></script> *@
+<script>
+        function invokeTabKey(n) {
+        var currInput = document.activeElement;
+        if (currInput.tagName.toLowerCase() == "input") {
+            var inputs = document.getElementsByTagName("input");
+            var currInput = document.activeElement;
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i] == currInput) {
+                    var next = inputs[i + n];
+                    if (next && next.focus) {
+                        next.focus();
+                    }
+                    break;
+                }
+            }
+        }
+    }
+</script>
+
+@* @inject NavigationManager Navigation
+
+<tr @onclick="() => Navigation.NavigateTo($"/details/{person.Id}")"> *@

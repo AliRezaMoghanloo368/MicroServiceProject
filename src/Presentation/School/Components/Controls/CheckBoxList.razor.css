@@ -1,0 +1,11 @@
+﻿.ckeck-box {
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.ckeck-box-item {
+    margin-bottom:5px;
+    margin-left:15px;
+}
+

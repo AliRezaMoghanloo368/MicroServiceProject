@@ -1,0 +1,41 @@
+﻿@inherits InputText
+
+<div class="row">
+    <div class="col-md-3">
+        <label>@Title</label>
+    </div>
+    <div class="col-md-8">
+        <input class="@this.CssClass"
+               type="text"
+               value="@this.CurrentValueAsString"
+               @oninput="this.OnInput"
+               @onchange="this.OnChange"
+               @attributes=this.AdditionalAttributes
+               @ref=this.Element />
+        <ValidationMessage For="() => Value" />
+    </div>
+    <div class="col-md-1">
+        <label>@CurrentChars / @MaxChars</label>
+    </div>
+</div>
+@code {
+    [Parameter, EditorRequired] public string Title { get; set; } = string.Empty;
+    [Parameter, EditorRequired] public int MaxChars { get; set; } = 255;
+    [Parameter] public bool UpdateOnInput { get; set; }
+
+    public int CurrentChars { get; set; }
+
+    private void OnInput(ChangeEventArgs e)
+    {
+        CurrentChars = e?.Value?.ToString()?.Length ?? 0;
+        if (UpdateOnInput)
+            CurrentValueAsString = e?.Value?.ToString() ?? null;
+
+    }
+
+    private void OnChange(ChangeEventArgs e)
+    {
+        if (!UpdateOnInput)
+            CurrentValueAsString = e?.Value?.ToString() ?? null;
+    }
+}

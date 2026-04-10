@@ -1,0 +1,21 @@
+﻿@rendermode InteractiveServer
+
+@if (IsVisible)
+{
+    <div class="modal-overlay">
+        <div class="modal-content" style="@ModalContentStyle">
+            <div class="modal-header">
+                <h3 style="width:100%; text-align:center; color: white; font-weight: 700;">@Title</h3>
+                <button @onclick="CancelModal" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-body">
+                @Body
+            </div>
+            @* <div class="modal-footer">
+                <button Class="btn btn-success" OnClick="OKModal" Title="قابل قبول" />
+                <button Class="btn btn-secondary" OnClick="CancelModal" Title="انصراف"  />
+            </div> *@
+        </div>
+    </div>
+}
+

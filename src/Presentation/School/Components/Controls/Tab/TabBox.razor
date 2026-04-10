@@ -1,0 +1,48 @@
+﻿@implements ITab
+@implements IDisposable
+
+<li class="nav-item">
+    <a class="nav-link @(Parent.ActiveTab == this ? "active" : "")" @onclick="OnClick">
+        @Title
+    </a>
+</li>
+
+@code {
+    public string Id { get; } = Guid.NewGuid().ToString();
+    [Parameter] public bool Active { get; set; } = false;
+    [CascadingParameter] public TabSet Parent { get; set; } = default!;
+    [Parameter] public string? Title { get; set; }
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public EventCallback<string> OnTabActivated { get; set; }
+    public class TabActivatedEventArgs
+    {
+        public string Id { get; set; } = string.Empty;
+        public string? Title { get; set; }
+    }
+
+    protected override void OnInitialized()
+    {
+        Parent.AddTab(this);
+        if (Active == true)
+            ActivateTab();
+        base.OnInitialized();
+    }
+
+    void ActivateTab()
+    {
+        Parent.SetActive(this);
+    }
+
+    public void Dispose()
+    {
+        Parent?.RemoveTab(this);
+    }
+
+    public async Task OnClick()
+    {
+        ActivateTab();
+
+        if (OnTabActivated.HasDelegate)
+            await OnTabActivated.InvokeAsync(Title);
+    }
+}

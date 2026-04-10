@@ -1,0 +1,56 @@
+﻿@using School.Components.Controls
+@using School.Components.Controls
+@inherits LayoutComponentBase
+
+<style>
+    .border-radius {
+        border-radius: 100px !important;
+    }
+
+    #txt-fullname {
+        background-color: transparent !important;
+        text-align: center !important;
+        direction: ltr;
+        text-indent: 0;
+        border-radius: 50px;
+    }
+
+    #txt-username {
+        background-color: transparent !important;
+        text-align: center !important;
+        direction: ltr;
+        text-indent: 0;
+        border-radius: 50px;
+    }
+
+    #txt-password {
+        background-color: transparent !important;
+        text-align: center !important;
+        direction: ltr;
+        text-indent: 0;
+        border-radius: 50px;
+    }
+
+    #txt-phonenumber {
+        background-color: transparent !important;
+        text-align: center !important;
+        direction: ltr;
+        text-indent: 0;
+        border-radius: 50px;
+    }
+</style>
+
+<div class="main-page flex-center w-100 vh-100">
+    <div class="sub-main-page flex-center w-100 h-100">
+        @Body
+    </div>
+</div>
+
+<Snackbar></Snackbar>
+
+<script>
+    function closeWindow() {
+        window.open('', '_self', '');
+        window.close();
+    }
+</script>

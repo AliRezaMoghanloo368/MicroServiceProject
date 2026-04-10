@@ -1,0 +1,46 @@
+﻿@* @using SocialMedia.Client.Components
+@using SocialMedia.Client.Shared
+@using SocialMedia.Shared.Classes
+
+<div>
+    @foreach (var divKey in DivContents.Keys)
+    {
+        @DivContents[divKey]
+    }
+</div>
+
+@code {
+    static Dictionary<Guid, RenderFragment> DivContents = new Dictionary<Guid, RenderFragment>();
+
+    [Parameter]
+    public Caller.Contents Contents { get; set; }
+}
+
+@functions{
+    protected override Task OnInitializedAsync()
+    {
+        StateHasChanged();
+        return base.OnInitializedAsync();
+    }
+
+    public static void Create(Caller.Contents contents)
+    {
+        Guid divId = Guid.NewGuid();
+        DivContents.Add(divId, CreateRenderFragment(contents, divId));
+    }
+
+    static RenderFragment CreateRenderFragment(Caller.Contents contents, Guid divId)
+    {
+        return builder =>
+        {
+            builder.OpenComponent<MessageBox>(0);
+            builder.AddAttribute(1, "StylesForOutbox", contents.MessageType == Enums.MessageType.MyMessage ? "direction:rtl" : "direction:ltr");
+            builder.AddAttribute(2, "StylesForInbox", contents.MessageType == Enums.MessageType.MyMessage ? "border-top-right-radius: 0px" : "border-top-left-radius: 0px");
+            builder.AddAttribute(3, "BGColor", contents.MessageType == Enums.MessageType.MyMessage ? "white" : "#def7ff"); //"#e8ffb5"
+            builder.AddAttribute(4, "Content", contents.Text);
+            builder.AddAttribute(5, "TimeDate", $"✅ {Functions.GetTime().Substring(0, 5)} | {Functions.GetDate().Substring(5, 5)}");
+            builder.AddAttribute(6, "MessageType", contents.MessageType);
+            builder.CloseComponent();
+        };
+    }
+} *@

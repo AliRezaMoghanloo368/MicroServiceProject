@@ -1,0 +1,23 @@
+﻿@page "/checkbox-list"
+
+<EditForm Model="@Model">
+    <ul class="ckeck-box">
+        @foreach (var item in Model.Options)
+        {
+            <li class="ckeck-box-item">
+                <label>
+                    <InputCheckbox @bind-Value="item.Checked" />
+                    @item.Name
+                </label>
+            </li>
+        }
+    </ul>
+</EditForm>
+
+@* <h4>Selected Items:</h4>
+<ul>
+    @foreach (var selected in Model.Options.Where(o => o.Checked))
+    {
+        <li>@selected.Name</li>
+    }
+</ul> *@

@@ -1,0 +1,20 @@
+﻿@if (OnClick.HasDelegate == true)
+{
+    <button id="@Id" value="@Title" class="@this.Class @_butttonStyle border-radius" style="@this.Style" @onclick="OnClick">
+        @if (!string.IsNullOrEmpty(IconClass))
+        {
+            <i class="@IconClass"></i>
+        }
+        @Title
+    </button>
+}
+else
+{
+    <button id="@Id" class="@_butttonStyle border-radius" style="@this.Style">
+        @if (!string.IsNullOrEmpty(IconClass))
+        {
+            <i class="@IconClass"></i>
+        }
+        @Title
+    </button>
+}

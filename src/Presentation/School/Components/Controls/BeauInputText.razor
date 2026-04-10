@@ -1,0 +1,114 @@
+﻿@using System.Linq.Expressions
+@inherits InputText
+@inject IJSRuntime _js;
+
+<div id="div-@this.Id" class="box border-radius @(IsFocused ? "focused" : "")">
+    @* <div class="lbl-box"> *@
+    @*     <label id="lbl1" class="lbl-title"> @Title </label> *@
+    @* </div> *@
+    @if (ShowTitle == true)
+    {    
+        <label class="floating-label @(ShowFloatingLabel ? "float" : "")">@Title</label>
+    }
+    <input id="@this.Id" class="@ComputedClass"
+    type="@Type"
+    value="@this.CurrentValueAsString"
+    placeholder="@PlaceHolder"
+    @oninput="this.OnInput"
+    @onchange="this.OnChange"
+    @onfocus="OnFocus"
+    @onblur="OnBlur"
+    @attributes=this.AdditionalAttributes
+    @ref=this.Element />
+    <div class="tool-box">
+        <a id="" class="fontawesome" style="@_btnCustomIcon" @onclick="CustomIconClick">
+            @this.CustomIcon
+        </a>
+        <a id="drop-down" class="fontawesome" style="@_btnDown" @onclick="DownClick">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="silver">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+            </svg>
+        </a>
+        <a id="close" class="fontawesome" style="@_btnClose" @onclick="CloseClick">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="silver">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+        </a>
+        <a id="search" class="fontawesome" style="@_btnSearch" @onclick="SearchClick">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="silver">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+            </svg>
+        </a>
+        <a id="password" class="fontawesome" style="@_btnPassword" @onclick="OnPasswordClick">
+            @if (IsTypePassword)
+            {
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="silver">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.98 8.223A10.477 10.477 0 0 0 1.934 12C3.226 16.338 7.244 19.5 12 19.5c.993 0 1.953-.138 2.863-.395M6.228 6.228A10.451 10.451 0 0 1 12 4.5c4.756 0 8.773 3.162 10.065 7.498a10.522 10.522 0 0 1-4.293 5.774M6.228 6.228 3 3m3.228 3.228 3.65 3.65m7.894 7.894L21 21m-3.228-3.228-3.65-3.65m0 0a3 3 0 1 0-4.243-4.243m4.242 4.242L9.88 9.88" />
+                </svg>
+            }
+            else
+            {
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="silver">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                </svg>
+            }
+        </a>
+    </div>
+</div>
+
+<script>
+    function applyMask(elementId, mask) {
+        const inputElement = document.getElementById(elementId);
+        inputElement.addEventListener('input', function (event) {
+            let value = event.target.value.replace(/\D/g, ''); // حذف کاراکترهای غیر عددی
+            let formattedValue = '';
+
+            // اعمال ماسک برای شماره تلفن
+            if (mask === '(999) 999-9999' || mask === 'phone') {
+                if (value.length <= 3) {
+                    formattedValue = `(${value}`;
+                } else if (value.length <= 6) {
+                    formattedValue = `(${value.slice(0, 3)}) ${value.slice(3, 6)}`;
+                } else {
+                    formattedValue = `(${value.slice(0, 3)}) ${value.slice(3, 6)}-${value.slice(6, 10)}`;
+                }
+            }
+            // اعمال ماسک برای تاریخ
+            else if (mask === '9999/99/99' || mask === 'date') {
+                if (value.length <= 4) {
+                    formattedValue = value;
+                } else if (value.length <= 6) {
+                    formattedValue = `${value.slice(0, 4)}/${value.slice(4, 6)}`;
+                } else {
+                    formattedValue = `${value.slice(0, 4)}/${value.slice(4, 6)}/${value.slice(6, 8)}`;
+                }
+            }
+            // اعمال ماسک برای قیمتها
+            else if (mask === 'price') {
+                let formatter = new Intl.NumberFormat("en-US");
+                formattedValue = formatter.format(value);
+            }
+            // اعمال ماسک برای فقط اعداد
+            else if (mask === 'number') {
+                formattedValue = value;
+            }
+            else {
+                formattedValue = event.target.value;
+            }
+            event.target.value = formattedValue; // قرار دادن مقدار فرمت شده در ورودی
+        });
+    }
+
+    function inputPassword(elementId) {
+        var x = document.getElementById(elementId);
+        //var img = document.getElementById("img-password");
+        if (x.type === "password") {
+            x.type = "text";
+            //img.src = "/images/icons/eye-off-white.svg";  //تصویر چشم بسته یا حالت مخفی
+        } else {
+            x.type = "password";
+            //img.src = "/images/icons/eye-white.svg";     //تصویر چشم باز یا حالت نمایش
+        }
+    }
+</script>

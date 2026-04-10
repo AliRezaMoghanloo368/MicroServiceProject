@@ -1,0 +1,52 @@
+
+<CascadingValue Value="this">
+    <ul class="nav nav-tabs p-0 tab-bar">
+        @ChildContent
+    </ul>
+</CascadingValue>
+
+<div class="nav-tabs-body p-3">
+    @foreach (var tab in _tabs)
+    {
+        if (tab.ChildContent != null)
+        {
+            <div @key="tab.Id" style="display: @(ActiveTab == tab ? "block" : "none")">
+                @tab.ChildContent
+            </div>
+        }
+    }
+</div>
+
+@code {
+    private readonly List<ITab> _tabs = new();
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    public ITab? ActiveTab { get; private set; }
+
+    public void AddTab(ITab tab)
+    {
+        if (!_tabs.Contains(tab))
+        {
+            _tabs.Add(tab);
+            if (ActiveTab == null)
+                ActiveTab = tab;
+        }
+    }
+
+    public void RemoveTab(ITab tab)
+    {
+        _tabs.Remove(tab);
+        if (ActiveTab == tab)
+            ActiveTab = _tabs.FirstOrDefault();
+
+        StateHasChanged();
+    }
+
+    public void SetActive(ITab tab)
+    {
+        if (ActiveTab != tab)
+        {
+            ActiveTab = tab;
+            StateHasChanged();
+        }
+    }
+}

@@ -1,0 +1,41 @@
+﻿.center {
+    justify-content: center;
+    align-items: center;
+}
+
+.profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border: 1px solid gainsboro;
+    width: 128px;
+    height: 128px;
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+#img-profile {
+    width:80%;
+    height:80%;
+    opacity:0.5;
+}
+
+.top-nav {
+    grid-area: top-nav;
+    height: inherit;
+}
+
+.bottom-nav {
+    grid-area: bottom-nav;
+    height: inherit;
+    background-color: transparent;
+    display: flex;
+    align-items: center;
+    padding: 10px 10px;
+}
+
+.btn-upload {
+    position: absolute;
+    bottom: 0;
+    right: 45px;
+}
