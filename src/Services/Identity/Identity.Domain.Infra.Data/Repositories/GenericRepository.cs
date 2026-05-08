@@ -1,11 +1,11 @@
 ﻿using Identity.Domain.Core.Common.SeedWork.Interfaces;
 using Identity.Domain.Infra.Data.Context;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
-using System.Threading;
 
 namespace Main.Infrastructure.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : class, IAggregateRoot
     {
         protected readonly IdentityContext _context;
         private DbSet<T> _query;

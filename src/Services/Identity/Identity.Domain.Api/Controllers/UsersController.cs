@@ -1,7 +1,7 @@
 ﻿using Identity.Domain.Application.Dtos.User;
 using Identity.Domain.Application.Dtos.User.FluentValidations;
 using Identity.Domain.Application.Services.Authenticate.Interfaces;
-using Identity.Domain.Core.AggregateModels.Users;
+using Identity.Domain.Core.AggregateModels.UserItems;
 using Identity.Domain.Core.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -56,8 +56,8 @@ namespace Identity.Domain.Api.Controllers
             //    return Result<string>.ErrorResult("Error", "نام کاربری و رمز عبور اشتباه است.");
             //}
 
-            var token = _jwtHandler.CreateToken(user);
-            return Result<string>.SuccessResult(token);
+            var token = _jwtHandler.Create(user);
+            return Result<string>.SuccessResult(token.Token);
         }
 
         [HttpPost("register")]
@@ -69,13 +69,13 @@ namespace Identity.Domain.Api.Controllers
                 var userIsValid = await valid.ValidateAsync(dto);
                 if (!userIsValid.IsValid)
                 {
-                    return Result<User>.ErrorResult(userIsValid.Errors.Select(x => x.ErrorMessage).ToList());
+                    return Result<CreateUserDto>.ErrorResult(userIsValid.Errors.Select(x => x.ErrorMessage).ToList());
                 }
 
-                var fileInfo = Core.AggregateModels.Users.User.CreateUserInfo(dto.UserInfo.FullName,
+                var fileInfo = Core.AggregateModels.UserItems.User.CreateUserInfo(dto.UserInfo.FullName,
                     dto.UserInfo.PhoneNumber, dto.UserInfo.Email);
 
-                var user = Core.AggregateModels.Users.User.CreateUser(dto.UserName,
+                var user = Core.AggregateModels.UserItems.User.CreateUser(dto.UserName,
                     dto.Password, fileInfo);
 
                 await _repository.AddAsync(user, cancellationToken);

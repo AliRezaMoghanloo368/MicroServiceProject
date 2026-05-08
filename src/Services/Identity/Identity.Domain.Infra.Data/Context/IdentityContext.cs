@@ -1,6 +1,6 @@
-﻿using Identity.Domain.Core.AggregateModels.Users;
-using Identity.Domain.Core.Common.SeedWork.Interfaces;
+﻿using Identity.Domain.Core.AggregateModels.UserItems;
 using Identity.Domain.Infra.Data.Configurations;
+using Microsoft.EntityFrameworkCore;
 
 namespace Identity.Domain.Infra.Data.Context
 {

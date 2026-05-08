@@ -1,4 +1,6 @@
+using Identity.Domain.Infra.Data.Context;
 using Identity.Domain.Infra.IoC;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +11,7 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 
 #region IoC
-builder.Services.RegisterServices(builder.Configuration);
+builder.Services.RegisterServices(builder.Configuration, builder.Environment);
 #endregion
 
 var app = builder.Build();
@@ -27,3 +29,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }

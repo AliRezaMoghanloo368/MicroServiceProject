@@ -1,8 +1,12 @@
-﻿namespace Identity.Domain.Infra.Data.Configurations
+﻿using Identity.Domain.Core.AggregateModels.UserItems;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+
+namespace Identity.Domain.Infra.Data.Configurations
 {
     public class UserConfiguration : IEntityTypeConfiguration<User>
     {
-        public void Configure(EntityTypeBuilder<Feature> builder)
+        public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.ToTable("Users", "MGH");
 

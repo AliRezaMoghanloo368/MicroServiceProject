@@ -7,11 +7,11 @@ namespace School.Services
     public class AuthService
     {
         private readonly HttpClient _httpClient;
-        private readonly ILocalStorageService _localStorage;
-        public AuthService(IHttpClientFactory httpClientFactory, ILocalStorageService localStorage)
+        //private readonly ILocalStorageService _localStorage;
+        public AuthService(IHttpClientFactory httpClientFactory/*, ILocalStorageService localStorage*/)
         {
-            _httpClient = httpClientFactory.CreateClient("API/Users");
-            _localStorage = localStorage;
+            _httpClient = httpClientFactory.CreateClient("API/Request");
+            //_localStorage = localStorage;
         }
 
         public async Task<bool> LoginAsync(string username, string password)
@@ -23,7 +23,7 @@ namespace School.Services
                 var result = await response.Content.ReadFromJsonAsync<Result<string>>();
                 if (!string.IsNullOrEmpty(result.Data))
                 {
-                    await _localStorage.SetItemAsync("schoolAuthToken", result.Data);
+                    //await _localStorage.SetItemAsync("schoolAuthToken", result.Data);
                     return true;
                 }
             }
@@ -43,13 +43,14 @@ namespace School.Services
 
         public async Task LogoutAsync()
         {
-            await _localStorage.RemoveItemAsync("schoolAuthToken");
+            //await _localStorage.RemoveItemAsync("schoolAuthToken");
         }
 
         public async Task<bool> IsLoggedInAsync()
         {
-            var token = await _localStorage.GetItemAsync<string>("schoolAuthToken");
-            return !string.IsNullOrEmpty(token);
+            //var token = await _localStorage.GetItemAsync<string>("schoolAuthToken");
+            //return !string.IsNullOrEmpty(token);
+            return true;
         }
 
         public async Task<AuthViewModel> GetUserAsync(string userName)

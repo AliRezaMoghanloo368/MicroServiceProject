@@ -1,6 +1,6 @@
 ﻿using Identity.Domain.Core.Common.SeedWork;
 
-namespace Identity.Domain.Core.AggregateModels.Users
+namespace Identity.Domain.Core.AggregateModels.UserItems
 {
     public class UserId : StronglyTypeId<UserId>
     {

@@ -1,7 +1,7 @@
 ﻿using Identity.Domain.Core.Common.SeedWork.Implements;
 using SharedLibrary.Encryptor;
 
-namespace Identity.Domain.Core.AggregateModels.Users
+namespace Identity.Domain.Core.AggregateModels.UserItems
 {
     public class User : AggregateRoot<UserId>
     {

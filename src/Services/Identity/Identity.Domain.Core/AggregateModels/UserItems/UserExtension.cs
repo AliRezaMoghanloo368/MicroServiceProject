@@ -1,7 +1,7 @@
 ﻿using SharedLibrary.Encryptor;
 using SharedLibrary.Exceptions;
 
-namespace Identity.Domain.Core.AggregateModels.Users
+namespace Identity.Domain.Core.AggregateModels.UserItems
 {
     public static class UserExtension
     {

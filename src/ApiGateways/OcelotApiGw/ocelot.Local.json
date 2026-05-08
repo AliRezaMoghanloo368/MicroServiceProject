@@ -152,7 +152,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8006"
+          "Port": "5135"
         }
       ],
       "UpstreamPathTemplate": "/users/name/{userName}",
@@ -164,7 +164,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8006"
+          "Port": "5135"
         }
       ],
       "UpstreamPathTemplate": "/users/id/{id}",
@@ -176,7 +176,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8006"
+          "Port": "5135"
         }
       ],
       "UpstreamPathTemplate": "/login",
@@ -188,7 +188,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": "8006"
+          "Port": "5135"
         }
       ],
       "UpstreamPathTemplate": "/register",

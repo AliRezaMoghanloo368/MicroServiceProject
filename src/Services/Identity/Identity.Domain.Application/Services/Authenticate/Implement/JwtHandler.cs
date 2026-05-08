@@ -1,5 +1,5 @@
 ﻿using Identity.Domain.Application.Services.Authenticate.Interfaces;
-using Identity.Domain.Core.AggregateModels.Users;
+using Identity.Domain.Core.AggregateModels.UserItems;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

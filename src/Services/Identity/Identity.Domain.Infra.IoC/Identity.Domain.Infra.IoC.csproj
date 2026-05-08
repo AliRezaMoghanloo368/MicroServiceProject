@@ -1,15 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Shared\SharedLibrary\SharedLibrary.csproj" />
-    <ProjectReference Include="..\Identity.Domain.Application\Identity.Domain.Application.csproj" />
-    <ProjectReference Include="..\Identity.Domain.Infra.Data\Identity.Domain.Infra.Data.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.7" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\..\Shared\SharedLibrary\SharedLibrary.csproj" />
+		<ProjectReference Include="..\Identity.Domain.Application\Identity.Domain.Application.csproj" />
+		<ProjectReference Include="..\Identity.Domain.Infra.Data\Identity.Domain.Infra.Data.csproj" />
+	</ItemGroup>
 
 </Project>

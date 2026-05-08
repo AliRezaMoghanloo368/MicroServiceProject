@@ -1,4 +1,4 @@
-﻿using Identity.Domain.Core.AggregateModels.Users;
+﻿using Identity.Domain.Core.AggregateModels.UserItems;
 
 namespace Identity.Domain.Application.Dtos.User
 {

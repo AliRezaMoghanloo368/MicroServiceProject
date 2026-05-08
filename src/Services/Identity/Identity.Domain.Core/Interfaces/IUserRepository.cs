@@ -1,4 +1,4 @@
-﻿using Identity.Domain.Core.AggregateModels.Users;
+﻿using Identity.Domain.Core.AggregateModels.UserItems;
 using Identity.Domain.Core.Common.SeedWork.Interfaces;
 
 namespace Identity.Domain.Core.Interfaces
