@@ -152,7 +152,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "Identity.Domain.Api",
-          "Port": "8006"
+          "Port": "8011"
         }
       ],
       "UpstreamPathTemplate": "/users/name/{userName}",
@@ -164,7 +164,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "Identity.Domain.Api",
-          "Port": "8006"
+          "Port": "8011"
         }
       ],
       "UpstreamPathTemplate": "/users/id/{id}",
@@ -176,7 +176,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "Identity.Domain.Api",
-          "Port": "8006"
+          "Port": "8011"
         }
       ],
       "UpstreamPathTemplate": "/login",
@@ -188,14 +188,14 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "Identity.Domain.Api",
-          "Port": "8006"
+          "Port": "8011"
         }
       ],
       "UpstreamPathTemplate": "/register",
       "UpstreamHttpMethod": [ "POST" ]
     }
-  ],
-  "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:5010"
-  }
+  ]
+  //,"GlobalConfiguration": {
+  //  "BaseUrl": "https://localhost:5010"
+  //}
 }

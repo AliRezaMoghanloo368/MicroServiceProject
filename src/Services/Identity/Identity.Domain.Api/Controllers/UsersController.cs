@@ -24,15 +24,15 @@ namespace Identity.Domain.Api.Controllers
             _encryptor = encryptor;
         }
 
-        [HttpPost("name/{username}")]
-        public async Task<Result<User>> GetUserName([FromRoute] string userName)
+        [HttpGet("name/{username}")]
+        public async Task<Result<User>> GetUserName(string userName)
         {
             var user = await _repository.GetUserByNameAsync(userName);
             return Result<User>.SuccessResult(user);
         }
 
-        [HttpPost("id/{userId}")]
-        public async Task<Result<User>> GetUserById([FromRoute] string userId)
+        [HttpGet("id/{userId}")]
+        public async Task<Result<User>> GetUserById(string userId)
         {
             var user = await _repository.GetByIdAsync(userId);
             return Result<User>.SuccessResult(user);

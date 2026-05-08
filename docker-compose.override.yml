@@ -142,15 +142,13 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
-      - ASPNETCORE_HTTPS_PORTS=8081
-      - "DatabaseSettings__Root=Server=identitydb;Port=5432;Database=IdentityDB;User Id=admin;Password=@Moghanloo368"
+      - "DatabaseSettings__Root=Server=identitydb;Port=5433;Database=IdentityDB;User Id=admin;Password=@Moghanloo368"
     restart: always
     depends_on: 
       identitydb:
         condition: service_healthy
     ports:
-      - "8006:8080"
-      - "8006:8081"
+      - "8011:8080"
     volumes:
       - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
       - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
@@ -171,6 +169,6 @@ services:
       timeout: 5s
       retries: 5
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data/
