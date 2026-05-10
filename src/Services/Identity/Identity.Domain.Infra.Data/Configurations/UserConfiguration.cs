@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Identity.Domain.Infra.Data.Configurations
 {
-    public class UserConfiguration : IEntityTypeConfiguration<User>
+    public class UserConfiguration : IEntityTypeConfiguration<UserEntity>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<UserEntity> builder)
         {
             builder.ToTable("Users", "MGH");
 
@@ -19,7 +19,7 @@ namespace Identity.Domain.Infra.Data.Configurations
             builder.OwnsOne(x => x.UserInfo, a =>
             {
                 a.Property(x => x.FullName).HasMaxLength(200).HasColumnName("FullName").IsRequired();
-                a.Property(x => x.Email).HasMaxLength(200).HasColumnName("Email").IsRequired();
+                a.Property(x => x.Email).HasMaxLength(200).HasColumnName("Email");
                 a.Property(x => x.PhoneNumber).HasMaxLength(20).HasColumnName("PhoneNumber").IsRequired();
             });
         }

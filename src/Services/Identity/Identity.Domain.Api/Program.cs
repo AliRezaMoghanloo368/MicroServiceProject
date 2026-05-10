@@ -1,3 +1,4 @@
+using Identity.Domain.Api.Extensions;
 using Identity.Domain.Infra.Data.Context;
 using Identity.Domain.Infra.IoC;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +28,8 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MigrateDatabase<Program>();
 
 app.Run();
 

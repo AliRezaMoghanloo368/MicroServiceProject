@@ -1,201 +1,201 @@
-//// BFF => Backend For FrontEnd
-//{
-//  "Routes": [
-//    //--------------------- Students
-//    {
-//      "DownstreamPathTemplate": "/api/v1/Students",
-//      "DownstreamScheme": "http",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": "8001"
-//        }
-//      ],
-//      "UpstreamPathTemplate": "/Students",
-//      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
-//    },
-//    {
-//      "DownstreamPathTemplate": "/api/v1/Students/{id}",
-//      "DownstreamScheme": "http",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": "8001"
-//        }
-//      ],
-//      "UpstreamPathTemplate": "/Students/{id}",
-//      "UpstreamHttpMethod": [ "GET", "DELETE" ]
-//    },
+// BFF => Backend For FrontEnd
+{
+  "Routes": [
+    //--------------------- Students
+    {
+      "DownstreamPathTemplate": "/api/v1/Students",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8001"
+        }
+      ],
+      "UpstreamPathTemplate": "/Students",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Students/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8001"
+        }
+      ],
+      "UpstreamPathTemplate": "/Students/{id}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    },
 
-//    //--------------------- Teachers
-//    {
-//      "DownstreamPathTemplate": "/api/v1/Teachers",
-//      "DownstreamScheme": "http",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": "8001"
-//        }
-//      ],
-//      "UpstreamPathTemplate": "/Teachers",
-//      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
-//    },
-//    {
-//      "DownstreamPathTemplate": "/api/v1/Teachers/{id}",
-//      "DownstreamScheme": "http",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": "8001"
-//        }
-//      ],
-//      "UpstreamPathTemplate": "/Teachers/{id}",
-//      "UpstreamHttpMethod": [ "GET", "DELETE" ]
-//    },
+    //--------------------- Teachers
+    {
+      "DownstreamPathTemplate": "/api/v1/Teachers",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8001"
+        }
+      ],
+      "UpstreamPathTemplate": "/Teachers",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Teachers/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8001"
+        }
+      ],
+      "UpstreamPathTemplate": "/Teachers/{id}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    },
 
-//    //--------------------- Courses
-//    {
-//      "DownstreamPathTemplate": "/api/v1/Courses",
-//      "DownstreamScheme": "http",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": "8001"
-//        }
-//      ],
-//      "UpstreamPathTemplate": "/Courses",
-//      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
-//    },
-//    {
-//      "DownstreamPathTemplate": "/api/v1/Courses/{id}",
-//      "DownstreamScheme": "http",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": "8001"
-//        }
-//      ],
-//      "UpstreamPathTemplate": "/Courses/{id}",
-//      "UpstreamHttpMethod": [ "GET", "DELETE" ]
-//    },
+    //--------------------- Courses
+    {
+      "DownstreamPathTemplate": "/api/v1/Courses",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8001"
+        }
+      ],
+      "UpstreamPathTemplate": "/Courses",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/Courses/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8001"
+        }
+      ],
+      "UpstreamPathTemplate": "/Courses/{id}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    },
 
-//    //--------------------- Student-Courses
-//    {
-//      "DownstreamPathTemplate": "/api/v1/student-courses",
-//      "DownstreamScheme": "http",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": "8001"
-//        }
-//      ],
-//      "UpstreamPathTemplate": "/student-courses",
-//      "UpstreamHttpMethod": [ "POST" ]
-//    },
+    //--------------------- Student-Courses
+    {
+      "DownstreamPathTemplate": "/api/v1/student-courses",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8001"
+        }
+      ],
+      "UpstreamPathTemplate": "/student-courses",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
 
-//    //--------------------- Logs
-//    {
-//      "DownstreamPathTemplate": "/api/v1/histories",
-//      "DownstreamScheme": "http",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": "8003"
-//        }
-//      ],
-//      "UpstreamPathTemplate": "/histories",
-//      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
-//    },
-//    {
-//      "DownstreamPathTemplate": "/api/v1/histories/{id}",
-//      "DownstreamScheme": "http",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": "8003"
-//        }
-//      ],
-//      "UpstreamPathTemplate": "/histories/{id}",
-//      "UpstreamHttpMethod": [ "GET", "DELETE" ]
-//    },
-//    {
-//      "DownstreamPathTemplate": "/api/v1/histories/{userName}/{section?}/{recordId?}",
-//      "DownstreamScheme": "http",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": "8003"
-//        }
-//      ],
-//      "UpstreamPathTemplate": "/histories/{userName}/{section?}/{recordId?}",
-//      "UpstreamHttpMethod": [ "GET" ]
-//    },
+    //--------------------- Logs
+    {
+      "DownstreamPathTemplate": "/api/v1/histories",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8003"
+        }
+      ],
+      "UpstreamPathTemplate": "/histories",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/histories/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8003"
+        }
+      ],
+      "UpstreamPathTemplate": "/histories/{id}",
+      "UpstreamHttpMethod": [ "GET", "DELETE" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/histories/{userName}/{section}/{recordId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8003"
+        }
+      ],
+      "UpstreamPathTemplate": "/histories/{userName}/{section}/{recordId}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
 
-//    //--------------------- Files
-//    {
-//      "DownstreamPathTemplate": "/api/v1/Files/{id}",
-//      "DownstreamScheme": "http",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": "8005"
-//        }
-//      ],
-//      "UpstreamPathTemplate": "/Files/{id}",
-//      "UpstreamHttpMethod": [ "GET" ]
-//    },
+    //--------------------- Files
+    {
+      "DownstreamPathTemplate": "/api/v1/Files/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "8005"
+        }
+      ],
+      "UpstreamPathTemplate": "/Files/{id}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
      
-//    //--------------------- Identity
-//    {
-//      "DownstreamPathTemplate": "/api/v1/users/name/{userName}",
-//      "DownstreamScheme": "http",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": "5135"
-//        }
-//      ],
-//      "UpstreamPathTemplate": "/users/name/{userName}",
-//      "UpstreamHttpMethod": [ "GET" ]
-//    },
-//    {
-//      "DownstreamPathTemplate": "/api/v1/users/id/{id}",
-//      "DownstreamScheme": "http",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": "5135"
-//        }
-//      ],
-//      "UpstreamPathTemplate": "/users/id/{id}",
-//      "UpstreamHttpMethod": [ "GET" ]
-//    },
-//    {
-//      "DownstreamPathTemplate": "/api/v1/users/login",
-//      "DownstreamScheme": "http",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": "5135"
-//        }
-//      ],
-//      "UpstreamPathTemplate": "/login",
-//      "UpstreamHttpMethod": [ "POST" ]
-//    },
-//    {
-//      "DownstreamPathTemplate": "/api/v1/users/register",
-//      "DownstreamScheme": "http",
-//      "DownstreamHostAndPorts": [
-//        {
-//          "Host": "localhost",
-//          "Port": "5135"
-//        }
-//      ],
-//      "UpstreamPathTemplate": "/register",
-//      "UpstreamHttpMethod": [ "POST" ]
-//    }
-//  ]
-//  //,"GlobalConfiguration": {
-//  //  "BaseUrl": "https://localhost:5010"
-//  //}
-//}
+    //--------------------- Identity
+    {
+      "DownstreamPathTemplate": "/api/v1/users/name/{userName}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5135"
+        }
+      ],
+      "UpstreamPathTemplate": "/users/name/{userName}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/users/id/{id}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5135"
+        }
+      ],
+      "UpstreamPathTemplate": "/users/id/{id}",
+      "UpstreamHttpMethod": [ "GET" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/users/login",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5135"
+        }
+      ],
+      "UpstreamPathTemplate": "/login",
+      "UpstreamHttpMethod": [ "POST" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/users/register",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": "5135"
+        }
+      ],
+      "UpstreamPathTemplate": "/register",
+      "UpstreamHttpMethod": [ "POST" ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:5010"
+  }
+}

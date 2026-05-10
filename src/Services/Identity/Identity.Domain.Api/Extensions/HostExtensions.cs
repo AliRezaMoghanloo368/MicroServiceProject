@@ -1,6 +1,6 @@
 ﻿using Npgsql;
 
-namespace Files.Api.Extensions
+namespace Identity.Domain.Api.Extensions
 {
     public static class HostExtensions
     {
@@ -28,18 +28,35 @@ namespace Files.Api.Extensions
                         Connection = connection
                     };
 
-                    //command.CommandText = "DROP TABLE IF EXISTS Files";
+                    //command.CommandText = "DROP TABLE IF EXISTS IdentityDB";
                     //command.ExecuteNonQuery();
 
-                    command.CommandText = @"CREATE TABLE IF NOT EXISTS Files(Id UUID PRIMARY KEY,
-                                                                EntityName VARCHAR(200) NOT NULL,
-                                                                EntityId TEXT NOT NULL,
-                                                                FileContent BYTEA,
-                                                                UploadAt TIMESTAMP)";
+                    command.CommandText = @"
+                        CREATE SCHEMA IF NOT EXISTS ""MGH"";
+
+                        CREATE TABLE IF NOT EXISTS ""MGH"".""Users"" (
+                            ""Id""            UUID PRIMARY KEY NOT NULL,
+                            ""UserName""      VARCHAR(200) UNIQUE NOT NULL,
+                            ""Password""      VARCHAR(200) NOT NULL,
+                            ""Salt""          VARCHAR(200) NOT NULL,
+                            ""CreateAt""      TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
+                        );
+
+                        CREATE TABLE IF NOT EXISTS ""MGH"".""UserInfo"" (
+                            ""UserId""        UUID PRIMARY KEY NOT NULL,
+                            ""FullName""      VARCHAR(200) NOT NULL,
+                            ""PhoneNumber""   VARCHAR(20)  NOT NULL,
+                            ""Email""         VARCHAR(200),
+
+                            CONSTRAINT ""FK_UserInfo_Users""
+                                FOREIGN KEY (""UserId"")
+                                REFERENCES ""MGH"".""Users"" (""Id"")
+                                ON DELETE CASCADE
+                        );";
                     command.ExecuteNonQuery();
 
                     // seed data
-                    //command.CommandText = "INSERT INTO Files(EntityName, EntityId, FileContent, UploadAt) VALUES ('Students', '', @FileContent, NOW());";
+                    //command.CommandText = "INSERT INTO IdentityDB() VALUES ('Students', '', @FileContent, NOW());";
                     //command.Parameters.AddWithValue("FileContent", new byte[] { 1, 2, 3, 4 });
                     ////command.Parameters.AddWithValue("UploadAt", DateTime.UtcNow);
                     //command.ExecuteNonQuery();

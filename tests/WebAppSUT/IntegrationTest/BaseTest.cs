@@ -46,10 +46,10 @@ namespace WebAppSUT.IntegrationTest
                 try
                 {
                     dbContext.Database.EnsureCreated();
-                    var fileInfo = User.CreateUserInfo("AliRezaMoghanloo",
+                    var fileInfo = UserEntity.CreateUserInfo("AliRezaMoghanloo",
                                                        "09195438781",
                                                        "AliReza.Moghanloo368@Gmail.Com");
-                    var user = User.CreateUser("Test",
+                    var user = UserEntity.CreateUser("Test",
                                                "1234",
                                                fileInfo);
                     dbContext.Users.Add(user);

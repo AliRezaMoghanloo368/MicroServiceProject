@@ -12,6 +12,20 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["src/Services/Files/Files.Api/Files.Api.csproj", "src/Services/Files/Files.Api/"]
+COPY ["src/Services/Main/Main.IoC/Main.IoC.csproj", "src/Services/Main/Main.IoC/"]
+COPY ["src/Services/Main/Main.Application/Main.Application.csproj", "src/Services/Main/Main.Application/"]
+COPY ["src/Shared/SharedLibrary/SharedLibrary.csproj", "src/Shared/SharedLibrary/"]
+COPY ["src/Services/Logs/Logs.Grpc2/Logs.Grpc/Logs.Grpc.csproj", "src/Services/Logs/Logs.Grpc2/Logs.Grpc/"]
+COPY ["src/Services/Logs/Logs.Core/Logs.Core.csproj", "src/Services/Logs/Logs.Core/"]
+COPY ["src/BuildingBlocks/EventBus.Messages/EventBus.Messages.csproj", "src/BuildingBlocks/EventBus.Messages/"]
+COPY ["src/Services/Logs/Logs.Domain/Logs.Domain.csproj", "src/Services/Logs/Logs.Domain/"]
+COPY ["src/Services/Logs/Logs.Infrastructure/Logs.Infrastructure.csproj", "src/Services/Logs/Logs.Infrastructure/"]
+COPY ["src/Services/Main/Main.Domain/Main.Domain.csproj", "src/Services/Main/Main.Domain/"]
+COPY ["src/Services/Main/Main.Infrastructure/Main.Infrastructure.csproj", "src/Services/Main/Main.Infrastructure/"]
+COPY ["src/Services/Files/Files.Application/Files.Application.csproj", "src/Services/Files/Files.Application/"]
+COPY ["src/Services/Files/Files.Domain/Files.Domain.csproj", "src/Services/Files/Files.Domain/"]
+COPY ["src/Services/Files/Files.Infra.Ioc/Files.Infra.Ioc.csproj", "src/Services/Files/Files.Infra.Ioc/"]
+COPY ["src/Services/Files/Files.Infra.Data/Files.Infra.Data.csproj", "src/Services/Files/Files.Infra.Data/"]
 RUN dotnet restore "./src/Services/Files/Files.Api/Files.Api.csproj"
 COPY . .
 WORKDIR "/src/src/Services/Files/Files.Api"

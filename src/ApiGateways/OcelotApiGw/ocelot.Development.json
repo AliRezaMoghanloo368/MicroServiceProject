@@ -119,7 +119,7 @@
       "UpstreamHttpMethod": [ "GET", "DELETE" ]
     },
     {
-      "DownstreamPathTemplate": "/api/v1/histories/{userName}/{section?}/{recordId?}",
+      "DownstreamPathTemplate": "/api/v1/histories/{userName}/{section}/{recordId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -127,7 +127,7 @@
           "Port": "8003"
         }
       ],
-      "UpstreamPathTemplate": "/histories/{userName}/{section?}/{recordId?}",
+      "UpstreamPathTemplate": "/histories/{userName}/{section}/{recordId}",
       "UpstreamHttpMethod": [ "GET" ]
     },
 
@@ -151,7 +151,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "Identity.Domain.Api",
+          "Host": "identity.domain.api",
           "Port": "8011"
         }
       ],
@@ -163,7 +163,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "Identity.Domain.Api",
+          "Host": "identity.domain.api",
           "Port": "8011"
         }
       ],
@@ -175,7 +175,7 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "Identity.Domain.Api",
+          "Host": "identity.domain.api",
           "Port": "8011"
         }
       ],
@@ -187,15 +187,15 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "Identity.Domain.Api",
+          "Host": "identity.domain.api",
           "Port": "8011"
         }
       ],
       "UpstreamPathTemplate": "/register",
       "UpstreamHttpMethod": [ "POST" ]
     }
-  ]
-  //,"GlobalConfiguration": {
-  //  "BaseUrl": "https://localhost:5010"
-  //}
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "https://localhost:5010"
+  }
 }

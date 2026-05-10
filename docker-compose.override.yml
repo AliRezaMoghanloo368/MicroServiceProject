@@ -142,7 +142,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
-      - "DatabaseSettings__Root=Server=identitydb;Port=5433;Database=IdentityDB;User Id=admin;Password=@Moghanloo368"
+      - "DatabaseSettings__Root=Server=filesdb;Port=5433;Database=IdentityDB;User Id=admin;Password=@Moghanloo368"
     restart: always
     depends_on: 
       identitydb:

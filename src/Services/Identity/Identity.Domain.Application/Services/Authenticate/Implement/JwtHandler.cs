@@ -29,7 +29,7 @@ namespace Identity.Domain.Application.Services.Authenticate.Implement
             };
         }
 
-        public JsonWebToken Create(User user)
+        public JsonWebToken Create(UserEntity user)
         {
             var nowUtc = DateTime.UtcNow;
             var expires = nowUtc.AddMinutes(_jwtOptions.ExpiryMinutes);

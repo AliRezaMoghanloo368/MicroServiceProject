@@ -9,7 +9,7 @@ namespace Identity.Domain.Api.EndPoints.Users
     {
         public static void MapUser(this IEndpointRouteBuilder app)
         {
-            app.MapPost("/login", async (IJwtHandler _jwtHandler, IGenericRepository<Core.AggregateModels.UserItems.User> _userRepository) =>
+            app.MapPost("/login", async (IJwtHandler _jwtHandler, IGenericRepository<Core.AggregateModels.UserItems.UserEntity> _userRepository) =>
             {
                 //var user = await _userRepository.GetByIdAsync(loginDto.B);
 

@@ -10,7 +10,7 @@ namespace Identity.Domain.Infra.Data.Context
         {
 
         }
-        public DbSet<User> Users { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

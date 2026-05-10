@@ -21,7 +21,7 @@ namespace WebAppSUT.IntegrationTest
         {
             var client = _factory.CreateClient();
             var user = await client.GetAsync(Urls.Identity.UserNameUrl.Replace("{userName}", "Test"));
-            var result = await user.Content.ReadFromJsonAsync<List<User>>();
+            var result = await user.Content.ReadFromJsonAsync<List<UserEntity>>();
             result.ShouldNotBeNull();
             var ormUsers = await _userRepository.GetAllAsync();
             result[0].UserName.ShouldBe(ormUsers[0].UserName);

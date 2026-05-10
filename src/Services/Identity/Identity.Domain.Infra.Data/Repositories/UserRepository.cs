@@ -1,33 +1,88 @@
-﻿using Identity.Domain.Core.AggregateModels.UserItems;
-using Identity.Domain.Core.Common.SeedWork.Interfaces;
+﻿using Dapper;
+using Identity.Domain.Core.AggregateModels.UserItems;
 using Identity.Domain.Core.Interfaces;
-using Identity.Domain.Infra.Data.Context;
-using Main.Infrastructure.Repositories;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Npgsql;
+using System.Data;
 
 namespace Identity.Domain.Infra.Data.Repositories
 {
-    public class UserRepository : GenericRepository<User>, IUserRepository
+    public class UserRepository : IUserRepository
     {
-        private readonly IdentityContext _context;
-        public UserRepository(IdentityContext context) : base(context)
+        #region Constructor
+        private string? connectionString;
+        private readonly IConfiguration _configuration;
+        public UserRepository(IConfiguration configuration)
         {
-            _context = context;
+            _configuration = configuration;
+            connectionString = _configuration.GetSection("DatabaseSettings:Root").Value;
+        }
+        #endregion
+
+        #region Get File
+        public async Task<UserEntity?> GetByIdAsync(Guid id)
+        {
+            using var connection = new NpgsqlConnection(connectionString);
+
+            return await connection.QuerySingleOrDefaultAsync<UserEntity>(
+                "SELECT * FROM IdentityDB WHERE Id = @Id",
+                new { Id = id }
+            );
         }
 
-        public async Task<bool> IsExistUserByUserNameAsync(string userName)
+        public async Task<UserEntity?> GetByUserNameAsync(string name)
         {
-            return await _context.Users.AnyAsync(u => u.UserName == userName);
+            using var connection = new NpgsqlConnection(connectionString);
+
+            return await connection.QuerySingleOrDefaultAsync<UserEntity>(
+                "SELECT * FROM IdentityDB WHERE UserName = @UserName",
+                new { UserName = name }
+            );
         }
 
-        public async Task<User> GetUserForLoginAsync(string userName, string password)
+        public async Task<UserEntity> CreateAsync(UserEntity entity, CancellationToken cancellationToken)
         {
-            return await _context.Users.FirstOrDefaultAsync(x => x.UserName == userName && x.Password == password);
+            DataTable dt = new DataTable();
+            using var connection = new NpgsqlConnection(connectionString);
+            connection.Open();
+
+            using var command = new NpgsqlCommand
+            {
+                Connection = connection
+            };
+            command.CommandText = "INSERT INTO IdentityDB (UserName, Password, Salt, FullName, PhoneNumber, Email, CreateAt) " +
+                                                  "VALUES (@UserName, @Password, @Salt, @FullName, @PhoneNumber, @Email, @CreateAt);" +
+                                  "SELECT TOP 1 * FROM IdentityDB ORDER BY Id DESC";
+            command.Parameters.AddWithValue("UserName", entity.UserName);
+            command.Parameters.AddWithValue("Password", entity.Password);
+            command.Parameters.AddWithValue("Salt", entity.Salt);
+            command.Parameters.AddWithValue("FullName", entity.UserInfo.FullName);
+            command.Parameters.AddWithValue("PhoneNumber", entity.UserInfo.PhoneNumber);
+            command.Parameters.AddWithValue("Email", entity.UserInfo.Email);
+            command.Parameters.AddWithValue("CreateAt", DateTime.UtcNow);
+            dt.Load(await command.ExecuteReaderAsync());
+            return entity;
         }
 
-        public async Task<User> GetUserByNameAsync(string userName)
+        public Task<bool> UpdateAsync(UserEntity entity)
         {
-            return await _context.Users.FirstOrDefaultAsync(x => x.UserName == userName);
+            throw new NotImplementedException();
         }
+
+        public Task<bool> DeleteAsync(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> IsExistUserByUserNameAsync(string name)
+        {
+            using var connection = new NpgsqlConnection(connectionString);
+
+            return await connection.QuerySingleOrDefaultAsync<bool>(
+                "SELECT 1 FROM IdentityDB WHERE UserName = @UserName",
+                new { UserName = name }
+            );
+        }
+        #endregion
     }
 }

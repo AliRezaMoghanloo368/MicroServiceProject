@@ -11,6 +11,9 @@ services:
   filesdb:
     image: postgres:15
 
+  identitydb:
+    image: postgres:15
+
   pgadmin:
     image: dpage/pgadmin4:8
 

@@ -25,23 +25,23 @@ namespace Identity.Domain.Api.Controllers
         }
 
         [HttpGet("name/{username}")]
-        public async Task<Result<User>> GetUserName(string userName)
+        public async Task<Result<UserEntity>> GetUserName(string userName)
         {
-            var user = await _repository.GetUserByNameAsync(userName);
-            return Result<User>.SuccessResult(user);
+            var user = await _repository.GetByUserNameAsync(userName);
+            return Result<UserEntity>.SuccessResult(user);
         }
 
         [HttpGet("id/{userId}")]
-        public async Task<Result<User>> GetUserById(string userId)
+        public async Task<Result<UserEntity>> GetUserById(Guid userId)
         {
             var user = await _repository.GetByIdAsync(userId);
-            return Result<User>.SuccessResult(user);
+            return Result<UserEntity>.SuccessResult(user);
         }
 
         [HttpPost("login")]
         public async Task<Result<string>> Login(UserDto dto)
         {
-            var user = await _repository.GetByIdAsync(dto.UserName);
+            var user = await _repository.GetByUserNameAsync(dto.UserName);
             if (user == null)
                 return Result<string>.ErrorResult("Error", "کاربری با این نام یافت نشد.");
 
@@ -72,13 +72,13 @@ namespace Identity.Domain.Api.Controllers
                     return Result<CreateUserDto>.ErrorResult(userIsValid.Errors.Select(x => x.ErrorMessage).ToList());
                 }
 
-                var fileInfo = Core.AggregateModels.UserItems.User.CreateUserInfo(dto.UserInfo.FullName,
+                var fileInfo = UserEntity.CreateUserInfo(dto.UserInfo.FullName,
                     dto.UserInfo.PhoneNumber, dto.UserInfo.Email);
 
-                var user = Core.AggregateModels.UserItems.User.CreateUser(dto.UserName,
+                var user = UserEntity.CreateUser(dto.UserName,
                     dto.Password, fileInfo);
 
-                await _repository.AddAsync(user, cancellationToken);
+                await _repository.CreateAsync(user, cancellationToken);
 
                 return Result<CreateUserDto>.SuccessResult(dto, "عملیات با موفقیت انجام شد!");
 

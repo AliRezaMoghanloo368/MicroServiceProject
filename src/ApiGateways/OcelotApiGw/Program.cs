@@ -21,7 +21,7 @@ builder.Services.AddOcelot(builder.Configuration);
 // ---------- Logging ----------
 builder.Logging.ClearProviders();
 builder.Logging.AddConfiguration(
-    builder.Configuration.GetSection("Logging"));
+builder.Configuration.GetSection("Logging"));
 builder.Logging.AddConsole();
 builder.Logging.AddDebug();
 

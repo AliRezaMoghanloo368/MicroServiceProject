@@ -1,12 +1,14 @@
 ﻿using Identity.Domain.Core.AggregateModels.UserItems;
-using Identity.Domain.Core.Common.SeedWork.Interfaces;
 
 namespace Identity.Domain.Core.Interfaces
 {
-    public interface IUserRepository : IGenericRepository<User>
+    public interface IUserRepository
     {
-        Task<bool> IsExistUserByUserNameAsync(string userName);
-        Task<User> GetUserByNameAsync(string userName);
-        Task<User> GetUserForLoginAsync(string userName, string password);
+        Task<UserEntity?> GetByIdAsync(Guid id);
+        Task<UserEntity?> GetByUserNameAsync(string name);
+        Task<bool> IsExistUserByUserNameAsync(string name);
+        Task<UserEntity> CreateAsync(UserEntity entity, CancellationToken cancellationToken);
+        Task<bool> UpdateAsync(UserEntity entity);
+        Task<bool> DeleteAsync(Guid id);
     }
 }

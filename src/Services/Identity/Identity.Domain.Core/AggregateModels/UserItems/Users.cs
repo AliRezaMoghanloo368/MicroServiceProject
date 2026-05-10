@@ -3,7 +3,7 @@ using SharedLibrary.Encryptor;
 
 namespace Identity.Domain.Core.AggregateModels.UserItems
 {
-    public class User : AggregateRoot<UserId>
+    public class UserEntity : AggregateRoot<UserId>
     {
         private readonly IEncryptor _encryptor;
 
@@ -13,9 +13,9 @@ namespace Identity.Domain.Core.AggregateModels.UserItems
         public DateTime CreateAt { get; set; }
         public UserInfo UserInfo { get; set; }
 
-        private User() { }
+        private UserEntity() { }
 
-        private User(UserId id, string userName, string password, UserInfo userInfo)
+        private UserEntity(UserId id, string userName, string password, UserInfo userInfo)
         {
             Id = id;
             UserName = userName;
@@ -29,10 +29,10 @@ namespace Identity.Domain.Core.AggregateModels.UserItems
             return new UserInfo(fullName, phoneNumber, email);
         }
 
-        public static User CreateUser(string userName, string password, UserInfo userInfo)
+        public static UserEntity CreateUser(string userName, string password, UserInfo userInfo)
         {
             var id = Guid.NewGuid();
-            return new User(new UserId(id), userName, password, userInfo);
+            return new UserEntity(new UserId(id), userName, password, userInfo);
         }
 
         public bool ValidatePassword(string password, IEncryptor encryptor)
