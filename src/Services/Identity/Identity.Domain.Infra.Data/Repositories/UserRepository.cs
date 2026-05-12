@@ -25,7 +25,7 @@ namespace Identity.Domain.Infra.Data.Repositories
             using var connection = new NpgsqlConnection(connectionString);
 
             return await connection.QuerySingleOrDefaultAsync<UserEntity>(
-                "SELECT * FROM IdentityDB WHERE Id = @Id",
+                @"SELECT * FROM ""MGH"".""Users"" WHERE Id = @Id",
                 new { Id = id }
             );
         }
@@ -35,7 +35,7 @@ namespace Identity.Domain.Infra.Data.Repositories
             using var connection = new NpgsqlConnection(connectionString);
 
             return await connection.QuerySingleOrDefaultAsync<UserEntity>(
-                "SELECT * FROM IdentityDB WHERE UserName = @UserName",
+                @"SELECT * FROM ""MGH"".""Users"" WHERE UserName = @UserName",
                 new { UserName = name }
             );
         }
@@ -50,17 +50,27 @@ namespace Identity.Domain.Infra.Data.Repositories
             {
                 Connection = connection
             };
-            command.CommandText = "INSERT INTO IdentityDB (UserName, Password, Salt, FullName, PhoneNumber, Email, CreateAt) " +
-                                                  "VALUES (@UserName, @Password, @Salt, @FullName, @PhoneNumber, @Email, @CreateAt);" +
-                                  "SELECT TOP 1 * FROM IdentityDB ORDER BY Id DESC";
+            command.CommandText = @"WITH generated_uuid AS (
+                                        SELECT gen_random_uuid() AS new_uuid
+                                    ), 
+                                    InsertedUser AS (
+                                        INSERT INTO ""MGH"".""Users"" (""Id"", ""UserName"", ""Password"", ""Salt"", ""CreateAt"")
+                                        SELECT new_uuid, @UserName, @Password, @Salt, @CreateAt
+                                        FROM generated_uuid
+                                        RETURNING ""Id""
+                                    )
+                                    INSERT INTO ""MGH"".""UserInfo"" (""FullName"", ""PhoneNumber"", ""Email"", ""UserId"")
+                                    SELECT @FullName, @PhoneNumber, @Email, ""Id"" 
+                                    FROM InsertedUser;";
             command.Parameters.AddWithValue("UserName", entity.UserName);
             command.Parameters.AddWithValue("Password", entity.Password);
             command.Parameters.AddWithValue("Salt", entity.Salt);
             command.Parameters.AddWithValue("FullName", entity.UserInfo.FullName);
             command.Parameters.AddWithValue("PhoneNumber", entity.UserInfo.PhoneNumber);
             command.Parameters.AddWithValue("Email", entity.UserInfo.Email);
-            command.Parameters.AddWithValue("CreateAt", DateTime.UtcNow);
-            dt.Load(await command.ExecuteReaderAsync());
+            command.Parameters.AddWithValue("CreateAt", entity.CreateAt);
+            await command.ExecuteNonQueryAsync();
+
             return entity;
         }
 
@@ -76,13 +86,17 @@ namespace Identity.Domain.Infra.Data.Repositories
 
         public async Task<bool> IsExistUserByUserNameAsync(string name)
         {
-            using var connection = new NpgsqlConnection(connectionString);
+            const string query = @"
+                SELECT EXISTS(
+                    SELECT 1
+                    FROM ""MGH"".""Users""
+                    WHERE ""UserName"" = @UserName
+                );";
 
-            return await connection.QuerySingleOrDefaultAsync<bool>(
-                "SELECT 1 FROM IdentityDB WHERE UserName = @UserName",
-                new { UserName = name }
-            );
+            await using var connection = new NpgsqlConnection(connectionString);
+            return await connection.ExecuteScalarAsync<bool>(query, new { UserName = name });
         }
+
         #endregion
     }
 }

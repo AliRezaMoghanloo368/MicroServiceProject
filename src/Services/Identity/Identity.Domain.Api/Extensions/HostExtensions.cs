@@ -43,7 +43,7 @@ namespace Identity.Domain.Api.Extensions
                         );
 
                         CREATE TABLE IF NOT EXISTS ""MGH"".""UserInfo"" (
-                            ""UserId""        UUID PRIMARY KEY NOT NULL,
+                            ""UserId""        VARCHAR(30) PRIMARY NOT NULL,
                             ""FullName""      VARCHAR(200) NOT NULL,
                             ""PhoneNumber""   VARCHAR(20)  NOT NULL,
                             ""Email""         VARCHAR(200),

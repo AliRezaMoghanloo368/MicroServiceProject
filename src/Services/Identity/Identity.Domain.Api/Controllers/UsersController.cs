@@ -61,7 +61,7 @@ namespace Identity.Domain.Api.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<Result<CreateUserDto>> Register(CreateUserDto dto, CancellationToken cancellationToken)
+        public async Task<Result<string>> Register(CreateUserDto dto, CancellationToken cancellationToken)
         {
             try
             {
@@ -69,23 +69,21 @@ namespace Identity.Domain.Api.Controllers
                 var userIsValid = await valid.ValidateAsync(dto);
                 if (!userIsValid.IsValid)
                 {
-                    return Result<CreateUserDto>.ErrorResult(userIsValid.Errors.Select(x => x.ErrorMessage).ToList());
+                    return Result<string>.ErrorResult(userIsValid.Errors.Select(x => x.ErrorMessage).ToList());
                 }
 
                 var fileInfo = UserEntity.CreateUserInfo(dto.UserInfo.FullName,
                     dto.UserInfo.PhoneNumber, dto.UserInfo.Email);
 
-                var user = UserEntity.CreateUser(dto.UserName,
+                var user = UserEntity.CreateUser(_encryptor, dto.UserName,
                     dto.Password, fileInfo);
 
-                await _repository.CreateAsync(user, cancellationToken);
-
-                return Result<CreateUserDto>.SuccessResult(dto, "عملیات با موفقیت انجام شد!");
-
+                var result =  await _repository.CreateAsync(user, cancellationToken);
+                return Result<string>.SuccessResult(result.Id.Value.ToString(), "عملیات با موفقیت انجام شد!");
             }
             catch (Exception e)
             {
-                return Result<CreateUserDto>.ErrorResult(e.Message);
+                return Result<string>.ErrorResult(e.Message);
             }
         }
     }

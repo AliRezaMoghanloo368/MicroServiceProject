@@ -1,4 +1,4 @@
-services:
+﻿services:
 #region -------------------------------------rabbitmq
   rabbitmq:
     container_name: rabbitmq
@@ -101,14 +101,14 @@ services:
       - POSTGRES_DB=Files
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U admin"] # اصلاح یوزر در healthcheck
       interval: 10s
       timeout: 5s
       retries: 5
     ports:
       - "5432:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - files_postgres_data:/var/lib/postgresql/data/ # Volume مخصوص filesdb
 
 #region ---------------------------------------- pgadmin
   pgadmin:
@@ -142,7 +142,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_HTTP_PORTS=8080
-      - "DatabaseSettings__Root=Server=filesdb;Port=5433;Database=IdentityDB;User Id=admin;Password=@Moghanloo368"
+      - "DatabaseSettings__Root=Server=identitydb;Port=5432;Database=IdentityDB;User Id=admin;Password=@Moghanloo368" # اصلاح پورت به 5432
     restart: always
     depends_on: 
       identitydb:
@@ -164,11 +164,21 @@ services:
       - POSTGRES_DB=IdentityDB
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -U admin"] # اصلاح یوزر و دیتابیس در healthcheck
       interval: 10s
       timeout: 5s
       retries: 5
     ports:
-      - "5433:5432"
+      - "5433:5432" # این پورت را نگه می‌داریم چون ممکن است جایی از برنامه از آن استفاده کند، ولی اتصال داخلی از identity.domain.api به identitydb روی 5432 خواهد بود
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - identity_postgres_data:/var/lib/postgresql/data/ # Volume مخصوص identitydb
+
+# Volume ها در انتهای فایل تعریف می‌شوند:
+volumes:
+  portainer_data:
+  maindb_data:
+  mongo_data:
+  postgres_data: # این volume ممکن است اشتباهی مانده باشد، اگر لازم ندارید حذف کنید
+  pgadmin_data:
+  files_postgres_data: # volume جدید برای filesdb
+  identity_postgres_data: # volume جدید برای identitydb

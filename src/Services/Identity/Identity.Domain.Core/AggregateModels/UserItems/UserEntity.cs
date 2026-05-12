@@ -5,8 +5,6 @@ namespace Identity.Domain.Core.AggregateModels.UserItems
 {
     public class UserEntity : AggregateRoot<UserId>
     {
-        private readonly IEncryptor _encryptor;
-
         public string UserName { get; set; }
         public string Password { get; set; }
         public string Salt { get; set; }
@@ -15,13 +13,14 @@ namespace Identity.Domain.Core.AggregateModels.UserItems
 
         private UserEntity() { }
 
-        private UserEntity(UserId id, string userName, string password, UserInfo userInfo)
+        private UserEntity(IEncryptor encryptor, UserId id, string userName, string password, UserInfo userInfo)
         {
             Id = id;
             UserName = userName;
             CreateAt = DateTime.Now;
-            Salt = _encryptor.GetSalt();
-            Password = _encryptor.GetHash(password, Salt);
+            Salt = encryptor.GetSalt();
+            Password = encryptor.GetHash(password, Salt);
+            UserInfo = userInfo;
         }
 
         public static UserInfo CreateUserInfo(string fullName, string phoneNumber, string? email)
@@ -29,10 +28,10 @@ namespace Identity.Domain.Core.AggregateModels.UserItems
             return new UserInfo(fullName, phoneNumber, email);
         }
 
-        public static UserEntity CreateUser(string userName, string password, UserInfo userInfo)
+        public static UserEntity CreateUser(IEncryptor encryptor, string userName, string password, UserInfo userInfo)
         {
             var id = Guid.NewGuid();
-            return new UserEntity(new UserId(id), userName, password, userInfo);
+            return new UserEntity(encryptor, new UserId(id), userName, password, userInfo);
         }
 
         public bool ValidatePassword(string password, IEncryptor encryptor)
