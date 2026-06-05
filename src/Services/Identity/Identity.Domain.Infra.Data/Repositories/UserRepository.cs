@@ -3,6 +3,7 @@ using Identity.Domain.Core.AggregateModels.UserItems;
 using Identity.Domain.Core.Interfaces;
 using Microsoft.Extensions.Configuration;
 using Npgsql;
+using SharedLibrary.Patterns.ResultPattern;
 using System.Data;
 
 namespace Identity.Domain.Infra.Data.Repositories
@@ -25,7 +26,7 @@ namespace Identity.Domain.Infra.Data.Repositories
             using var connection = new NpgsqlConnection(connectionString);
 
             return await connection.QuerySingleOrDefaultAsync<UserEntity>(
-                @"SELECT * FROM ""MGH"".""Users"" WHERE Id = @Id",
+                @"SELECT * FROM ""MGH"".""Users"" WHERE ""Id"" = @Id",
                 new { Id = id }
             );
         }
@@ -34,9 +35,29 @@ namespace Identity.Domain.Infra.Data.Repositories
         {
             using var connection = new NpgsqlConnection(connectionString);
 
-            return await connection.QuerySingleOrDefaultAsync<UserEntity>(
-                @"SELECT * FROM ""MGH"".""Users"" WHERE UserName = @UserName",
+            var user = await connection.QuerySingleOrDefaultAsync<dynamic>(
+                @"SELECT * FROM ""MGH"".""Users"" WHERE ""UserName"" = @UserName",
                 new { UserName = name }
+            );
+
+            if (user == null)
+                return null;
+
+            var userInfo = await connection.QuerySingleOrDefaultAsync<dynamic>(
+                @"SELECT * FROM ""MGH"".""UserInfo"" WHERE ""UserId"" = @UserId",
+                new { UserId = user.Id }
+            );
+
+            var createUserInfo = UserInfo.Create(userInfo.FullName, userInfo.PhoneNumber, userInfo.Email);
+
+            // اگر بخواهی Entity را از DB بازسازی کنی، باید یک factory/reconstitution method داشته باشی
+            return UserEntity.Reconstitute(
+                new UserId(user.Id),
+                user.UserName,
+                user.Password,
+                user.Salt,
+                user.CreateAt,
+                createUserInfo
             );
         }
 
@@ -96,7 +117,6 @@ namespace Identity.Domain.Infra.Data.Repositories
             await using var connection = new NpgsqlConnection(connectionString);
             return await connection.ExecuteScalarAsync<bool>(query, new { UserName = name });
         }
-
         #endregion
     }
 }

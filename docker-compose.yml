@@ -56,11 +56,18 @@ services:
       context: .
       dockerfile: src/Services/Identity/Identity.Domain.Api/Dockerfile
 
+  school:
+    image: ${DOCKER_REGISTRY-}school
+    build:
+      context: .
+      dockerfile: src/Presentation/School/Dockerfile
+
 volumes:
   maindb_data:
   mongo_data:
   portainer_data:
   postgres_data:
   pgadmin_data:
+
 
 

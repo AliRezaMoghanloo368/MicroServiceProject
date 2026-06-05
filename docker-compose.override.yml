@@ -1,4 +1,4 @@
-﻿services:
+services:
 #region -------------------------------------rabbitmq
   rabbitmq:
     container_name: rabbitmq
@@ -101,14 +101,14 @@
       - POSTGRES_DB=Files
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin"] # اصلاح یوزر در healthcheck
+      test: ["CMD-SHELL", "pg_isready -U admin"]
       interval: 10s
       timeout: 5s
       retries: 5
     ports:
       - "5432:5432"
     volumes:
-      - files_postgres_data:/var/lib/postgresql/data/ # Volume مخصوص filesdb
+      - files_postgres_data:/var/lib/postgresql/data/
 
 #region ---------------------------------------- pgadmin
   pgadmin:
@@ -133,16 +133,17 @@
       - logs.api
       - main.api
       - identity.domain.api
+    restart: always
     ports:
-      - "8010:80"
+      - "8010:8080"
 
 #region ---------------------------------------- identity
   identity.domain.api:
     container_name: identity.domain.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_HTTP_PORTS=8080
-      - "DatabaseSettings__Root=Server=identitydb;Port=5432;Database=IdentityDB;User Id=admin;Password=@Moghanloo368" # اصلاح پورت به 5432
+      # - ASPNETCORE_HTTP_PORTS=8080
+      - "DatabaseSettings__Root=Server=identitydb;Port=5432;Database=IdentityDB;User Id=admin;Password=@Moghanloo368"
     restart: always
     depends_on: 
       identitydb:
@@ -164,14 +165,30 @@
       - POSTGRES_DB=IdentityDB
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin"] # اصلاح یوزر و دیتابیس در healthcheck
+      test: ["CMD-SHELL", "pg_isready -U admin"] 
       interval: 10s
       timeout: 5s
       retries: 5
     ports:
       - "5433:5432" # این پورت را نگه می‌داریم چون ممکن است جایی از برنامه از آن استفاده کند، ولی اتصال داخلی از identity.domain.api به identitydb روی 5432 خواهد بود
     volumes:
-      - identity_postgres_data:/var/lib/postgresql/data/ # Volume مخصوص identitydb
+      - identity_postgres_data:/var/lib/postgresql/data/
+
+  #region ---------------------------------------- school
+  school:
+    container_name: school
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_HTTP_PORTS=8012
+      - ASPNETCORE_HTTPS_PORTS=8013
+    ports:
+      - "8012"
+      - "8013"
+    volumes:
+      - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+      - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+      - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 
 # Volume ها در انتهای فایل تعریف می‌شوند:
 volumes:
@@ -180,5 +197,5 @@ volumes:
   mongo_data:
   postgres_data: # این volume ممکن است اشتباهی مانده باشد، اگر لازم ندارید حذف کنید
   pgadmin_data:
-  files_postgres_data: # volume جدید برای filesdb
-  identity_postgres_data: # volume جدید برای identitydb
+  files_postgres_data:
+  identity_postgres_data:

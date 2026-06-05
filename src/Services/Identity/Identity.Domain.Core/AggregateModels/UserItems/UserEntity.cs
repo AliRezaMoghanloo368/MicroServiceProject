@@ -34,6 +34,20 @@ namespace Identity.Domain.Core.AggregateModels.UserItems
             return new UserEntity(encryptor, new UserId(id), userName, password, userInfo);
         }
 
+        public static UserEntity Reconstitute(
+            UserId id, string userName, string password, string salt, DateTime createAt, UserInfo userInfo) 
+        {
+            return new UserEntity
+            {
+                Id = id,
+                UserName = userName,
+                Password = password,
+                Salt = salt,
+                CreateAt = createAt,
+                UserInfo = userInfo
+            };
+        }
+
         public bool ValidatePassword(string password, IEncryptor encryptor)
         => Password.Equals(encryptor.GetHash(password, Salt));
     }

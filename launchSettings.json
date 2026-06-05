@@ -8,7 +8,8 @@
         "logs.api": "StartDebugging",
         "main.api": "StartDebugging",
         "ocelotapigw": "StartDebugging",
-        "identity.domain.api": "StartDebugging"
+        "identity.domain.api": "StartDebugging",
+        "school": "StartDebugging"
       }
     }
   }
